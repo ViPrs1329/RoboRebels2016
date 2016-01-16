@@ -26,7 +26,7 @@ public class Rotate extends Command {
 		// Variable "inAngle" needs to be in degrees
 		// If isFoward is true, it will drive forwards, otherwise it will drive
 		// in reverse.
-		requires(Robot.drivetrain);
+//		requires(Robot.drivetrain);
 		this.speed = speed;
 		this.direction = direction;
 //		if (direction)
@@ -57,20 +57,20 @@ public class Rotate extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		if (direction) {
-			Robot.drivetrain.mecanum_drive(0, 0, speed);
+//			Robot.drivetrain.mecanum_drive(0, 0, speed);
 		}
 		else {
-		Robot.drivetrain.mecanum_drive(0, 0, -speed);
+//		Robot.drivetrain.mecanum_drive(0, 0, -speed);
 		}// this number may need to
 													// be fixed
-		SmartDashboard.putNumber("Robot Speed",
-				Robot.drivetrain.getRobotSpeed());
+//		SmartDashboard.putNumber("Robot Speed",
+//				Robot.drivetrain.getRobotSpeed());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		timeCurrent = timer.get(); // fix this
-		angle = (Robot.drivetrain.getRobotSpeed() * (timeCurrent - startTime));
+//		angle = (Robot.drivetrain.getRobotSpeed() * (timeCurrent - startTime));
 		totalAngle = totalAngle + angle;
 		if (totalAngle >= goalAngle) {
 			return true;
@@ -82,14 +82,14 @@ public class Rotate extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.drivetrain.mecanum_drive(0.0, 0, 0);
+//		Robot.drivetrain.mecanum_drive(0.0, 0, 0);
 
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		Robot.drivetrain.mecanum_drive(0.0, 0, 0);
+//		Robot.drivetrain.mecanum_drive(0.0, 0, 0);
 
 	}
 }

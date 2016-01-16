@@ -1,8 +1,10 @@
 package org.stlpriory.robotics;
 
+import org.stlpriory.robotics.commands.drivetrain.DebugCommand;
 import org.stlpriory.robotics.commands.drivetrain.ShiftHigh;
 import org.stlpriory.robotics.commands.drivetrain.ShiftLow;
 import org.stlpriory.robotics.commands.drivetrain.ShiftSuperLow;
+import org.stlpriory.robotics.commands.drivetrain.StopDebugCommand;
 import org.stlpriory.robotics.utils.Debug;
 import org.stlpriory.robotics.utils.Keymap;
 
@@ -71,30 +73,27 @@ public class OI {
     private JoystickButton shiftHighButton;
     private JoystickButton shiftLowButton;
     private JoystickButton shiftSuperLowButton;
+	private JoystickButton debugButton;
     public OI() {
         Debug.println("[OI] Instantiating ...");
         Debug.println("[OI] Intitalizing gamepad to Driver's station USB port"  );
         
         this.xboxController = new Joystick(0);
         
+//        shiftHighButton = new JoystickButton(xboxController,Keymap.DRIVETAIN_SHIFT_HIGH_BUTTON_KEY_MAP);
+//        shiftHighButton.whenPressed(new ShiftHigh());
+//        
+//        shiftLowButton = new JoystickButton(xboxController,Keymap.DRIVETRAIN_SHIFT_LOW_BUTTON_KEY_MAP);
+//        shiftLowButton.whenPressed(new ShiftLow());
+//        
+//        
+//        
+//        shiftSuperLowButton = new JoystickButton(xboxController, Keymap.SHIFT_SUPER_LOW_BUTTON);
+//        shiftSuperLowButton.whenPressed(new ShiftSuperLow());
         
-        
-        
-        
-        
-        
-        
-        
-        shiftHighButton = new JoystickButton(xboxController,Keymap.DRIVETAIN_SHIFT_HIGH_BUTTON_KEY_MAP);
-        shiftHighButton.whenPressed(new ShiftHigh());
-        
-        shiftLowButton = new JoystickButton(xboxController,Keymap.DRIVETRAIN_SHIFT_LOW_BUTTON_KEY_MAP);
-        shiftLowButton.whenPressed(new ShiftLow());
-        
-        
-        
-        shiftSuperLowButton = new JoystickButton(xboxController, Keymap.SHIFT_SUPER_LOW_BUTTON);
-        shiftSuperLowButton.whenPressed(new ShiftSuperLow());
+        debugButton = new JoystickButton(xboxController, Keymap.GRAB_BUTTON_KEY_MAP);
+        debugButton.whenPressed(new DebugCommand());
+        debugButton.whenReleased(new StopDebugCommand());
 
         Debug.println("[OI] Instantiation complete.");
     }

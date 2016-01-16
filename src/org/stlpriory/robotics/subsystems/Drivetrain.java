@@ -18,7 +18,6 @@ public class Drivetrain extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	//Asus is superior to Lenovo and Apple
 
     Jaguar left_front, right_front, left_rear, right_rear;
     RobotDrive drive;

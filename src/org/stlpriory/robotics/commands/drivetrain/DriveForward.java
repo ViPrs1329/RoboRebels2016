@@ -25,7 +25,7 @@ public class DriveForward extends Command {
 		// Variable "din" needs to be in feet
 		// If isFoward is true, it will drive forwards, otherwise it will drive
 		// in reverse.
-		requires(Robot.drivetrain);
+//		requires(Robot.drivetrain);
 		setTimeout(.1);
 		goalDistance = Utils.TALONdistance(din);
 		forward = isForward;
@@ -42,20 +42,20 @@ public class DriveForward extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		if (forward) {
-			Robot.drivetrain.mecanum_drive(-1 * Constants.DEFAULT_FORWARD_SPEED, 0, 0);
+//			Robot.drivetrain.mecanum_drive(-1 * Constants.DEFAULT_FORWARD_SPEED, 0, 0);
 			System.out.println("Driving forward");
 		} else {
-			Robot.drivetrain.mecanum_drive(Constants.DEFAULT_FORWARD_SPEED, 0,
-					0);
+//			Robot.drivetrain.mecanum_drive(Constants.DEFAULT_FORWARD_SPEED, 0,
+//					0);
 		}
-		SmartDashboard.putNumber("Robot Speed",
-				Robot.drivetrain.getRobotSpeed());
+//		SmartDashboard.putNumber("Robot Speed",
+//				Robot.drivetrain.getRobotSpeed());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		timeCurrent = timer.get(); // fix this
-		distance = (Robot.drivetrain.getRobotSpeed() * (timeCurrent - startTime));
+//		distance = (Robot.drivetrain.getRobotSpeed() * (timeCurrent - startTime));
 		totalDistance = totalDistance + distance;
 		System.out.println( "distance " + totalDistance);
 		if (totalDistance >= goalDistance) {
@@ -68,7 +68,7 @@ public class DriveForward extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.drivetrain.mecanum_drive(0.0, 0, 0);
+//		Robot.drivetrain.mecanum_drive(0.0, 0, 0);
 		System.out.println("I finished Driving");
 
 	}
@@ -76,6 +76,6 @@ public class DriveForward extends Command {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		Robot.drivetrain.mecanum_drive(0, 0, 0);
+//		Robot.drivetrain.mecanum_drive(0, 0, 0);
 	}
 }
