@@ -1,14 +1,8 @@
 package org.stlpriory.robotics;
 
-import org.stlpriory.robotics.commands.ElevatorDown;
-import org.stlpriory.robotics.commands.ElevatorStop;
-import org.stlpriory.robotics.commands.ElevatorUp;
-import org.stlpriory.robotics.commands.HoldElevatorUp;
-import org.stlpriory.robotics.commands.TogglePulse;
 import org.stlpriory.robotics.commands.drivetrain.ShiftHigh;
 import org.stlpriory.robotics.commands.drivetrain.ShiftLow;
 import org.stlpriory.robotics.commands.drivetrain.ShiftSuperLow;
-import org.stlpriory.robotics.triggers.ElevatorStill;
 import org.stlpriory.robotics.utils.Debug;
 import org.stlpriory.robotics.utils.Keymap;
 
@@ -71,12 +65,8 @@ public class OI {
      * 6:  Directional pad
      */
     private final Joystick xboxController;
-    private JoystickButton elevatorUpButton;
-    private JoystickButton elevatorDownButton;
-    private ElevatorStill elevatorStill;
     private JoystickButton shiftHighButton;
     private JoystickButton shiftLowButton;
-    private JoystickButton pulseToggle;
     private JoystickButton shiftSuperLowButton;
     public OI() {
         Debug.println("[OI] Instantiating ...");
@@ -86,18 +76,11 @@ public class OI {
         
         
         
-        Debug.println("[OI] Initializing gamepad to raise elevator when the y button is pressed is pressed");
-        elevatorUpButton = new JoystickButton(xboxController, Keymap.ELEVATOR_UP_BUTTON_KEY_MAP);
-        elevatorUpButton.whenPressed(new ElevatorUp());
-        elevatorUpButton.whenReleased(new ElevatorStop());
         
-        Debug.println("[OI] Initializing gamepad to lower elevator when the a button is pressed is pressed");
-        elevatorDownButton = new JoystickButton(xboxController, Keymap.ELEVATOR_DOWN_BUTTON_KEY_MAP);
-        elevatorDownButton.whenPressed(new ElevatorDown());
-        elevatorDownButton.whenReleased(new ElevatorStop());
         
-        elevatorStill = new ElevatorStill(xboxController);
-        elevatorStill.whileActive(new HoldElevatorUp());
+        
+        
+        
         
         shiftHighButton = new JoystickButton(xboxController,Keymap.DRIVETAIN_SHIFT_HIGH_BUTTON_KEY_MAP);
         shiftHighButton.whenPressed(new ShiftHigh());
@@ -105,8 +88,7 @@ public class OI {
         shiftLowButton = new JoystickButton(xboxController,Keymap.DRIVETRAIN_SHIFT_LOW_BUTTON_KEY_MAP);
         shiftLowButton.whenPressed(new ShiftLow());
         
-        pulseToggle = new JoystickButton(xboxController, Keymap.TOGGLE_PULSE);
-        pulseToggle.whenPressed(new TogglePulse());
+        
         
         shiftSuperLowButton = new JoystickButton(xboxController, Keymap.SHIFT_SUPER_LOW_BUTTON);
         shiftSuperLowButton.whenPressed(new ShiftSuperLow());

@@ -1,13 +1,6 @@
 package org.stlpriory.robotics.commands.autonomous;
 
-import org.stlpriory.robotics.commands.ElevatorStop;
-import org.stlpriory.robotics.commands.ElevatorUp;
-import org.stlpriory.robotics.commands.drivetrain.DriveForward;
-import org.stlpriory.robotics.commands.drivetrain.Rotate;
-import org.stlpriory.robotics.commands.drivetrain.ShiftHigh;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  *
