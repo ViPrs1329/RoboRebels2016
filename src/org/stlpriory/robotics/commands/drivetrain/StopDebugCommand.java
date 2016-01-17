@@ -33,7 +33,7 @@ public class StopDebugCommand extends Command {
 	@Override
 	protected void execute() {
 		// TODO Auto-generated method stub
-		Robot.testMotor.set(0);
+		
 	}
 
 	@Override

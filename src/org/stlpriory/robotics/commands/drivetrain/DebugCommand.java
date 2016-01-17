@@ -35,7 +35,6 @@ public class DebugCommand extends Command {
 	protected void execute() {
 		// TODO Auto-generated method stub
 		System.out.println("Pressed button");
-		Robot.testMotor.set(1);
 	}
 
 	@Override

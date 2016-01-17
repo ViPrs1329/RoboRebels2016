@@ -2,11 +2,8 @@
 package org.stlpriory.robotics;
 
 import org.stlpriory.robotics.commands.autonomous.AutonomousCommand;
-import org.stlpriory.robotics.subsystems.CANDrivetrain;
-import org.stlpriory.robotics.subsystems.Drivetrain;
 import org.stlpriory.robotics.subsystems.ExampleSubsystem;
-import org.stlpriory.robotics.subsystems.TestDrivetrain;
-import org.stlpriory.robotics.utils.Debug;
+import org.stlpriory.robotics.subsystems.TestTankDrivetrain;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Talon;
@@ -38,7 +35,6 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         System.out.println("Starting robot");
         oi = new OI();
-        testMotor = new Talon(0);
     }
     public void disabledPeriodic() {
         Scheduler.getInstance().run();
