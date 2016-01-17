@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * of the robot.
  */
 
-// Testing for commit...
 
 public class OI {
     //// CREATING BUTTONS
@@ -45,9 +44,9 @@ public class OI {
     // Start the command when the button is released  and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
-	
-	
-	/*
+
+
+    /*
      * The bottons on the XBox controller follow this mapping
      * 1:  A
      * 2:  B
@@ -73,27 +72,12 @@ public class OI {
     private JoystickButton shiftHighButton;
     private JoystickButton shiftLowButton;
     private JoystickButton shiftSuperLowButton;
-	private JoystickButton debugButton;
+    private JoystickButton debugButton;
     public OI() {
         Debug.println("[OI] Instantiating ...");
         Debug.println("[OI] Intitalizing gamepad to Driver's station USB port"  );
-        
+
         this.xboxController = new Joystick(0);
-        
-//        shiftHighButton = new JoystickButton(xboxController,Keymap.DRIVETAIN_SHIFT_HIGH_BUTTON_KEY_MAP);
-//        shiftHighButton.whenPressed(new ShiftHigh());
-//        
-//        shiftLowButton = new JoystickButton(xboxController,Keymap.DRIVETRAIN_SHIFT_LOW_BUTTON_KEY_MAP);
-//        shiftLowButton.whenPressed(new ShiftLow());
-//        
-//        
-//        
-//        shiftSuperLowButton = new JoystickButton(xboxController, Keymap.SHIFT_SUPER_LOW_BUTTON);
-//        shiftSuperLowButton.whenPressed(new ShiftSuperLow());
-        
-        debugButton = new JoystickButton(xboxController, Keymap.GRAB_BUTTON_KEY_MAP);
-        debugButton.whenPressed(new DebugCommand());
-        debugButton.whenReleased(new StopDebugCommand());
 
         Debug.println("[OI] Instantiation complete.");
     }

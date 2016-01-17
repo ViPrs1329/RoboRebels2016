@@ -26,7 +26,7 @@ public class Robot extends IterativeRobot {
 
     public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
     public static OI oi;
-    public static Talon testMotor;
+    public static TestTankDrivetrain drivetrain = new TestTankDrivetrain();
     private Timer timer = new Timer();
 
     Command autonomousCommand;
