@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class TestTankDrivetrain extends Subsystem {
@@ -25,7 +24,7 @@ public class TestTankDrivetrain extends Subsystem {
     public TestTankDrivetrain() {
         Debug.println("[test drivetrain Subsystem] Instantiating...");
         // Next two lines for testing encoder/talon srx
-        rightFront = new CANTalon(RobotMap.RIGHT_FRONT_CAN_TALON_CHANNEL);
+        rightFront = new CANTalon(RobotMap.RIGHT_FRONT_TALON_CHANNEL);
         initTalon(this.rightFront);
         rightRear = new CANTalon(RobotMap.RIGHT_REAR_TALON_CHANNEL);
         initTalon(this.rightRear);
@@ -50,7 +49,10 @@ public class TestTankDrivetrain extends Subsystem {
     public void tankDrive(double leftValue, double rightValue)
     {
         drive.tankDrive(leftRamper.scale(leftValue), rightRamper.scale(rightValue));
-        System.out.println(rightFront.getEncVelocity());
+        System.out.printf("The left rear is going %d%n", leftRear.getEncVelocity());
+        System.out.printf("The right rear is going %d%n", rightRear.getEncVelocity());
+        System.out.printf("The left front is going %d%n", leftFront.getEncVelocity());
+        System.out.printf("The right front is going %d%n", rightFront.getEncVelocity());
     }
     public void tankDrive(Joystick joystick)
     {
