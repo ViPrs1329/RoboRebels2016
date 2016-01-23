@@ -1,5 +1,12 @@
 package org.stlpriory.robotics;
 
+import org.stlpriory.robotics.commands.BallHolderDown;
+import org.stlpriory.robotics.commands.BallHolderStop;
+import org.stlpriory.robotics.commands.BallHolderUp;
+import org.stlpriory.robotics.commands.Hold;
+import org.stlpriory.robotics.commands.StopShooter;
+import org.stlpriory.robotics.commands.Suck;
+import org.stlpriory.robotics.commands.Throw;
 import org.stlpriory.robotics.commands.drivetrain.DebugCommand;
 import org.stlpriory.robotics.commands.drivetrain.ShiftHigh;
 import org.stlpriory.robotics.commands.drivetrain.ShiftLow;
@@ -71,19 +78,36 @@ public class OI {
     private final Joystick xboxController;
     private JoystickButton holderUpButton;
     private JoystickButton holderDownButton;
+    private JoystickButton throwButton;
+    private JoystickButton suckButton;
+    private JoystickButton holdSwitch;
     public OI() {
         Debug.println("[OI] Instantiating ...");
         Debug.println("[OI] Intitalizing gamepad to Driver's station USB port"  );
 
         this.xboxController = new Joystick(0);
         holderUpButton = new JoystickButton(xboxController, 4);
-        holderUpButton.whenPressed(new BallHolderUp());
+        holderUpButton.whileHeld(new BallHolderUp());
         holderUpButton.whenReleased(new BallHolderStop());
 
-        holderDownButton = new JoystickButton(xboxController, 1);
-        holderDownButton.whenPressed(new BallHolderDown());
+        holderDownButton = new JoystickButton(xboxController, 3);
+        holderDownButton.whileHeld(new BallHolderDown());
         holderDownButton.whenReleased(new BallHolderStop());
-        Debug.println("[OI] Instantiation complete.");
+        
+        throwButton = new JoystickButton(xboxController, 2);
+        throwButton.whileHeld(new Throw());
+        throwButton.whenReleased(new StopShooter());
+        
+        suckButton = new JoystickButton(xboxController, 3);
+        suckButton.whileHeld(new Suck());
+        suckButton.whenReleased(new StopShooter());
+        
+        holdSwitch = new JoystickButton(xboxController, 8);
+        holdSwitch.whenPressed(new Hold());
+        
+        
+        
+        Debug.println("[OI] Instantiation complete.");        
     }
 
     public Joystick getGamePad() {

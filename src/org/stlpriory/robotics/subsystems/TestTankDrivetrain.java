@@ -49,10 +49,6 @@ public class TestTankDrivetrain extends Subsystem {
     public void tankDrive(double leftValue, double rightValue)
     {
         drive.tankDrive(leftRamper.scale(leftValue), rightRamper.scale(rightValue));
-        System.out.printf("The left rear is going %d%n", leftRear.getEncVelocity());
-        System.out.printf("The right rear is going %d%n", rightRear.getEncVelocity());
-        System.out.printf("The left front is going %d%n", leftFront.getEncVelocity());
-        System.out.printf("The right front is going %d%n", rightFront.getEncVelocity());
     }
     public void tankDrive(Joystick joystick)
     {
