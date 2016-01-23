@@ -15,21 +15,24 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class TestTankDrivetrain extends Subsystem {
     CANTalon rightFront;
-    Talon rightRear;
-    Talon leftFront;
-    Talon leftRear;
+    CANTalon rightRear;
+    CANTalon leftFront;
+    CANTalon leftRear;
     Ramper leftRamper;
     Ramper rightRamper;
     RobotDrive drive;
 
     public TestTankDrivetrain() {
         Debug.println("[test drivetrain Subsystem] Instantiating...");
-        //next two lines for testing encoder/talon srx
+        // Next two lines for testing encoder/talon srx
         rightFront = new CANTalon(RobotMap.RIGHT_FRONT_CAN_TALON_CHANNEL);
         initTalon(this.rightFront);
-        rightRear = new Talon(RobotMap.RIGHT_REAR_TALON_CHANNEL);
-        leftFront = new Talon(RobotMap.LEFT_FRONT_TALON_CHANNEL);
-        leftRear = new Talon(RobotMap.LEFT_REAR_TALON_CHANNEL);
+        rightRear = new CANTalon(RobotMap.RIGHT_REAR_TALON_CHANNEL);
+        initTalon(this.rightRear);
+        leftFront = new CANTalon(RobotMap.LEFT_FRONT_TALON_CHANNEL);
+        initTalon(this.leftFront);
+        leftRear = new CANTalon(RobotMap.LEFT_REAR_TALON_CHANNEL);
+        initTalon(this.leftRear);
         leftRamper = new Ramper();
         rightRamper = new Ramper();
         drive = new RobotDrive(leftFront, leftRear, rightFront, rightRear);

@@ -75,10 +75,9 @@ public class OI {
         Debug.println("[OI] Intitalizing gamepad to Driver's station USB port"  );
 
         this.xboxController = new Joystick(0);
-        button = new JoystickButton(xboxController, 1);
-        System.out.println("pressed");
-        button.whenPressed(new SpinMotor());
-        button.whenReleased(new StopSpin());
+        // button = new JoystickButton(xboxController, 1);
+        // button.whenPressed(new SpinMotor());
+        // button.whenReleased(new StopSpin());
         Debug.println("[OI] Instantiation complete.");
     }
 

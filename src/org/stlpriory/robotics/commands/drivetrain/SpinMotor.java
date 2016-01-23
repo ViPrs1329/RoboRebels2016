@@ -15,19 +15,16 @@ public class SpinMotor extends Command {
 	@Override
 	protected void initialize() {
 		System.out.println("button");
-	
 	}
 
 	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
 		Robot.drivetrain.tankDrive(1, 1);
 		counter++;
 	}
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
 		return counter >= 10;		
 	}
 
