@@ -69,15 +69,20 @@ public class OI {
      * 6:  Directional pad
      */
     private final Joystick xboxController;
-    private JoystickButton button;
+    private JoystickButton holderUpButton;
+    private JoystickButton holderDownButton;
     public OI() {
         Debug.println("[OI] Instantiating ...");
         Debug.println("[OI] Intitalizing gamepad to Driver's station USB port"  );
 
         this.xboxController = new Joystick(0);
-        // button = new JoystickButton(xboxController, 1);
-        // button.whenPressed(new SpinMotor());
-        // button.whenReleased(new StopSpin());
+        holderUpButton = new JoystickButton(xboxController, 4);
+        holderUpButton.whenPressed(new BallHolderUp());
+        holderUpButton.whenReleased(new BallHolderStop());
+
+        holderDownButton = new JoystickButton(xboxController, 1);
+        holderDownButton.whenPressed(new BallHolderDown());
+        holderDownButton.whenReleased(new BallHolderStop());
         Debug.println("[OI] Instantiation complete.");
     }
 
