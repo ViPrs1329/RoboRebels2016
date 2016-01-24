@@ -4,9 +4,12 @@ import org.stlpriory.robotics.commands.BallHolderDown;
 import org.stlpriory.robotics.commands.BallHolderStop;
 import org.stlpriory.robotics.commands.BallHolderUp;
 import org.stlpriory.robotics.commands.Hold;
+import org.stlpriory.robotics.commands.HolderToBottom;
+import org.stlpriory.robotics.commands.HolderToTop;
 import org.stlpriory.robotics.commands.StopShooter;
 import org.stlpriory.robotics.commands.Suck;
 import org.stlpriory.robotics.commands.Throw;
+import org.stlpriory.robotics.utils.ControllerMap;
 import org.stlpriory.robotics.utils.Debug;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -52,6 +55,9 @@ public class OI {
     private JoystickButton throwButton;
     private JoystickButton suckButton;
     private JoystickButton holdSwitch;
+    private JoystickButton holderTop;
+    private JoystickButton holderBottom;
+    private JoystickButton holderMiddle;
     public OI() {
         Debug.println("[OI] Instantiating ...");
         Debug.println("[OI] Intitalizing gamepad to Driver's station USB port"  );
@@ -76,6 +82,11 @@ public class OI {
         holdSwitch = new JoystickButton(xboxController, 8);
         holdSwitch.whenPressed(new Hold());
         
+        holderTop = new JoystickButton(xboxController, ControllerMap.RIGHT_BUMPER);
+        holderTop.whenPressed(new HolderToTop());
+        
+        holderBottom = new JoystickButton(xboxController, ControllerMap.LEFT_BUMPER);
+        holderBottom.whenPressed(new HolderToBottom());
         
         
         Debug.println("[OI] Instantiation complete.");        

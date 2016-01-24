@@ -11,6 +11,7 @@ public class BallHolder extends Subsystem {
     private Talon rightMotor;
     private Talon leftMotor;
     private AnalogPotentiometer pot;
+    public enum Direction {UP,DOWN};
     public BallHolder() 
     {
         rightMotor = new Talon(RobotMap.RIGHT_WINDOW_MOTOR);
@@ -27,6 +28,12 @@ public class BallHolder extends Subsystem {
     {
     	
     	return pot.get();
+    	
+    }
+    public void set(Direction dir,double speed)
+    {
+    	speed = Math.abs(speed)*(dir == Direction.UP ? 1 : -1);
+    	this.set(speed);
     	
     }
 	@Override
