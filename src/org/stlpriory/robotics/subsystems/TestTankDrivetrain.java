@@ -51,7 +51,8 @@ public class TestTankDrivetrain extends Subsystem {
     public void tankDrive(double leftValue, double rightValue)
     {
         drive.tankDrive(leftRamper.scale(leftValue), rightRamper.scale(rightValue));
-        System.out.println(Robot.ballHolder.readAngle());
+        // This is just for testing. 
+        System.out.println(Robot.ballHolder.getAngle());
     }
     public void tankDrive(Joystick joystick)
     {

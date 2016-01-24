@@ -16,7 +16,7 @@ public class BallHolder extends Subsystem {
     {
         rightMotor = new Talon(RobotMap.RIGHT_WINDOW_MOTOR);
         leftMotor = new Talon(RobotMap.LEFT_WINDOW_MOTOR);
-        pot = new AnalogPotentiometer(RobotMap.POTENTIOMETER,Constants.POTENTIOMETER_SCALE_FACTOR,Constants.POTENTIOMETER_OFFSET);
+        pot = new AnalogPotentiometer(RobotMap.POTENTIOMETER, Constants.POTENTIOMETER_SCALE_FACTOR, Constants.POTENTIOMETER_OFFSET);
         
     }
     public void set(double speed)
@@ -24,7 +24,7 @@ public class BallHolder extends Subsystem {
         leftMotor.set(speed);
         rightMotor.set(speed);
     }
-    public double readAngle()
+    public double getAngle()
     {
     	
     	return pot.get();

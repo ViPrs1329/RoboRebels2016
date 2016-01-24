@@ -27,7 +27,7 @@ public class HolderToTop extends Command {
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		if(Robot.ballHolder.readAngle() > Math.abs((Constants.MAX_ANGLE-Constants.TOLERANCE)))
+		if(Robot.ballHolder.getAngle() > Math.abs((Constants.MAX_ANGLE-Constants.TOLERANCE)))
 		{
 			return true;
 		}
