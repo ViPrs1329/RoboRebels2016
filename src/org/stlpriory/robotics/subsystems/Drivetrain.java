@@ -4,6 +4,7 @@ import org.stlpriory.robotics.RobotMap;
 import org.stlpriory.robotics.commands.drivetrain.DriveWithGamepad;
 import org.stlpriory.robotics.utils.Debug;
 import org.stlpriory.robotics.utils.Utils;
+import org.stlpriory.robotics.utils.ControllerMap;
 
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
@@ -79,9 +80,9 @@ public class Drivetrain extends Subsystem {
          * 6 - DPad Left/Right
          */
 
-        double rawLeftX = joystick.getRawAxis(1);
-        double rawLeftY = joystick.getRawAxis(2);
-        double rawZ = joystick.getRawAxis(3);
+        double rawLeftX = joystick.getRawAxis(ControllerMap.LEFT_STICK_X_AXIS);
+        double rawLeftY = joystick.getRawAxis(ControllerMap.LEFT_STICK_Y_AXIS);
+        double rawZ = joystick.getRawAxis(ControllerMap.TRIGGERS);
 
         double scaledLeftX = Utils.scale(rawLeftX);
         double scaledLeftY = Utils.scale(rawLeftY);
