@@ -1,5 +1,6 @@
 package org.stlpriory.robotics.subsystems;
 
+import org.stlpriory.robotics.Robot;
 import org.stlpriory.robotics.RobotMap;
 import org.stlpriory.robotics.commands.drivetrain.DriveWithGamepad;
 import org.stlpriory.robotics.utils.Constants;
@@ -50,6 +51,7 @@ public class TestTankDrivetrain extends Subsystem {
     public void tankDrive(double leftValue, double rightValue)
     {
         drive.tankDrive(leftRamper.scale(leftValue), rightRamper.scale(rightValue));
+        System.out.println(Robot.ballHolder.readAngle());
     }
     public void tankDrive(Joystick joystick)
     {

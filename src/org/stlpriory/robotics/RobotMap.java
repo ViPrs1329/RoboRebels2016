@@ -27,6 +27,7 @@ public class RobotMap {
 	
 	public static final int RIGHT_WINDOW_MOTOR = 0; 
 	public static final int LEFT_WINDOW_MOTOR = 1;
+	public static final int POTENTIOMETER = 0;
 	
 	public static final int RIGHT_SHOOTER = 2;
 	public static final int LEFT_SHOOTER = 3;

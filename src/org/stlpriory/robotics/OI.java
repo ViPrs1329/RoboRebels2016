@@ -7,13 +7,7 @@ import org.stlpriory.robotics.commands.Hold;
 import org.stlpriory.robotics.commands.StopShooter;
 import org.stlpriory.robotics.commands.Suck;
 import org.stlpriory.robotics.commands.Throw;
-import org.stlpriory.robotics.commands.drivetrain.DebugCommand;
-import org.stlpriory.robotics.commands.drivetrain.ShiftHigh;
-import org.stlpriory.robotics.commands.drivetrain.ShiftLow;
-import org.stlpriory.robotics.commands.drivetrain.ShiftSuperLow;
-import org.stlpriory.robotics.commands.drivetrain.StopDebugCommand;
 import org.stlpriory.robotics.utils.Debug;
-import org.stlpriory.robotics.utils.Keymap;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
