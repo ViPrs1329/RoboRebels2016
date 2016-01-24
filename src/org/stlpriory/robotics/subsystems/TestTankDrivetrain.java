@@ -5,6 +5,7 @@ import org.stlpriory.robotics.commands.drivetrain.DriveWithGamepad;
 import org.stlpriory.robotics.utils.Constants;
 import org.stlpriory.robotics.utils.Debug;
 import org.stlpriory.robotics.utils.Ramper;
+import org.stlpriory.robotics.utils.ControllerMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
@@ -53,7 +54,7 @@ public class TestTankDrivetrain extends Subsystem {
     public void tankDrive(Joystick joystick)
     {
         // This should be the left stick y axis and the right stick y axis. 
-        tankDrive(joystick.getRawAxis(1), joystick.getRawAxis(5));
+        tankDrive(joystick.getRawAxis(ControllerMap.LEFT_STICK_Y_AXIS), joystick.getRawAxis(ControllerMap.RIGHT_STICK_Y_AXIS));
     }
 
     public void initDefaultCommand() {
