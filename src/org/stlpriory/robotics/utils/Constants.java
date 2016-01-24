@@ -19,10 +19,11 @@ public class Constants {
 	public static final double DEFAULT_ROTATION_SPEED = -.5; // Negative is counterclockwise
 	public static final double DEFAULT_STRAFE_SPEED = .3;
 	public static final double DEFAULT_FORWARD_SPEED = .7;
-	public static final int POTENTIOMETER_SCALE_FACTOR = 1;//range of potentiometers
+	// Range of potentiometers
+	public static final int POTENTIOMETER_SCALE_FACTOR = 270; 
 	public static final int POTENTIOMETER_OFFSET = 0;
 	public static final double MAX_ANGLE = POTENTIOMETER_SCALE_FACTOR;
 	public static final double MIN_ANGLE = POTENTIOMETER_OFFSET;
-	public static final double TOLERANCE = (1 / 18) * POTENTIOMETER_SCALE_FACTOR;
+	public static final double TOLERANCE = (1.0 / 15.0) * POTENTIOMETER_SCALE_FACTOR;
 }
 			

@@ -30,9 +30,9 @@ public class BallHolder extends Subsystem {
     	return pot.get();
     	
     }
-    public void set(Direction dir,double speed)
+    public void set(Direction dir, double speed)
     {
-    	speed = Math.abs(speed)*(dir == Direction.UP ? 1 : -1);
+    	speed = Math.abs(speed) * (dir == Direction.UP ? 1 : -1);
     	this.set(speed);
     	
     }

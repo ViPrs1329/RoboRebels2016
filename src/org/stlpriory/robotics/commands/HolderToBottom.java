@@ -25,7 +25,7 @@ public class HolderToBottom extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
+		System.out.printf("The limit is %f%n", Math.abs((Constants.MIN_ANGLE - Constants.TOLERANCE)));
 		if(Robot.ballHolder.getAngle() < Math.abs((Constants.MIN_ANGLE - Constants.TOLERANCE)))
 		{
 			return true;
