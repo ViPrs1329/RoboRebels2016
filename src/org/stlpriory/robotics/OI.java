@@ -71,18 +71,15 @@ public class OI {
 
         holderDownButton = new JoystickButton(xboxController, ControllerMap.A_BUTTON);
         holderDownButton.whileHeld(new BallHolderDown());
-        holderDownButton.whenReleased(new BallHolderStop());
         
         throwButton = new JoystickButton(xboxController, ControllerMap.Y_BUTTON);
         throwButton.whileHeld(new Throw());
-        throwButton.whenReleased(new StopShooter());
         
         suckButton = new JoystickButton(xboxController, ControllerMap.X_BUTTON);
         suckButton.whileHeld(new Suck());
-        suckButton.whenReleased(new StopShooter());
         
         holdSwitch = new JoystickButton(xboxController, ControllerMap.START_BUTTON);
-        holdSwitch.whenPressed(new Hold());
+        holdSwitch.toggleWhenPressed(new Hold());
         
         holderTop = new JoystickButton(xboxController, ControllerMap.RIGHT_BUMPER);
         holderTop.whenPressed(new HolderToTop());

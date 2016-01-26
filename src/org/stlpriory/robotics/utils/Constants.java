@@ -25,5 +25,6 @@ public class Constants {
 	public static final double MAX_ANGLE = POTENTIOMETER_SCALE_FACTOR;
 	public static final double MIN_ANGLE = POTENTIOMETER_OFFSET;
 	public static final double TOLERANCE = (1.0 / 15.0) * POTENTIOMETER_SCALE_FACTOR;
+        public static final double BALL_HOLDER_UP_SPEED = 1;
+        public static final double BALL_HOLDER_DOWN_SPEED = 1;
 }
-			

@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Shooter extends Subsystem {
 	private Talon rightShooter;
 	private Talon leftShooter;
-	public boolean holding = false;
 	public Shooter()
 	{
 		rightShooter = new Talon(RobotMap.RIGHT_SHOOTER);

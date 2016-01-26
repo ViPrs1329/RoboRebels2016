@@ -20,20 +20,22 @@ public class BallHolderDown extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.ballHolder.set(-1);
+        Robot.ballHolder.set(Robot.ballholder.Direction.DOWN, Constants.BALL_HOLDER_DOWN_SPEED);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+        Robot.ballHolder.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        Robot.ballHolder.stop();
     }
 }
