@@ -80,19 +80,19 @@ public class Drivetrain extends Subsystem {
          * 6 - DPad Left/Right
          */
 
-        double rawLeftX = joystick.getRawAxis(ControllerMap.LEFT_STICK_X_AXIS);
-        double rawLeftY = joystick.getRawAxis(ControllerMap.LEFT_STICK_Y_AXIS);
-        double rawZ = joystick.getRawAxis(ControllerMap.TRIGGERS);
-
-        double scaledLeftX = Utils.scale(rawLeftX);
-        double scaledLeftY = Utils.scale(rawLeftY);
-
-        double right = -scaledLeftX;
-        double forward = scaledLeftY;
-        double rotation = -rawZ;
-        double clockwise = rawZ;
-
-        this.drive.mecanumDrive_Cartesian(right, -forward, rotation, clockwise);
+//        double rawLeftX = joystick.getRawAxis(ControllerMap.LEFT_STICK_X_AXIS);
+//        double rawLeftY = joystick.getRawAxis(ControllerMap.LEFT_STICK_Y_AXIS);
+////        double rawZ = joystick.getRawAxis(ControllerMap.TRIGGERS);
+//
+//        double scaledLeftX = Utils.scale(rawLeftX);
+//        double scaledLeftY = Utils.scale(rawLeftY);
+//
+//        double right = -scaledLeftX;
+//        double forward = scaledLeftY;
+//        double rotation = -rawZ;
+//        double clockwise = rawZ;
+//
+//        this.drive.mecanumDrive_Cartesian(right, -forward, rotation, clockwise);
     }
 
     public void mecanum_drive(final double forward, final double right, final double rotation) {

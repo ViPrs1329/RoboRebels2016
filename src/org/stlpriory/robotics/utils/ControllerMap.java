@@ -11,11 +11,12 @@ public class ControllerMap {
     public static final int START_BUTTON = 8;
     public static final int LEFT_STICK = 9;
     public static final int RIGHT_STICK = 10;
-
+// we don't know what left stick x axis is, but it isn't 1
     public static final int LEFT_STICK_X_AXIS = 1;
-    public static final int LEFT_STICK_Y_AXIS = 2;
+    public static final int LEFT_TRIGGER = 2;
+    public static final int RIGHT_TRIGGER = 3;
     // The triggers are the difference of the right and the left. IE, all left would be 1, all right would be -1, and nothing would be 0.
-    public static final int TRIGGERS = 3;
+    public static final int LEFT_STICK_Y_AXIS = 1;
     public static final int RIGHT_STICK_X_AXIS = 4;
     public static final int RIGHT_STICK_Y_AXIS = 5;
     // You can only see left and right on the D-pad, not up and down. Something something interface standard. Brilliant. 

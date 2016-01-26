@@ -13,9 +13,14 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TestTankDrivetrain extends Subsystem {
-    CANTalon rightFront;
+    private static final String LEFT_FRONT_SPEED = "Left Front speed";
+	private static final String LEFT_REAR_SPEED = "left rear";
+	private static final String RIGHT_REAR_SPEED = "right rear";
+	private static final String RIGHT_FRONT_SPEED = "right front";
+	CANTalon rightFront;
     CANTalon rightRear;
     CANTalon leftFront;
     CANTalon leftRear;
@@ -50,12 +55,16 @@ public class TestTankDrivetrain extends Subsystem {
 
     public void tankDrive(double leftValue, double rightValue)
     {
+    	System.out.println("It worked");
+    	
         drive.tankDrive(leftRamper.scale(leftValue), rightRamper.scale(rightValue));
-        // This is just for testing. 
-        System.out.println(Robot.ballHolder.getAngle());
+        SmartDashboard.putNumber(LEFT_FRONT_SPEED, leftFront.getSpeed());
+        SmartDashboard.putNumber(LEFT_REAR_SPEED, leftRear.getSpeed());
+        SmartDashboard.putNumber(RIGHT_FRONT_SPEED, rightFront.getSpeed());
+        SmartDashboard.putNumber(RIGHT_REAR_SPEED, rightRear.getSpeed());
     }
-    public void tankDrive(Joystick joystick)
-    {
+    public void tankDrive(Joystick joystick){
+    
         // This should be the left stick y axis and the right stick y axis. 
         tankDrive(joystick.getRawAxis(ControllerMap.LEFT_STICK_Y_AXIS), joystick.getRawAxis(ControllerMap.RIGHT_STICK_Y_AXIS));
     }
