@@ -57,6 +57,7 @@ public class OI {
     private JoystickButton holdSwitch;
     private JoystickButton holderTop;
     private JoystickButton holderBottom;
+    // This isn't implemented yet, but rumor has it that Adam is getting to it.
     private JoystickButton holderMiddle;
     public OI() {
         Debug.println("[OI] Instantiating ...");
