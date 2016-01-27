@@ -3,6 +3,8 @@ package org.stlpriory.robotics.commands;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.stlpriory.robotics.Robot;
+import org.stlpriory.robotics.subsystems.BallHolder.Direction;
+import org.stlpriory.robotics.utils.Constants;
 
 /**
  *
@@ -20,7 +22,7 @@ public class BallHolderUp extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.ballHolder.set(Robot.ballHolder.Direction.UP, Constants.BALL_HOLDER_UP_SPEED);
+        Robot.ballHolder.set(Direction.UP, Constants.BALL_HOLDER_UP_SPEED);
     }
 
     // Make this return true when this Command no longer needs to run execute()
