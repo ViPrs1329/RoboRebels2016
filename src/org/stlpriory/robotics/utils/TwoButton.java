@@ -16,15 +16,16 @@ public class TwoButton extends Trigger {
 	}
 	@Override
 	public boolean get() {
-		// TODO Auto-generated method stub
-		if(firstButton.get()&&secondButton.get())
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return false;
+		// This doesn't work...
+//		if(firstButton.get() && secondButton.get())
+//		{
+//			return true;
+//		}
+//		else
+//		{
+//			return false;
+//		}
 	}
 	
 

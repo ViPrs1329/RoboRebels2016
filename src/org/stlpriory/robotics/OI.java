@@ -88,8 +88,8 @@ public class OI {
         holderBottom = new JoystickButton(xboxController, ControllerMap.LEFT_BUMPER);
         holderBottom.whenPressed(new HolderToBottom());
         
-        holderMiddle = new TwoButton(new JoystickButton(xboxController,ControllerMap.LEFT_BUMPER),
-        							 new JoystickButton(xboxController,ControllerMap.RIGHT_BUMPER),
+        holderMiddle = new TwoButton(holderBottom,
+        							 holderTop,
         							 new ExampleCommand());
         
         Debug.println("[OI] Instantiation complete.");        
