@@ -3,6 +3,7 @@ package org.stlpriory.robotics;
 import org.stlpriory.robotics.commands.BallHolderDown;
 import org.stlpriory.robotics.commands.BallHolderStop;
 import org.stlpriory.robotics.commands.BallHolderUp;
+import org.stlpriory.robotics.commands.ExampleCommand;
 import org.stlpriory.robotics.commands.Hold;
 import org.stlpriory.robotics.commands.HolderToBottom;
 import org.stlpriory.robotics.commands.HolderToTop;
@@ -10,6 +11,7 @@ import org.stlpriory.robotics.commands.Suck;
 import org.stlpriory.robotics.commands.Throw;
 import org.stlpriory.robotics.utils.ControllerMap;
 import org.stlpriory.robotics.utils.Debug;
+import org.stlpriory.robotics.utils.TwoButton;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -56,9 +58,8 @@ public class OI {
     private JoystickButton holdSwitch;
     private JoystickButton holderTop;
     private JoystickButton holderBottom;
-    // This isn't implemented yet, but rumor has it that Adam is getting to it.
-    // that is correct -Adam
-    // private JoystickButton holderMiddle;
+    private TwoButton holderMiddle;
+
     public OI() {
         Debug.println("[OI] Instantiating ...");
         Debug.println("[OI] Intitalizing gamepad to Driver's station USB port"  );
@@ -87,6 +88,9 @@ public class OI {
         holderBottom = new JoystickButton(xboxController, ControllerMap.LEFT_BUMPER);
         holderBottom.whenPressed(new HolderToBottom());
         
+        holderMiddle = new TwoButton(new JoystickButton(xboxController,ControllerMap.LEFT_BUMPER),
+        							 new JoystickButton(xboxController,ControllerMap.RIGHT_BUMPER),
+        							 new ExampleCommand());
         
         Debug.println("[OI] Instantiation complete.");        
     }
