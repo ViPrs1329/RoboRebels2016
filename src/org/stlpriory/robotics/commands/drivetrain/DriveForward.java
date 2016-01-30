@@ -1,6 +1,7 @@
 package org.stlpriory.robotics.commands.drivetrain;
 
 import org.stlpriory.robotics.Robot;
+import org.stlpriory.robotics.utils.Constants;
 import org.stlpriory.robotics.utils.Utils;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -43,14 +44,13 @@ public class DriveForward extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         if (forward) {
-            //		Robot.drivetrain.mecanum_drive(-1 * Constants.DEFAULT_FORWARD_SPEED, 0, 0);
+            		Robot.drivetrain.tankDrive(Constants.DEFAULT_FORWARD_SPEED,Constants.DEFAULT_FORWARD_SPEED);
             System.out.println("Driving forward");
         } else {
-            //			Robot.drivetrain.mecanum_drive(Constants.DEFAULT_FORWARD_SPEED, 0,
-            //					0);
+            			Robot.drivetrain.tankDrive(-1*Constants.DEFAULT_FORWARD_SPEED,-1*Constants.DEFAULT_FORWARD_SPEED);
         }
-        //		SmartDashboard.putNumber("Robot Speed",
-        //				Robot.drivetrain.getRobotSpeed());
+        		SmartDashboard.putNumber("Robot Speed",
+        				Robot.drivetrain.getRobotSpeed());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -75,7 +75,7 @@ public class DriveForward extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-        //		Robot.drivetrain.mecanum_drive(0.0, 0, 0);
+    	Robot.drivetrain.tankDrive(0, 0);
         System.out.println("I finished Driving");
 
     }
@@ -83,6 +83,6 @@ public class DriveForward extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-        //		Robot.drivetrain.mecanum_drive(0, 0, 0);
+    	Robot.drivetrain.tankDrive(0, 0);
     }
 }
