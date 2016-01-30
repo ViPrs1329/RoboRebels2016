@@ -1,12 +1,11 @@
 package org.stlpriory.robotics.commands.drivetrain;
 
+import org.stlpriory.robotics.Robot;
+import org.stlpriory.robotics.utils.Utils;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.stlpriory.robotics.utils.Constants;
-import org.stlpriory.robotics.utils.Utils;
-import org.stlpriory.robotics.Robot;
 
 public class DriveForward extends Command {
 
@@ -15,6 +14,8 @@ public class DriveForward extends Command {
     double distance;
     double totalDistance = 0.0;
     double timeCurrent;
+    double distance2;
+    double lastVelocity;
     Timer timer = new Timer();
     boolean forward;
 
@@ -54,16 +55,22 @@ public class DriveForward extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        timeCurrent = timer.get(); // fix this
-        //		distance = (Robot.drivetrain.getRobotSpeed() * (timeCurrent - startTime));
-        totalDistance = totalDistance + distance;
-        System.out.println( "distance " + totalDistance);
-        if (totalDistance >= goalDistance) {
+        if (getDistance() >= goalDistance) {
             return true;
         }
-        startTime = timer.get();
-        SmartDashboard.putNumber("Distance", totalDistance);
+        SmartDashboard.putNumber("Distance", getDistance());
         return false;
+    }
+    private double getDistance()
+    {
+    	timeCurrent = timer.get();
+		distance = (Robot.drivetrain.getRobotSpeed() * (timeCurrent - startTime));
+		distance2 = (lastVelocity * (timeCurrent-startTime));
+		totalDistance = totalDistance + ((distance+distance2)/2);//using trapezoid rule to estimate distance
+		System.out.println( "distance " + totalDistance);
+		startTime = timer.get();
+		lastVelocity = Robot.drivetrain.getRobotSpeed();
+		return distance;
     }
 
     // Called once after isFinished returns true

@@ -1,12 +1,11 @@
 package org.stlpriory.robotics.subsystems;
 
-import org.stlpriory.robotics.Robot;
 import org.stlpriory.robotics.RobotMap;
 import org.stlpriory.robotics.commands.drivetrain.DriveWithGamepad;
 import org.stlpriory.robotics.utils.Constants;
+import org.stlpriory.robotics.utils.ControllerMap;
 import org.stlpriory.robotics.utils.Debug;
 import org.stlpriory.robotics.utils.Ramper;
-import org.stlpriory.robotics.utils.ControllerMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
@@ -67,6 +66,29 @@ public class TestTankDrivetrain extends Subsystem {
     
         // This should be the left stick y axis and the right stick y axis. 
         tankDrive(joystick.getRawAxis(ControllerMap.LEFT_STICK_Y_AXIS), joystick.getRawAxis(ControllerMap.RIGHT_STICK_Y_AXIS));
+    }
+    public double getRobotSpeed() {
+    	double leftFrontSpeed = leftFront.getEncVelocity();
+    	double rightFrontSpeed = rightFront.getEncVelocity();
+    	double leftRearSpeed = leftRear.getEncVelocity();
+    	double rightRearSpeed = rightRear.getEncVelocity();
+    	leftFrontSpeed = Math.abs(leftFrontSpeed);
+    	rightFrontSpeed = Math.abs(rightFrontSpeed);
+    	leftRearSpeed = Math.abs(leftRearSpeed);
+    	rightRearSpeed = Math.abs(rightRearSpeed);
+    	
+    	double speed = 0;
+    	if (leftFrontSpeed != 0) speed = leftFrontSpeed;
+    	if (rightFrontSpeed != 0) speed = rightFrontSpeed;
+    	if (leftRearSpeed != 0) speed = leftRearSpeed;
+    	if (rightRearSpeed != 0) speed = rightRearSpeed;
+    	
+    	if (leftFrontSpeed != 0) speed = Math.min(speed,leftFrontSpeed);
+    	if (rightFrontSpeed != 0) speed = Math.min(speed, rightFrontSpeed);
+    	if (leftRearSpeed != 0) speed = Math.min(speed, leftRearSpeed);
+    	if (rightRearSpeed != 0) speed = Math.min(speed, rightRearSpeed);
+    	
+    	return speed;
     }
 
     public void initDefaultCommand() {
