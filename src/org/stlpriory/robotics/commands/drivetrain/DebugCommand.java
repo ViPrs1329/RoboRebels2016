@@ -1,8 +1,5 @@
 package org.stlpriory.robotics.commands.drivetrain;
 
-import org.stlpriory.robotics.Robot;
-import org.stlpriory.robotics.utils.Debug;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 public class DebugCommand extends Command {

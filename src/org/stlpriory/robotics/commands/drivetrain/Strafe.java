@@ -1,12 +1,10 @@
 package org.stlpriory.robotics.commands.drivetrain;
 
+import org.stlpriory.robotics.utils.Utils;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.stlpriory.robotics.utils.Constants;
-import org.stlpriory.robotics.utils.Utils;
-import org.stlpriory.robotics.Robot;
 
 public class Strafe extends Command {
 

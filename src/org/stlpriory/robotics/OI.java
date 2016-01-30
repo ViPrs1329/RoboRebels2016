@@ -6,7 +6,6 @@ import org.stlpriory.robotics.commands.BallHolderUp;
 import org.stlpriory.robotics.commands.Hold;
 import org.stlpriory.robotics.commands.HolderToBottom;
 import org.stlpriory.robotics.commands.HolderToTop;
-import org.stlpriory.robotics.commands.StopShooter;
 import org.stlpriory.robotics.commands.Suck;
 import org.stlpriory.robotics.commands.Throw;
 import org.stlpriory.robotics.utils.ControllerMap;
@@ -58,7 +57,8 @@ public class OI {
     private JoystickButton holderTop;
     private JoystickButton holderBottom;
     // This isn't implemented yet, but rumor has it that Adam is getting to it.
-    private JoystickButton holderMiddle;
+    // that is correct -Adam
+    // private JoystickButton holderMiddle;
     public OI() {
         Debug.println("[OI] Instantiating ...");
         Debug.println("[OI] Intitalizing gamepad to Driver's station USB port"  );

@@ -3,8 +3,6 @@ package org.stlpriory.robotics.subsystems;
 import org.stlpriory.robotics.RobotMap;
 import org.stlpriory.robotics.commands.drivetrain.DriveWithGamepad;
 import org.stlpriory.robotics.utils.Debug;
-import org.stlpriory.robotics.utils.Utils;
-import org.stlpriory.robotics.utils.ControllerMap;
 
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
