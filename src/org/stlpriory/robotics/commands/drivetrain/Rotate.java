@@ -65,7 +65,7 @@ public class Rotate extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		timeCurrent = timer.get(); // fix this
+		timeCurrent = timer.get();
 		angle = (Robot.drivetrain.getRobotSpeed() * (timeCurrent - startTime));
 		totalAngle = totalAngle + angle;
 		if (totalAngle >= goalAngle) {
