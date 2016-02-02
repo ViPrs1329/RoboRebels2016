@@ -108,4 +108,10 @@ public class Drivetrain extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
         setDefaultCommand(new DriveWithGamepad());
     }
+    
+    public void updateStatus() {
+    	/*
+    	 * TODO: Put in SmartDashboard values to monitor here
+    	 */
+    }
 }

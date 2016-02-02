@@ -6,12 +6,14 @@ import org.stlpriory.robotics.subsystems.BallHolder;
 import org.stlpriory.robotics.subsystems.ExampleSubsystem;
 import org.stlpriory.robotics.subsystems.Shooter;
 import org.stlpriory.robotics.subsystems.TestTankDrivetrain;
+import org.stlpriory.robotics.utils.Debug;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 //import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -38,9 +40,14 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         System.out.println("Starting robot");
         oi = new OI();
+        
+        // See all commands running on the scheduler
+        if (Debug.isDebugMode()) SmartDashboard.putData(Scheduler.getInstance());
     }
+    
     public void disabledPeriodic() {
         Scheduler.getInstance().run();
+        updateStatus();
     }
 
     public void autonomousInit() {
@@ -65,7 +72,7 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
 
-
+        updateStatus();
     }
 
     /**
@@ -81,12 +88,25 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        updateStatus();
     }
-
+    
     /**
      * This function is called periodically during test mode
      */
     public void testPeriodic() {
         LiveWindow.run();
     }
+    
+    /**
+     * Call the updateStatus methods on all subsystems
+     */
+    public void updateStatus() {
+    	if (Debug.isDebugMode()) {
+            drivetrain.updateStatus();
+            ballHolder.updateStatus();
+            shooter.updateStatus();
+    	}
+    }
+    
 }

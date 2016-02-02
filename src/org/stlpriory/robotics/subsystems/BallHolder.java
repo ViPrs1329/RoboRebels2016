@@ -6,6 +6,7 @@ import org.stlpriory.robotics.utils.Constants;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class BallHolder extends Subsystem {
     private Talon rightMotor;
@@ -44,4 +45,11 @@ public class BallHolder extends Subsystem {
     {
         set(0);
     }
+
+    public void updateStatus() {
+        SmartDashboard.putNumber("Right ballholder speed", rightMotor.getSpeed());
+        SmartDashboard.putNumber("Left ballholder speed", leftMotor.getSpeed());
+        SmartDashboard.putNumber("Ballholder potentiometer", pot.get());
+    }
+    
 }

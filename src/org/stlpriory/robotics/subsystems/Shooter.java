@@ -5,6 +5,7 @@ import org.stlpriory.robotics.utils.Constants;
 
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter extends Subsystem {
 	private Talon rightShooter;
@@ -39,5 +40,10 @@ public class Shooter extends Subsystem {
 		rightShooter.set(0);
 		leftShooter.set(0);
 	}
+	
+    public void updateStatus() {
+        SmartDashboard.putNumber("Right shooter speed", rightShooter.getSpeed());
+        SmartDashboard.putNumber("Left shooter speed", leftShooter.getSpeed());
+    }
 
 }

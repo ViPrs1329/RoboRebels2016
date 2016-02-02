@@ -14,7 +14,9 @@ import org.stlpriory.robotics.utils.Debug;
 import org.stlpriory.robotics.utils.TwoButton;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.InternalButton;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator interface to the commands and command groups that allow control
@@ -59,6 +61,11 @@ public class OI {
     private JoystickButton holderTop;
     private JoystickButton holderBottom;
     private TwoButton holderMiddle;
+    
+    // Software only button used within SmartDashboard 
+    // to test robot functionality
+    private InternalButton ibutton01 = new InternalButton();
+
 
     public OI() {
         Debug.println("[OI] Instantiating ...");
@@ -88,15 +95,16 @@ public class OI {
         holderBottom = new JoystickButton(xboxController, ControllerMap.LEFT_BUMPER);
         holderBottom.whenPressed(new HolderToBottom());
      
-        
-    
         holderMiddle = new TwoButton(holderBottom,
         							 holderTop,
         							 new ExampleCommand());
         
-        
-        
         Debug.println("[OI] Instantiation complete."); 
+        
+        // Two examples of how to execute command functionality via SmartDashboard
+        ibutton01.whenPressed(new Throw());
+        SmartDashboard.putData("Throw",this.ibutton01);
+        SmartDashboard.putData("Suck",new Suck());
         
     }
 

@@ -15,10 +15,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TestTankDrivetrain extends Subsystem {
-    private static final String LEFT_FRONT_SPEED = "Left Front speed";
-	private static final String LEFT_REAR_SPEED = "left rear";
-	private static final String RIGHT_REAR_SPEED = "right rear";
-	private static final String RIGHT_FRONT_SPEED = "right front";
 	CANTalon rightFront;
     CANTalon rightRear;
     CANTalon leftFront;
@@ -26,6 +22,8 @@ public class TestTankDrivetrain extends Subsystem {
     Ramper leftRamper;
     Ramper rightRamper;
     RobotDrive drive;
+    double leftStickValue;
+    double rightStickValue;
 
     public TestTankDrivetrain() {
         Debug.println("[test drivetrain Subsystem] Instantiating...");
@@ -54,11 +52,9 @@ public class TestTankDrivetrain extends Subsystem {
 
     public void tankDrive(double leftValue, double rightValue)
     {    	
-        drive.tankDrive(leftRamper.scale(leftValue), rightRamper.scale(rightValue));
-        SmartDashboard.putNumber(LEFT_FRONT_SPEED, leftFront.getSpeed());
-        SmartDashboard.putNumber(LEFT_REAR_SPEED, leftRear.getSpeed());
-        SmartDashboard.putNumber(RIGHT_FRONT_SPEED, rightFront.getSpeed());
-        SmartDashboard.putNumber(RIGHT_REAR_SPEED, rightRear.getSpeed());
+    	leftStickValue = leftRamper.scale(leftValue);
+    	rightStickValue = rightRamper.scale(rightValue);
+        drive.tankDrive(leftStickValue, rightStickValue);
     }
     public void tankDrive(Joystick joystick){
     
@@ -98,6 +94,16 @@ public class TestTankDrivetrain extends Subsystem {
         talon.setPID(Constants.TALON_PROPORTION, Constants.TALON_INTEGRATION, Constants.TALON_DIFFERENTIAL, Constants.TALON_FEEDFORWARD, 0,
                      0, 0);
         talon.reverseSensor(true);
+    }
+
+    public void updateStatus() {
+        SmartDashboard.putNumber("Left stick", leftStickValue);
+        SmartDashboard.putNumber("Left front speed", leftFront.getSpeed());
+        SmartDashboard.putNumber("Left rear speed", leftRear.getSpeed());
+        
+        SmartDashboard.putNumber("Right stick", rightStickValue);
+        SmartDashboard.putNumber("Right front speed", rightFront.getSpeed());
+        SmartDashboard.putNumber("Right rear speed", rightRear.getSpeed());
     }
 
 }

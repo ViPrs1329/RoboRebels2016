@@ -10,6 +10,7 @@ import org.stlpriory.robotics.utils.Utils;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CANDrivetrain extends Subsystem {
     // Put methods for controlling this subsystem
@@ -145,5 +146,11 @@ public class CANDrivetrain extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
         setDefaultCommand(new DriveWithGamepad());
+    }
+
+    public void updateStatus() {
+    	/*
+    	 * TODO: Put in SmartDashboard values to monitor here
+    	 */
     }
 }
