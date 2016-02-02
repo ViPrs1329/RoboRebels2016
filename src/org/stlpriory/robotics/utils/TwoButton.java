@@ -10,22 +10,22 @@ public class TwoButton extends Trigger {
 
 	public TwoButton(JoystickButton buttonOne, JoystickButton buttonTwo, Command c)
 	{
-		this.whenActive(c);
+		
 		firstButton = buttonOne;
 		secondButton = buttonTwo;
+		this.whenActive(c);
 	}
 	@Override
 	public boolean get() {
-		return false;
-		// This doesn't work...
-//		if(firstButton.get() && secondButton.get())
-//		{
-//			return true;
-//		}
-//		else
-//		{
-//			return false;
-//		}
+
+		if(firstButton.get() && secondButton.get())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 

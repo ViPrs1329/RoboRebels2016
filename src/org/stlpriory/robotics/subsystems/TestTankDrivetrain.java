@@ -53,9 +53,7 @@ public class TestTankDrivetrain extends Subsystem {
     }
 
     public void tankDrive(double leftValue, double rightValue)
-    {
-    	System.out.println("It worked");
-    	
+    {    	
         drive.tankDrive(leftRamper.scale(leftValue), rightRamper.scale(rightValue));
         SmartDashboard.putNumber(LEFT_FRONT_SPEED, leftFront.getSpeed());
         SmartDashboard.putNumber(LEFT_REAR_SPEED, leftRear.getSpeed());

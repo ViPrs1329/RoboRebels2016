@@ -87,12 +87,17 @@ public class OI {
         
         holderBottom = new JoystickButton(xboxController, ControllerMap.LEFT_BUMPER);
         holderBottom.whenPressed(new HolderToBottom());
+     
         
+    
         holderMiddle = new TwoButton(holderBottom,
         							 holderTop,
         							 new ExampleCommand());
         
-        Debug.println("[OI] Instantiation complete.");        
+        
+        
+        Debug.println("[OI] Instantiation complete."); 
+        
     }
 
     public Joystick getGamePad() {
