@@ -2,12 +2,13 @@
 package org.stlpriory.robotics;
 
 import org.stlpriory.robotics.commands.autonomous.AutonomousCommand;
-import org.stlpriory.robotics.subsystems.CANDrivetrain;
+import org.stlpriory.robotics.subsystems.BallHolder;
 import org.stlpriory.robotics.subsystems.ExampleSubsystem;
-import org.stlpriory.robotics.utils.Debug;
+import org.stlpriory.robotics.subsystems.Shooter;
+import org.stlpriory.robotics.subsystems.TestTankDrivetrain;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
+//import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -21,11 +22,12 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-	
-	public static final CANDrivetrain drivetrain = new CANDrivetrain();
-	public static OI oi;
-    private Timer timer = new Timer();
+    public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+    public static OI oi;
+    public static TestTankDrivetrain drivetrain = new TestTankDrivetrain();
+    public static BallHolder ballHolder = new BallHolder();
+	public static Shooter shooter = new Shooter();
+//    private Timer timer = new Timer();
 
     Command autonomousCommand;
 
@@ -34,30 +36,18 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-        Debug.println("[Robot.robotInit()] Initializing...");
-        timer.start();
-        
-		oi = new OI();
-        // instantiate the command used for the autonomous period
-        autonomousCommand = new AutonomousCommand();
-        
-        timer.stop();
-        Debug.println("[RoboRebels.robotInit()] Done in " + timer.get() * 1e6 + " ms");
-        Debug.println("------------------------------------------");
-        Debug.println("           Robot ready!");
-        Debug.println("------------------------------------------");
+        System.out.println("Starting robot");
+        oi = new OI();
     }
-	
-	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
-	}
+    public void disabledPeriodic() {
+        Scheduler.getInstance().run();
+    }
 
     public void autonomousInit() {
-    	
-        // schedule the autonomous command (example)
-    	autonomousCommand = new AutonomousCommand();
+
+        autonomousCommand = new AutonomousCommand();
         if (autonomousCommand != null) { 
-        	autonomousCommand.start();
+            autonomousCommand.start();
         }
     }
 
@@ -69,12 +59,13 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
-		// This makes sure that the autonomous stops running when
+        // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
-        
+
+
     }
 
     /**
@@ -91,7 +82,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
     }
-    
+
     /**
      * This function is called periodically during test mode
      */

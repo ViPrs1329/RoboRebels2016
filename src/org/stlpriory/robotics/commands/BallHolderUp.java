@@ -1,16 +1,19 @@
-package org.stlpriory.robotics.commands.drivetrain;
+package org.stlpriory.robotics.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+
+import org.stlpriory.robotics.Robot;
+import org.stlpriory.robotics.subsystems.BallHolder.Direction;
+import org.stlpriory.robotics.utils.Constants;
 
 /**
  *
  */
-public class ShiftSuperLow extends Command {
+public class BallHolderUp extends Command {
 
-    public ShiftSuperLow() {
+    public BallHolderUp() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-//    	requires(Robot.drivetrain);
+        requires(Robot.ballHolder);
     }
 
     // Called just before this Command runs the first time
@@ -19,20 +22,22 @@ public class ShiftSuperLow extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//    	Robot.drivetrain.shiftSuperLow();
+        Robot.ballHolder.set(Direction.UP, Constants.BALL_HOLDER_UP_SPEED);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+        Robot.ballHolder.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        Robot.ballHolder.stop();
     }
 }

@@ -3,7 +3,6 @@ package org.stlpriory.robotics.subsystems;
 import org.stlpriory.robotics.RobotMap;
 import org.stlpriory.robotics.commands.drivetrain.DriveWithGamepad;
 import org.stlpriory.robotics.utils.Debug;
-import org.stlpriory.robotics.utils.Utils;
 
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
@@ -18,7 +17,6 @@ public class Drivetrain extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	//Asus is superior to Lenovo and Apple
 
     Jaguar left_front, right_front, left_rear, right_rear;
     RobotDrive drive;
@@ -80,19 +78,19 @@ public class Drivetrain extends Subsystem {
          * 6 - DPad Left/Right
          */
 
-        double rawLeftX = joystick.getRawAxis(1);
-        double rawLeftY = joystick.getRawAxis(2);
-        double rawZ = joystick.getRawAxis(3);
-
-        double scaledLeftX = Utils.scale(rawLeftX);
-        double scaledLeftY = Utils.scale(rawLeftY);
-
-        double right = -scaledLeftX;
-        double forward = scaledLeftY;
-        double rotation = -rawZ;
-        double clockwise = rawZ;
-
-        this.drive.mecanumDrive_Cartesian(right, -forward, rotation, clockwise);
+//        double rawLeftX = joystick.getRawAxis(ControllerMap.LEFT_STICK_X_AXIS);
+//        double rawLeftY = joystick.getRawAxis(ControllerMap.LEFT_STICK_Y_AXIS);
+////        double rawZ = joystick.getRawAxis(ControllerMap.TRIGGERS);
+//
+//        double scaledLeftX = Utils.scale(rawLeftX);
+//        double scaledLeftY = Utils.scale(rawLeftY);
+//
+//        double right = -scaledLeftX;
+//        double forward = scaledLeftY;
+//        double rotation = -rawZ;
+//        double clockwise = rawZ;
+//
+//        this.drive.mecanumDrive_Cartesian(right, -forward, rotation, clockwise);
     }
 
     public void mecanum_drive(final double forward, final double right, final double rotation) {

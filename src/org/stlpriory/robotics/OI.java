@@ -1,10 +1,17 @@
 package org.stlpriory.robotics;
 
-import org.stlpriory.robotics.commands.drivetrain.ShiftHigh;
-import org.stlpriory.robotics.commands.drivetrain.ShiftLow;
-import org.stlpriory.robotics.commands.drivetrain.ShiftSuperLow;
+import org.stlpriory.robotics.commands.BallHolderDown;
+import org.stlpriory.robotics.commands.BallHolderStop;
+import org.stlpriory.robotics.commands.BallHolderUp;
+import org.stlpriory.robotics.commands.ExampleCommand;
+import org.stlpriory.robotics.commands.Hold;
+import org.stlpriory.robotics.commands.HolderToBottom;
+import org.stlpriory.robotics.commands.HolderToTop;
+import org.stlpriory.robotics.commands.Suck;
+import org.stlpriory.robotics.commands.Throw;
+import org.stlpriory.robotics.utils.ControllerMap;
 import org.stlpriory.robotics.utils.Debug;
-import org.stlpriory.robotics.utils.Keymap;
+import org.stlpriory.robotics.utils.TwoButton;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -14,7 +21,6 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * of the robot.
  */
 
-// Testing for commit...
 
 public class OI {
     //// CREATING BUTTONS
@@ -43,60 +49,55 @@ public class OI {
     // Start the command when the button is released  and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
-	
-	
-	/*
-     * The bottons on the XBox controller follow this mapping
-     * 1:  A
-     * 2:  B
-     * 3:  X
-     * 4:  Y
-     * 5:  Left Bumper
-     * 6:  Right Bumper
-     * 7:  Back
-     * 8:  Start
-     * 9:  Left thumbstickck
-     * 10: Right thumbstick
-     *
-     * The axis on the controller follow this mapping
-     * (all output is between -1 to 1)
-     * 1:  Left stick X axis  (left:negative, right:positve)
-     * 2:  Left stick Y axis  (up:negative, down:positive)
-     * 3:  Triggers           (left:positive, right:negative)
-     * 4:  Right stick X axis (left:negative, right:positive)
-     * 5:  Right stick Y axis (up:negative, down:positive)
-     * 6:  Directional pad
-     */
+
     private final Joystick xboxController;
-    private JoystickButton shiftHighButton;
-    private JoystickButton shiftLowButton;
-    private JoystickButton shiftSuperLowButton;
+    private JoystickButton holderUpButton;
+    private JoystickButton holderDownButton;
+    private JoystickButton throwButton;
+    private JoystickButton suckButton;
+    private JoystickButton holdSwitch;
+    private JoystickButton holderTop;
+    private JoystickButton holderBottom;
+    private TwoButton holderMiddle;
+
     public OI() {
         Debug.println("[OI] Instantiating ...");
         Debug.println("[OI] Intitalizing gamepad to Driver's station USB port"  );
-        
-        this.xboxController = new Joystick(0);
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        shiftHighButton = new JoystickButton(xboxController,Keymap.DRIVETAIN_SHIFT_HIGH_BUTTON_KEY_MAP);
-        shiftHighButton.whenPressed(new ShiftHigh());
-        
-        shiftLowButton = new JoystickButton(xboxController,Keymap.DRIVETRAIN_SHIFT_LOW_BUTTON_KEY_MAP);
-        shiftLowButton.whenPressed(new ShiftLow());
-        
-        
-        
-        shiftSuperLowButton = new JoystickButton(xboxController, Keymap.SHIFT_SUPER_LOW_BUTTON);
-        shiftSuperLowButton.whenPressed(new ShiftSuperLow());
 
-        Debug.println("[OI] Instantiation complete.");
+        this.xboxController = new Joystick(0);
+
+        holderUpButton = new JoystickButton(xboxController, ControllerMap.B_BUTTON);
+        holderUpButton.whileHeld(new BallHolderUp());
+        holderUpButton.whenReleased(new BallHolderStop());
+
+        holderDownButton = new JoystickButton(xboxController, ControllerMap.A_BUTTON);
+        holderDownButton.whileHeld(new BallHolderDown());
+        
+        throwButton = new JoystickButton(xboxController, ControllerMap.Y_BUTTON);
+        throwButton.whileHeld(new Throw());
+        
+        suckButton = new JoystickButton(xboxController, ControllerMap.X_BUTTON);
+        suckButton.whileHeld(new Suck());
+        
+        holdSwitch = new JoystickButton(xboxController, ControllerMap.START_BUTTON);
+        holdSwitch.toggleWhenPressed(new Hold());
+        
+        holderTop = new JoystickButton(xboxController, ControllerMap.RIGHT_BUMPER);
+        holderTop.whenPressed(new HolderToTop());
+        
+        holderBottom = new JoystickButton(xboxController, ControllerMap.LEFT_BUMPER);
+        holderBottom.whenPressed(new HolderToBottom());
+     
+        
+    
+        holderMiddle = new TwoButton(holderBottom,
+        							 holderTop,
+        							 new ExampleCommand());
+        
+        
+        
+        Debug.println("[OI] Instantiation complete."); 
+        
     }
 
     public Joystick getGamePad() {

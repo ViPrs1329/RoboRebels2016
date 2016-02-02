@@ -1,4 +1,3 @@
-
 package org.stlpriory.robotics.commands;
 
 import edu.wpi.first.wpilibj.command.Command;

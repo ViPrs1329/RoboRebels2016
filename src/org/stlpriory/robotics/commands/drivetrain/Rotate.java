@@ -21,11 +21,8 @@ public class Rotate extends Command {
 
 	public Rotate(double inAngle, double speed, boolean direction) {
 		super("DriveWithGamepad");
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
-		// Variable "inAngle" needs to be in degrees
-		// If isFoward is true, it will drive forwards, otherwise it will drive
-		// in reverse.
+		// if direction is true, turns left
+		//els turns right
 		requires(Robot.drivetrain);
 		this.speed = speed;
 		this.direction = direction;
@@ -57,19 +54,18 @@ public class Rotate extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		if (direction) {
-			Robot.drivetrain.mecanum_drive(0, 0, speed);
+			Robot.drivetrain.tankDrive(speed,0);
 		}
 		else {
-		Robot.drivetrain.mecanum_drive(0, 0, -speed);
-		}// this number may need to
-													// be fixed
+			Robot.drivetrain.tankDrive(0,speed);
+		}
 		SmartDashboard.putNumber("Robot Speed",
 				Robot.drivetrain.getRobotSpeed());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		timeCurrent = timer.get(); // fix this
+		timeCurrent = timer.get();
 		angle = (Robot.drivetrain.getRobotSpeed() * (timeCurrent - startTime));
 		totalAngle = totalAngle + angle;
 		if (totalAngle >= goalAngle) {
@@ -82,14 +78,14 @@ public class Rotate extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.drivetrain.mecanum_drive(0.0, 0, 0);
+//		Robot.drivetrain.mecanum_drive(0.0, 0, 0);
 
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
-		Robot.drivetrain.mecanum_drive(0.0, 0, 0);
+//		Robot.drivetrain.mecanum_drive(0.0, 0, 0);
 
 	}
 }

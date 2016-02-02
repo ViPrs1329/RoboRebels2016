@@ -24,10 +24,15 @@ public class RobotMap {
 	public static final int RIGHT_FRONT_CAN_TALON_CHANNEL = 2;
 	public static final int LEFT_REAR_CAN_TALON_CHANNEL = 3;
 	public static final int RIGHT_REAR_CAN_TALON_CHANNEL = 4;
-	public static final int ELEVATOR_CAN_TALON_CHANNEL = 5;
-	public static final int ELEVATOR_ENCODER_CHANNEL_A = 1;
-	public static final int ELEVATOR_ENCODER_CHANNEL_B = 2;
-	public static final int ELEVATOR_TOP_SWITCH_CHANNEL = 0;
-	public static final int ELEVATOR_BOTTOM_SWITCH_CHANNEL = 1;
 	
-}
+	public static final int RIGHT_WINDOW_MOTOR = 0; 
+	public static final int LEFT_WINDOW_MOTOR = 2;
+	public static final int POTENTIOMETER = 0;
+	
+	public static final int RIGHT_SHOOTER = 1;
+	public static final int LEFT_SHOOTER = 3;
+
+	public static final int LEFT_FRONT_TALON_CHANNEL = 3;
+	public static final int RIGHT_FRONT_TALON_CHANNEL = 4;
+	public static final int RIGHT_REAR_TALON_CHANNEL = 1;
+	public static final int LEFT_REAR_TALON_CHANNEL = 5;}
