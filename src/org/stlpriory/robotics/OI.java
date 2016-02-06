@@ -3,12 +3,15 @@ package org.stlpriory.robotics;
 import org.stlpriory.robotics.commands.BallHolderDown;
 import org.stlpriory.robotics.commands.BallHolderStop;
 import org.stlpriory.robotics.commands.BallHolderUp;
+import org.stlpriory.robotics.commands.DebugPIDCommand;
 import org.stlpriory.robotics.commands.ExampleCommand;
 import org.stlpriory.robotics.commands.Hold;
 import org.stlpriory.robotics.commands.HolderToBottom;
 import org.stlpriory.robotics.commands.HolderToTop;
 import org.stlpriory.robotics.commands.Suck;
 import org.stlpriory.robotics.commands.Throw;
+import org.stlpriory.robotics.commands.drivetrain.DebugCommand;
+import org.stlpriory.robotics.utils.Constants;
 import org.stlpriory.robotics.utils.ControllerMap;
 import org.stlpriory.robotics.utils.Debug;
 import org.stlpriory.robotics.utils.TwoButton;
@@ -103,9 +106,12 @@ public class OI {
         
         // Two examples of how to execute command functionality via SmartDashboard
         ibutton01.whenPressed(new Throw());
-        SmartDashboard.putData("Throw",this.ibutton01);
-        SmartDashboard.putData("Suck",new Suck());
-        
+        SmartDashboard.putData("Throw", this.ibutton01);
+        SmartDashboard.putData("Suck", new Suck());
+        SmartDashboard.putData("Set PID", new DebugPIDCommand());
+        SmartDashboard.putNumber("P", Constants.TALON_PROPORTION);
+        SmartDashboard.putNumber("I", Constants.TALON_INTEGRATION);
+        SmartDashboard.putNumber("D", Constants.TALON_DIFFERENTIAL);
     }
 
     public Joystick getGamePad() {

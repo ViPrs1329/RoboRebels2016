@@ -11,8 +11,7 @@ public class ControllerMap {
     public static final int START_BUTTON = 8;
     public static final int LEFT_STICK = 9;
     public static final int RIGHT_STICK = 10;
-// we don't know what left stick x axis is, but it isn't 1
-    public static final int LEFT_STICK_X_AXIS = 1;
+    public static final int LEFT_STICK_X_AXIS = 0;
     public static final int LEFT_TRIGGER = 2;
     public static final int RIGHT_TRIGGER = 3;
     // The triggers are the difference of the right and the left. IE, all left would be 1, all right would be -1, and nothing would be 0.

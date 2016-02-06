@@ -7,10 +7,12 @@ import org.stlpriory.robotics.utils.ControllerMap;
 import org.stlpriory.robotics.utils.Debug;
 import org.stlpriory.robotics.utils.Ramper;
 
+import edu.wpi.first.wpilibj.CANSpeedController.ControlMode;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -38,11 +40,14 @@ public class TestTankDrivetrain extends Subsystem {
         initTalon(this.leftRear);
         leftRamper = new Ramper();
         rightRamper = new Ramper();
-        drive = new RobotDrive(leftFront, leftRear, rightFront, rightRear);
-        drive.setInvertedMotor(MotorType.kFrontLeft, true);
-        drive.setInvertedMotor(MotorType.kFrontRight, true);
-        drive.setInvertedMotor(MotorType.kRearLeft, true);
-        drive.setInvertedMotor(MotorType.kRearRight, true);
+        
+        rightRear.changeControlMode(CANTalon.TalonControlMode.Follower);
+        rightRear.set(RobotMap.RIGHT_FRONT_TALON_CHANNEL);
+        leftRear.changeControlMode(CANTalon.TalonControlMode.Follower);
+        leftRear.set(RobotMap.LEFT_FRONT_TALON_CHANNEL);
+        drive = new RobotDrive(leftFront, rightFront);
+//        drive.setInvertedMotor(MotorType.kFrontLeft, true);
+//        drive.setInvertedMotor(MotorType.kFrontRight, true);
         Debug.println("[DriveTrain Subsystem] Instantiation complete.");
     }
 
@@ -51,14 +56,13 @@ public class TestTankDrivetrain extends Subsystem {
     }
 
     public void tankDrive(double leftValue, double rightValue)
-    {    	
+    {
     	leftStickValue = leftRamper.scale(leftValue);
     	rightStickValue = rightRamper.scale(rightValue);
         drive.tankDrive(leftStickValue, rightStickValue);
     }
-    public void tankDrive(Joystick joystick){
-    
-        // This should be the left stick y axis and the right stick y axis. 
+    public void tankDrive(Joystick joystick)
+    { 
         tankDrive(joystick.getRawAxis(ControllerMap.LEFT_STICK_Y_AXIS), joystick.getRawAxis(ControllerMap.RIGHT_STICK_Y_AXIS));
     }
     public double getRobotSpeed() {
@@ -105,5 +109,14 @@ public class TestTankDrivetrain extends Subsystem {
         SmartDashboard.putNumber("Right front speed", rightFront.getSpeed());
         SmartDashboard.putNumber("Right rear speed", rightRear.getSpeed());
     }
-
+	public void setPID(double p, double i, double d)
+	{
+		CANTalon[] talons = {leftFront, rightFront};
+		for(CANTalon c : talons)
+		{
+			c.setP(p);
+			c.setI(i);
+			c.setD(d);
+		}
+	}
 }
