@@ -7,12 +7,12 @@ import org.stlpriory.robotics.utils.ControllerMap;
 import org.stlpriory.robotics.utils.Debug;
 import org.stlpriory.robotics.utils.Ramper;
 
-import edu.wpi.first.wpilibj.CANSpeedController.ControlMode;
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANSpeedController.ControlMode;
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.RobotDrive.MotorType;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -29,7 +29,6 @@ public class TestTankDrivetrain extends Subsystem {
 
     public TestTankDrivetrain() {
         Debug.println("[test drivetrain Subsystem] Instantiating...");
-        // Next two lines for testing encoder/talon srx
         rightFront = new CANTalon(RobotMap.RIGHT_FRONT_TALON_CHANNEL);
         initTalon(this.rightFront);
         rightRear = new CANTalon(RobotMap.RIGHT_REAR_TALON_CHANNEL);
@@ -46,8 +45,6 @@ public class TestTankDrivetrain extends Subsystem {
         leftRear.changeControlMode(CANTalon.TalonControlMode.Follower);
         leftRear.set(RobotMap.LEFT_FRONT_TALON_CHANNEL);
         drive = new RobotDrive(leftFront, rightFront);
-//        drive.setInvertedMotor(MotorType.kFrontLeft, true);
-//        drive.setInvertedMotor(MotorType.kFrontRight, true);
         Debug.println("[DriveTrain Subsystem] Instantiation complete.");
     }
 
@@ -57,8 +54,10 @@ public class TestTankDrivetrain extends Subsystem {
 
     public void tankDrive(double leftValue, double rightValue)
     {
-    	leftStickValue = leftRamper.scale(leftValue);
-    	rightStickValue = rightRamper.scale(rightValue);
+//    	leftStickValue = leftRamper.scale(leftValue);
+//    	rightStickValue = rightRamper.scale(rightValue);
+    	rightStickValue = rightValue;
+    	leftStickValue = leftValue;
         drive.tankDrive(leftStickValue, rightStickValue);
     }
     public void tankDrive(Joystick joystick)
@@ -95,28 +94,36 @@ public class TestTankDrivetrain extends Subsystem {
         setDefaultCommand(new DriveWithGamepad());
     }
     private void initTalon(final CANTalon talon) {
-        talon.setPID(Constants.TALON_PROPORTION, Constants.TALON_INTEGRATION, Constants.TALON_DIFFERENTIAL, Constants.TALON_FEEDFORWARD, 0,
-                     0, 0);
-        talon.reverseSensor(true);
+    	talon.setControlMode(TalonControlMode.Speed.value);
+    	talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+    	talon.configEncoderCodesPerRev(Constants.COUNTS_PER_REV);
+    	talon.setPID(Constants.TALON_PROPORTION, Constants.TALON_INTEGRATION, Constants.TALON_DIFFERENTIAL, Constants.TALON_FEEDFORWARD, 0,
+                0, 0);
+    	talon.setVoltageRampRate(Constants.VOLTAGE_RAMP_RATE);
+    	talon.enable();
+        talon.reverseSensor(false);
     }
 
     public void updateStatus() {
         SmartDashboard.putNumber("Left stick", leftStickValue);
         SmartDashboard.putNumber("Left front speed", leftFront.getSpeed());
         SmartDashboard.putNumber("Left rear speed", leftRear.getSpeed());
-        
         SmartDashboard.putNumber("Right stick", rightStickValue);
         SmartDashboard.putNumber("Right front speed", rightFront.getSpeed());
+        SmartDashboard.putNumber("Error", rightFront.getError());
+        SmartDashboard.putNumber("Front Right Voltage", rightFront.get());
+        SmartDashboard.putNumber("Rear Right Voltage", rightRear.get());
+        SmartDashboard.putNumber("Front Left Voltage", leftFront.get());
+        SmartDashboard.putNumber("Rear Left Voltage", leftRear.get());
         SmartDashboard.putNumber("Right rear speed", rightRear.getSpeed());
     }
 	public void setPID(double p, double i, double d)
 	{
-		CANTalon[] talons = {leftFront, rightFront};
-		for(CANTalon c : talons)
+		CANTalon[] masterTalons = {leftFront, rightFront};
+		for(CANTalon c : masterTalons)
 		{
-			c.setP(p);
-			c.setI(i);
-			c.setD(d);
+			c.setPID(p, i, d, Constants.TALON_FEEDFORWARD, 0, 0, 0);
 		}
+		System.out.println(leftFront.getP());
 	}
 }
