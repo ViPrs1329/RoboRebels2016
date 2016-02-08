@@ -3,34 +3,28 @@ package org.stlpriory.robotics.utils;
 public class Constants {
 
 	public static final int DRIVE_MAX_OUTPUT = 1;
-	public static final double TALON_FEEDFORWARD = .0002;
+	public static final double TALON_FEEDFORWARD = 0;
 	public static final double TALON_DIFFERENTIAL = 0;
 	public static final double TALON_INTEGRATION = 0;
 	public static final double TALON_PROPORTION = 0;
 	public static final int TALON_CONTROL_MODE = 1;
 	public static final double KEEPING_SPEED = .1;
-	// v not sure what this is v
+	//v  not sure what this is  v
 	public static final int ELEVATOR_SHAFT_HEIGHT = 20;
-	public static final int DRIVER_STATION_USB_PORT1 = 1; // Fix this number
+	public static final int DRIVER_STATION_USB_PORT1 = 1; //Fix this number
 	public static final double MAX_ACCELLERATION = .05;
 	public static final double MAX_DECELLERATION = .06;
 	public static final double ELEVATOR_SPEED = .5;
-	public static final double TALON_UNIT = 63; // this number is the conversion
-												// factor from feet to 'TALON'
-												// units.
-	public static final double DEFAULT_ROTATION_SPEED = -.5; // Negative is
-																// counterclockwise
+	public static final double TALON_UNIT = 63; //this number is the conversion factor from feet to 'TALON' units.
+	public static final double DEFAULT_ROTATION_SPEED = -.5; // Negative is counterclockwise
 	public static final double DEFAULT_STRAFE_SPEED = .3;
 	public static final double DEFAULT_FORWARD_SPEED = .7;
 	// Range of potentiometers
-	public static final int POTENTIOMETER_SCALE_FACTOR = 270;
+	public static final int POTENTIOMETER_SCALE_FACTOR = 270; 
 	public static final int POTENTIOMETER_OFFSET = 0;
 	public static final double MAX_ANGLE = POTENTIOMETER_SCALE_FACTOR;
 	public static final double MIN_ANGLE = POTENTIOMETER_OFFSET;
-	public static final double TOLERANCE = (1.0 / 15.0)
-			* POTENTIOMETER_SCALE_FACTOR;
-	public static final double BALL_HOLDER_UP_SPEED = 1;
-	public static final double BALL_HOLDER_DOWN_SPEED = 1;
-	public static final int COUNTS_PER_REV = 250;
-	public static final double VOLTAGE_RAMP_RATE = 20;
+	public static final double TOLERANCE = (1.0 / 15.0) * POTENTIOMETER_SCALE_FACTOR;
+        public static final double BALL_HOLDER_UP_SPEED = 1;
+        public static final double BALL_HOLDER_DOWN_SPEED = 1;
 }
