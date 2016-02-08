@@ -105,13 +105,9 @@ public class OI {
         Debug.println("[OI] Instantiation complete."); 
         
         // Two examples of how to execute command functionality via SmartDashboard
-        ibutton01.whenPressed(new Throw());
-        SmartDashboard.putData("Throw", this.ibutton01);
-        SmartDashboard.putData("Suck", new Suck());
-        SmartDashboard.putData("Set PID", new DebugPIDCommand());
-        SmartDashboard.putNumber("P", Constants.TALON_PROPORTION);
-        SmartDashboard.putNumber("I", Constants.TALON_INTEGRATION);
-        SmartDashboard.putNumber("D", Constants.TALON_DIFFERENTIAL);
+//        ibutton01.whenPressed(new Throw());
+//        SmartDashboard.putData("Throw", this.ibutton01);
+//        SmartDashboard.putData("BallHoderDown Command", new BallHoderDown());
     }
 
     public Joystick getGamePad() {
