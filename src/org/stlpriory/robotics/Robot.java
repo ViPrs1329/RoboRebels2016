@@ -71,11 +71,14 @@ public class Robot extends IterativeRobot {
             double targetSpeed = leftYstick * 1500.0; // [-1500, 1500] RPM in either direction
             this.talon.changeControlMode(TalonControlMode.Speed);
             this.talon.set(targetSpeed);
+            
+            SmartDashboard.putString("Control Mode", "Speed"); // speed in RPM
             SmartDashboard.putNumber("target speed RPM", targetSpeed);
 
         } else {
             this.talon.changeControlMode(TalonControlMode.PercentVbus);
             this.talon.set(leftYstick);
+            SmartDashboard.putString("Control Mode", "PercentVbus"); // speed in RPM
         }
 
         
