@@ -3,15 +3,11 @@ package org.stlpriory.robotics;
 import org.stlpriory.robotics.commands.BallHolderDown;
 import org.stlpriory.robotics.commands.BallHolderStop;
 import org.stlpriory.robotics.commands.BallHolderUp;
-import org.stlpriory.robotics.commands.DebugPIDCommand;
-import org.stlpriory.robotics.commands.ExampleCommand;
 import org.stlpriory.robotics.commands.Hold;
 import org.stlpriory.robotics.commands.HolderToBottom;
 import org.stlpriory.robotics.commands.HolderToTop;
 import org.stlpriory.robotics.commands.Suck;
 import org.stlpriory.robotics.commands.Throw;
-import org.stlpriory.robotics.commands.drivetrain.DebugCommand;
-import org.stlpriory.robotics.utils.Constants;
 import org.stlpriory.robotics.utils.ControllerMap;
 import org.stlpriory.robotics.utils.Debug;
 import org.stlpriory.robotics.utils.TwoButton;
@@ -19,7 +15,6 @@ import org.stlpriory.robotics.utils.TwoButton;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.InternalButton;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator interface to the commands and command groups that allow control
@@ -98,9 +93,9 @@ public class OI {
         holderBottom = new JoystickButton(xboxController, ControllerMap.LEFT_BUMPER);
         holderBottom.whenPressed(new HolderToBottom());
      
-        holderMiddle = new TwoButton(holderBottom,
-        							 holderTop,
-        							 new ExampleCommand());
+//        holderMiddle = new TwoButton(holderBottom,
+//        							 holderTop,
+//        							 new ExampleCommand());
         
         Debug.println("[OI] Instantiation complete."); 
         

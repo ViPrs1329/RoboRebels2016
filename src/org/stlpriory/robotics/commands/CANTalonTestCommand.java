@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * Command used to test PID values
  */
 public class CANTalonTestCommand extends Command {
     
@@ -50,7 +50,7 @@ public class CANTalonTestCommand extends Command {
         SmartDashboard.putNumber("talon.get()", this.talon.get());
         
         SmartDashboard.putNumber("talon.getError()", this.talon.getError());
-        SmartDashboard.putNumber("talon.getSpeed()", this.talon.getSpeed()); // speed in RPM
+        SmartDashboard.putNumber("talon.getSpeed() RPM", this.talon.getSpeed()); // speed in RPM
         SmartDashboard.putNumber("talon.getEncVelocity()", this.talon.getEncVelocity());
         SmartDashboard.putNumber("talon.getAnalogInVelocity()", this.talon.getAnalogInVelocity());
         
