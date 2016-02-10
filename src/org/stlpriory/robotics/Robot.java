@@ -3,6 +3,7 @@ package org.stlpriory.robotics;
 
 import org.stlpriory.robotics.commands.CANTalonTestCommand;
 import org.stlpriory.robotics.commands.DebugPIDCommand;
+import org.stlpriory.robotics.commands.PIDAutoTuneCommand;
 import org.stlpriory.robotics.subsystems.BallHolder;
 import org.stlpriory.robotics.subsystems.Shooter;
 import org.stlpriory.robotics.subsystems.TestTankDrivetrain;
@@ -30,6 +31,11 @@ public class Robot extends IterativeRobot {
 
     public static final int RIGHT_FRONT_TALON_CHANNEL = 4;
     public static final int RIGHT_REAR_TALON_CHANNEL = 1;
+    
+    public static double P_VALUE = 0;
+    public static double I_VALUE = 0;
+    public static double D_VALUE = 0;
+    public static double F_VALUE = 0;
 
     public static TestTankDrivetrain drivetrain;
     public static BallHolder ballHolder;
@@ -51,6 +57,7 @@ public class Robot extends IterativeRobot {
         createTalon(channel);
 
         //SmartDashboard.putData("Test CANTalon", new CANTalonTestCommand(this.talon));
+        //SmartDashboard.putData("Auto Tune CANTalon", new PIDAutoTuneCommand(this.talon));
         SmartDashboard.putData("Set PID", new DebugPIDCommand(this.talon));
         SmartDashboard.putNumber("talon.set(value)", this.targetValue);
     }
@@ -114,10 +121,10 @@ public class Robot extends IterativeRobot {
         this.talon.setAllowableClosedLoopErr(2000);
 
         this.talon.setProfile(0);
-        this.talon.setP(0);
-        this.talon.setI(0);
-        this.talon.setD(0);
-        this.talon.setF(0);
+        this.talon.setP(P_VALUE);
+        this.talon.setI(I_VALUE);
+        this.talon.setD(D_VALUE);
+        this.talon.setF(F_VALUE);
 
 //        // Set the appropriate target value on the talon, depending on the mode.
 //        // In Current mode, the value is in amperes
