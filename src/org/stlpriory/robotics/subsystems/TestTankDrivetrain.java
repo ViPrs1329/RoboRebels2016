@@ -94,14 +94,17 @@ public class TestTankDrivetrain extends Subsystem {
         setDefaultCommand(new DriveWithGamepad());
     }
     private void initTalon(final CANTalon talon) {
-    	talon.setControlMode(TalonControlMode.Speed.value);
+      	talon.setControlMode(TalonControlMode.Speed.value);
+//    	talon.changeControlMode(TalonControlMode.Voltage);//
+//    	talon.setVoltageCompensationRampRate(24.0);//
+//    	talon.set(4.0);//
     	talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
     	talon.configEncoderCodesPerRev(Constants.COUNTS_PER_REV);
     	talon.setPID(Constants.TALON_PROPORTION, Constants.TALON_INTEGRATION, Constants.TALON_DIFFERENTIAL, Constants.TALON_FEEDFORWARD, 0,
                 0, 0);
     	talon.setVoltageRampRate(Constants.VOLTAGE_RAMP_RATE);
     	talon.enable();
-        talon.reverseSensor(false);
+        talon.reverseSensor(true);
     }
 
     public void updateStatus() {
@@ -111,10 +114,10 @@ public class TestTankDrivetrain extends Subsystem {
         SmartDashboard.putNumber("Right stick", rightStickValue);
         SmartDashboard.putNumber("Right front speed", rightFront.getSpeed());
         SmartDashboard.putNumber("Error", rightFront.getError());
-        SmartDashboard.putNumber("Front Right Voltage", rightFront.get());
-        SmartDashboard.putNumber("Rear Right Voltage", rightRear.get());
-        SmartDashboard.putNumber("Front Left Voltage", leftFront.get());
-        SmartDashboard.putNumber("Rear Left Voltage", leftRear.get());
+        SmartDashboard.putNumber("Front Right Voltage", rightFront.getOutputVoltage());
+        SmartDashboard.putNumber("Rear Right Voltage", rightRear.getOutputVoltage());
+        SmartDashboard.putNumber("Front Left Voltage", leftFront.getOutputVoltage());
+        SmartDashboard.putNumber("Rear Left Voltage", leftRear.getOutputVoltage());
         SmartDashboard.putNumber("Right rear speed", rightRear.getSpeed());
     }
 	public void setPID(double p, double i, double d)
