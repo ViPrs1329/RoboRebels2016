@@ -8,7 +8,6 @@ import org.stlpriory.robotics.utils.Debug;
 import org.stlpriory.robotics.utils.Ramper;
 
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.CANSpeedController.ControlMode;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Joystick;
@@ -29,6 +28,7 @@ public class TestTankDrivetrain extends Subsystem {
 
     public TestTankDrivetrain() {
         Debug.println("[test drivetrain Subsystem] Instantiating...");
+        // Next two lines for testing encoder/talon srx
         rightFront = new CANTalon(RobotMap.RIGHT_FRONT_TALON_CHANNEL);
         initTalon(this.rightFront);
         rightRear = new CANTalon(RobotMap.RIGHT_REAR_TALON_CHANNEL);
@@ -45,6 +45,8 @@ public class TestTankDrivetrain extends Subsystem {
         leftRear.changeControlMode(CANTalon.TalonControlMode.Follower);
         leftRear.set(RobotMap.LEFT_FRONT_TALON_CHANNEL);
         drive = new RobotDrive(leftFront, rightFront);
+//        drive.setInvertedMotor(MotorType.kFrontLeft, true);
+//        drive.setInvertedMotor(MotorType.kFrontRight, true);
         Debug.println("[DriveTrain Subsystem] Instantiation complete.");
     }
 
@@ -54,10 +56,8 @@ public class TestTankDrivetrain extends Subsystem {
 
     public void tankDrive(double leftValue, double rightValue)
     {
-//    	leftStickValue = leftRamper.scale(leftValue);
-//    	rightStickValue = rightRamper.scale(rightValue);
-    	rightStickValue = rightValue;
-    	leftStickValue = leftValue;
+    	leftStickValue = leftRamper.scale(leftValue);
+    	rightStickValue = rightRamper.scale(rightValue);
         drive.tankDrive(leftStickValue, rightStickValue);
     }
     public void tankDrive(Joystick joystick)
@@ -111,6 +111,7 @@ public class TestTankDrivetrain extends Subsystem {
         SmartDashboard.putNumber("Left stick", leftStickValue);
         SmartDashboard.putNumber("Left front speed", leftFront.getSpeed());
         SmartDashboard.putNumber("Left rear speed", leftRear.getSpeed());
+        
         SmartDashboard.putNumber("Right stick", rightStickValue);
         SmartDashboard.putNumber("Right front speed", rightFront.getSpeed());
         SmartDashboard.putNumber("Error", rightFront.getError());
@@ -122,11 +123,12 @@ public class TestTankDrivetrain extends Subsystem {
     }
 	public void setPID(double p, double i, double d)
 	{
-		CANTalon[] masterTalons = {leftFront, rightFront};
-		for(CANTalon c : masterTalons)
+		CANTalon[] talons = {leftFront, rightFront};
+		for(CANTalon c : talons)
 		{
-			c.setPID(p, i, d, Constants.TALON_FEEDFORWARD, 0, 0, 0);
+			c.setP(p);
+			c.setI(i);
+			c.setD(d);
 		}
-		System.out.println(leftFront.getP());
 	}
 }
