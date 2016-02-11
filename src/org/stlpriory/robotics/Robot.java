@@ -7,6 +7,7 @@ import org.stlpriory.robotics.commands.PIDAutoTuneCommand;
 import org.stlpriory.robotics.subsystems.BallHolder;
 import org.stlpriory.robotics.subsystems.Shooter;
 import org.stlpriory.robotics.subsystems.TestTankDrivetrain;
+import org.stlpriory.robotics.utils.Utils;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
@@ -32,15 +33,17 @@ public class Robot extends IterativeRobot {
     public static final int RIGHT_FRONT_TALON_CHANNEL = 4;
     public static final int RIGHT_REAR_TALON_CHANNEL = 1;
     
-    public static double P_VALUE = 0;
-    public static double I_VALUE = 0;
+    public static double P_VALUE = 0.5;
+    public static double I_VALUE = 0.02;
     public static double D_VALUE = 0;
-    public static double F_VALUE = 0;
+    public static double F_VALUE = 0.5;
+    public static int IZONE_VALUE = 100;
+    public static double RAMP_RATE = 10;
 
-    public static TestTankDrivetrain drivetrain;
-    public static BallHolder ballHolder;
-    public static Shooter shooter;
-    public static OI oi;
+    public static TestTankDrivetrain drivetrain = new TestTankDrivetrain();
+    public static BallHolder ballHolder = new BallHolder();
+    public static Shooter shooter = new Shooter();
+    public static OI oi = new OI();
 
     private Joystick xboxController;
     private CANTalon talon;
@@ -53,11 +56,11 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         this.xboxController = new Joystick(0);
 
-        int channel = 4;
+        int channel = 3;
         createTalon(channel);
 
         //SmartDashboard.putData("Test CANTalon", new CANTalonTestCommand(this.talon));
-        //SmartDashboard.putData("Auto Tune CANTalon", new PIDAutoTuneCommand(this.talon));
+        SmartDashboard.putData("Auto Tune CANTalon", new PIDAutoTuneCommand(this.talon));
         SmartDashboard.putData("Set PID", new DebugPIDCommand(this.talon));
         SmartDashboard.putNumber("talon.set(value)", this.targetValue);
     }
@@ -66,7 +69,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
 
-        double leftYstick = this.xboxController.getAxis(AxisType.kY);
+        double leftYstick = Utils.scale( this.xboxController.getAxis(AxisType.kY) );
 
         double motorOutput = this.talon.getOutputVoltage() / this.talon.getBusVoltage();
         SmartDashboard.putNumber("leftYstick input", leftYstick);
@@ -76,7 +79,7 @@ public class Robot extends IterativeRobot {
         // XBox button A or B?
         if (this.xboxController.getRawButton(1)) {
             // leftYstick range [-1, 1].  Speed range [-1500, 1500] RPM
-            double targetSpeed = leftYstick * 1500.0;
+            double targetSpeed = leftYstick * 3000.0;
             this.talon.changeControlMode(TalonControlMode.Speed);
             this.talon.set(targetSpeed);
             
@@ -111,6 +114,7 @@ public class Robot extends IterativeRobot {
 
         this.talon.reverseSensor(false);
         this.talon.reverseOutput(false);
+        this.talon.setCloseLoopRampRate(RAMP_RATE);
 
         this.talon.setForwardSoftLimit(10000);
         this.talon.enableForwardSoftLimit(false);
@@ -125,6 +129,7 @@ public class Robot extends IterativeRobot {
         this.talon.setI(I_VALUE);
         this.talon.setD(D_VALUE);
         this.talon.setF(F_VALUE);
+        this.talon.setIZone(IZONE_VALUE);
 
 //        // Set the appropriate target value on the talon, depending on the mode.
 //        // In Current mode, the value is in amperes
