@@ -50,14 +50,9 @@ public class CANTalonTestCommand extends Command {
         SmartDashboard.putNumber("talon.get()", this.talon.get());
         
         SmartDashboard.putNumber("talon.getError()", this.talon.getError());
-        SmartDashboard.putNumber("talon.getSpeed() RPM", this.talon.getSpeed()); // speed in RPM
-        SmartDashboard.putNumber("talon.getEncVelocity()", this.talon.getEncVelocity());
-        SmartDashboard.putNumber("talon.getAnalogInVelocity()", this.talon.getAnalogInVelocity());
-        
-//        SmartDashboard.putNumber("talon.getPulseWidthPosition()", this.talon.getPulseWidthPosition());
-//        SmartDashboard.putNumber("talon.getPulseWidthRiseToFallUs()", this.talon.getPulseWidthRiseToFallUs());
-//        SmartDashboard.putNumber("talon.getPulseWidthRiseToRiseUs()", this.talon.getPulseWidthRiseToRiseUs());
-//        SmartDashboard.putNumber("talon.getPulseWidthVelocity()", this.talon.getPulseWidthVelocity());
+        SmartDashboard.putNumber("sensorSpeed", this.talon.getSpeed()); // speed in RPM
+        SmartDashboard.putNumber("quadEncVelocity", this.talon.getEncVelocity());
+        SmartDashboard.putNumber("analogVelocity", this.talon.getAnalogInVelocity());
     }
 
     // Make this return true when this Command no longer needs to run execute()

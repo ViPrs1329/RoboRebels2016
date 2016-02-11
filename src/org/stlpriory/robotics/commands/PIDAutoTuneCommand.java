@@ -1,6 +1,8 @@
 package org.stlpriory.robotics.commands;
 
 import org.stlpriory.robotics.Robot;
+import org.stlpriory.robotics.hardware.AMOpticalEncoderSpecs;
+import org.stlpriory.robotics.hardware.CIMMotorSpecs;
 import org.stlpriory.robotics.utils.Debug;
 
 import edu.wpi.first.wpilibj.CANTalon;
@@ -21,8 +23,15 @@ public class PIDAutoTuneCommand extends Command {
 
     private int executeCounter = 0;
     private int innerCounter   = 0;
-    private final double targetRPM = 150.0;
+    private final double yStickValue = 0.5;
+    private final double maxRPM = CIMMotorSpecs.MAX_SPEED_RPM;
+    private final double targetRPM = yStickValue*maxRPM;
     
+    // If the closed-loop output exceeds these settings the motor output is capped
+    private final double posPeakOutput = +1023.0d;
+    private final double negPeakOutput = -1023.0d;
+    
+    private String sensorStatus = "";
     private boolean reverseSensor = false;
     private double maxErr  = this.targetRPM;
     private double errLow  = maxErr;
@@ -66,18 +75,35 @@ public class PIDAutoTuneCommand extends Command {
         
         double speed  = this.talon.getSpeed();
         double target = this.targetRPM;
-        SmartDashboard.putNumber("speed", speed);
+        SmartDashboard.putNumber("sensorSpeed", speed);
         SmartDashboard.putNumber("target", target);
 
         // Use the first 2 sec to spin up the motor
         if (this.executeCounter < 100) {
             SmartDashboard.putString("Status", "spinning up motor ...");
             
+            FeedbackDeviceStatus status = talon.isSensorPresent(FeedbackDevice.QuadEncoder);
+            switch (status) {
+                case FeedbackStatusPresent:
+                    sensorStatus = "FeedbackStatusPresent";
+                    break;
+                case FeedbackStatusNotPresent:
+                    sensorStatus = "FeedbackStatusNotPresent";
+                    break;
+                case FeedbackStatusUnknown:
+                default:
+                    sensorStatus = "FeedbackStatusUnknown";
+                    break;
+            }
+            
         // Use the next 2 sec to test that the motor and sensor are in phase    
         } else if (this.executeCounter < 200) {
             SmartDashboard.putString("Status", "checking that motor and sensor are in phase ...");
             
-            if (((speed > 0) && (target < 0)) || ((speed < 0) && (target > 0))) {
+            double sensorPosition = talon.getPosition();
+            double throttle = this.yStickValue * posPeakOutput;
+            
+            if (((throttle > 0) && (sensorPosition < 0)) || ((throttle < 0) && (sensorPosition > 0))) {
                 this.reverseSensor = true;
                 this.talon.reverseSensor(true);
             }
@@ -87,11 +113,9 @@ public class PIDAutoTuneCommand extends Command {
             SmartDashboard.putString("Status", "computing a feed forward gain ...");
             
             // Convert our measured speed to sensor native units
-            // (speed rotations/min) * (1 min/60 sec) * ( 100 ms ) * (1000 native units/rotation)
-            double speedInNativeUnits = speed / 60 * 0.1 * 1000;
+            double speedInNativeUnits = (speed / 600) * AMOpticalEncoderSpecs.PULSES_PER_REV;
             // Calculate the feed forward gain
-            // (Positive Peak Output of 1023) / speedInNativeUnits
-            this.f_gain = 1023 / speedInNativeUnits;
+            this.f_gain = this.posPeakOutput / speedInNativeUnits;
             talon.setF(this.f_gain);
        
         // Use the remaining time to compute a proportional gain    
@@ -111,7 +135,7 @@ public class PIDAutoTuneCommand extends Command {
             // motor output is capped. The default value is +1023 as read in the web-based 
             // configuration Self-Test. The peak outputs are +1023 representing full forward, 
             // and -1023 representing full reverse
-            this.p_gain = 0.1 * 1023 / errorInNativeUnits;
+            this.p_gain = 0.1 * this.posPeakOutput / errorInNativeUnits;
             
             // Sample data for 1 sec before adjusting the gain
             if (this.innerCounter < 20) {
@@ -151,6 +175,8 @@ public class PIDAutoTuneCommand extends Command {
     @Override
     protected void end() {
         this.talon.set(0);
+        SmartDashboard.putString("Status", "DONE ...");
+        System.out.println("sensor status = "+this.sensorStatus);
         System.out.println("reversed sensor ? "+this.reverseSensor);
         System.out.println("Max error (RPM)   =  "+this.maxErr);
         System.out.println("Feed forward gain =  "+this.f_gain);
