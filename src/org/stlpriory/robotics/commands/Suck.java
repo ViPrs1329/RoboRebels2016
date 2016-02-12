@@ -9,6 +9,7 @@ public class Suck extends Command {
     public Suck() {
         requires(Robot.shooter);
     }
+
     @Override
     protected void initialize() {
     }

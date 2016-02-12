@@ -1,30 +1,32 @@
 
 package org.stlpriory.robotics;
 
-import org.stlpriory.robotics.commands.CANTalonTestCommand;
 import org.stlpriory.robotics.commands.DebugPIDCommand;
-import org.stlpriory.robotics.commands.PIDAutoTuneCommand;
 import org.stlpriory.robotics.hardware.AMOpticalEncoderSpecs;
 import org.stlpriory.robotics.hardware.CIMMotorSpecs;
-import org.stlpriory.robotics.subsystems.BallHolder;
-import org.stlpriory.robotics.subsystems.Shooter;
-import org.stlpriory.robotics.subsystems.TestTankDrivetrain;
+import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
+import org.stlpriory.robotics.subsystems.CANDrivetrainSubsystem;
+import org.stlpriory.robotics.subsystems.DrivetrainSubsystem;
+import org.stlpriory.robotics.subsystems.ShooterSubsystem;
+import org.stlpriory.robotics.utils.Debug;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
-//import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * The VM is configured to automatically run this class, and to call the functions corresponding to each mode, as described in the
- * IterativeRobot documentation. If you change the name of this class or the package after creating this project, you must also update the
- * manifest file in the resource directory.
+ * The VM is configured to automatically run this class, and to call the functions corresponding 
+ * to each mode, as described in the IterativeRobot documentation. If you change the name of this 
+ * class or the package after creating this project, you must also update the manifest file in the 
+ * resource directory.
  */
 public class Robot extends IterativeRobot {
 
@@ -41,9 +43,9 @@ public class Robot extends IterativeRobot {
     public static int IZONE_VALUE  = (int) (0.2 * AMOpticalEncoderSpecs.PULSES_PER_REV);
     //public static double RAMP_RATE = 100;
 
-    public static TestTankDrivetrain drivetrain;
-    public static BallHolder ballHolder;
-    public static Shooter shooter;
+    public static DrivetrainSubsystem drivetrain;
+    public static BallHolderSubsystem ballHolder;
+    public static ShooterSubsystem shooter;
     public static OI oi;
 
     private Joystick xboxController;
@@ -143,4 +145,96 @@ public class Robot extends IterativeRobot {
         //this.talon.setCloseLoopRampRate(RAMP_RATE);
     }
 
+    
+// COMMENT OUT THE CODE ABOVE AND UNCOMMENT OUT THE CODE BELOW WHEN WE GET PUSH TO THE PROTOTYPE ROBOT
+    
+//    // Initialize robot subsystems
+//    public static final DrivetrainSubsystem drivetrain = new CANDrivetrainSubsystem();;
+//    public static final BallHolderSubsystem ballHolder = new BallHolderSubsystem();
+//    public static final ShooterSubsystem shooter = new ShooterSubsystem();
+//    
+//    // Human operator interface
+//    public OI oi;
+//    public Joystick xboxController;
+//    
+//    private Command autonomousCommand;
+//    private Timer timer = new Timer();
+//
+//    // ==================================================================================
+//    //                            ROBOT INIT SECTION
+//    // ==================================================================================
+//
+//    @Override
+//    public void robotInit() {
+//        Debug.println("[Robot.robotInit()] Initializing...");
+//        timer.start();
+//
+//        // Initialize the human operator interface ...
+//        OI oi = new OI();
+//        this.xboxController = oi.getController();
+//        
+//        timer.stop();
+//        Debug.println("[RoboRebels.robotInit()] Done in " + timer.get() * 1e6 + " ms");
+//        Debug.println("------------------------------------------");
+//        Debug.println("           Robot ready!");
+//        Debug.println("------------------------------------------");
+//    }
+//
+//    @Override
+//    public void disabledInit() {
+//    }
+//
+//    // ==================================================================================
+//    //                          AUTONOMOUS MODE SECTION
+//    // ==================================================================================
+//
+//    @Override
+//    public void autonomousInit() {
+//    }
+//
+//    @Override
+//    public void autonomousPeriodic() {
+//        Scheduler.getInstance().run();
+//    }
+//
+//    // ==================================================================================
+//    //                            TELEOP MODE SECTION
+//    // ==================================================================================
+//
+//    @Override
+//    public void teleopInit() {
+//        if (autonomousCommand != null) {
+//            autonomousCommand.cancel();
+//        }
+//        // Record initial status values
+//        updateStatus();
+//    }
+//
+//    @Override
+//    public void teleopPeriodic() {
+//        Scheduler.getInstance().run();
+//        // Record updated status values
+//        updateStatus();
+//    }
+//    
+//    @Override
+//    public void disabledPeriodic() {
+//    }
+//
+//    /**
+//     * Call the updateStatus methods on all subsystems
+//     */
+//    public void updateStatus() {
+//        // drivetrain.updateStatus();
+//        // ballHolder.updateStatus();
+//        // shooter.updateStatus();
+//    }
+//
+//    @Override
+//    public void testInit() {
+//        LiveWindow.run();
+//    }
+
+    
+    
 }
