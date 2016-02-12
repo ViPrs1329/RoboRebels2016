@@ -5,21 +5,16 @@ import org.stlpriory.robotics.commands.DebugPIDCommand;
 import org.stlpriory.robotics.hardware.AMOpticalEncoderSpecs;
 import org.stlpriory.robotics.hardware.CIMMotorSpecs;
 import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
-import org.stlpriory.robotics.subsystems.CANDrivetrainSubsystem;
 import org.stlpriory.robotics.subsystems.DrivetrainSubsystem;
 import org.stlpriory.robotics.subsystems.ShooterSubsystem;
-import org.stlpriory.robotics.utils.Debug;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Joystick.AxisType;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
