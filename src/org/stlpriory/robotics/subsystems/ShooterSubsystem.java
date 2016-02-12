@@ -1,7 +1,5 @@
 package org.stlpriory.robotics.subsystems;
 
-import org.stlpriory.robotics.RobotMap;
-
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,8 +19,8 @@ public class ShooterSubsystem extends Subsystem {
     // ==================================================================================
 
     public ShooterSubsystem() {
-        this.rightShooter = new Talon(RobotMap.RIGHT_SHOOTER);
-        this.leftShooter  = new Talon(RobotMap.LEFT_SHOOTER);
+        this.rightShooter = new Talon(RIGHT_SHOOTER);
+        this.leftShooter  = new Talon(LEFT_SHOOTER);
     }
     
     // ==================================================================================

@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Robot drive train subsystem consisting of 4 CIM motors configured in 2 master/slave arrangements. The motors are controlled by Talon SRX
- * speed controllers through a CAN bus and encoder feedback.
+ * Robot drive train subsystem consisting of 4 CIM motors configured in 2 master/slave arrangements. 
+ * The motors are controlled by Talon SRX speed controllers through a CAN bus and encoder feedback.
  */
 public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
 

@@ -95,8 +95,9 @@ public class DrivetrainSubsystem extends Subsystem {
     public double getSpeedInRPM() {
         // Since the 2 left motors and 2 right motors are paired in a 
         // master/slave arrangement we only need to check the master
-        double leftYstick  = Robot.oi.getController().getRawAxis(OI.LEFT_STICK_Y_AXIS);
-        double rightYstick = Robot.oi.getController().getRawAxis(OI.RIGHT_STICK_Y_AXIS);
+        Joystick joystick  = Robot.oi.getController();
+        double leftYstick  = joystick.getRawAxis(OI.LEFT_STICK_Y_AXIS);
+        double rightYstick = joystick.getRawAxis(OI.RIGHT_STICK_Y_AXIS);
         double leftSide  = leftYstick * CIMMotorSpecs.MAX_SPEED_RPM;
         double rightSide = rightYstick * CIMMotorSpecs.MAX_SPEED_RPM;
         
