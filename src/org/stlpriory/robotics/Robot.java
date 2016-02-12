@@ -2,14 +2,11 @@
 package org.stlpriory.robotics;
 
 import org.stlpriory.robotics.commands.DebugPIDCommand;
-import org.stlpriory.robotics.commands.PIDAutoTuneCommand;
 import org.stlpriory.robotics.hardware.AMOpticalEncoderSpecs;
 import org.stlpriory.robotics.hardware.CIMMotorSpecs;
 import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
 import org.stlpriory.robotics.subsystems.DrivetrainSubsystem;
 import org.stlpriory.robotics.subsystems.ShooterSubsystem;
-import org.stlpriory.robotics.subsystems.TestTankDrivetrain;
-import org.stlpriory.robotics.utils.Utils;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
@@ -38,14 +35,13 @@ public class Robot extends IterativeRobot {
     public static double I_VALUE   = 0.02;
     public static double D_VALUE   = 0;
     public static double F_VALUE   = 0.5;
-
     public static int IZONE_VALUE  = (int) (0.2 * AMOpticalEncoderSpecs.PULSES_PER_REV);
-    public static double RAMP_RATE = 100;
-    public static TestTankDrivetrain drivetrain = new TestTankDrivetrain();
-    public static BallHolderSubsystem ballHolder = new BallHolderSubsystem();
-    public static ShooterSubsystem shooter = new ShooterSubsystem();
-    public static OI oi = new OI();
+    //public static double RAMP_RATE = 100;
 
+    public static DrivetrainSubsystem drivetrain;
+    public static BallHolderSubsystem ballHolder;
+    public static ShooterSubsystem shooter;
+    public static OI oi;
 
     private Joystick xboxController;
     private CANTalon talon;
@@ -58,11 +54,11 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         this.xboxController = new Joystick(0);
 
-        int channel = 3;
+        int channel = 4;
         createTalon(channel);
 
         //SmartDashboard.putData("Test CANTalon", new CANTalonTestCommand(this.talon));
-        SmartDashboard.putData("Auto Tune CANTalon", new PIDAutoTuneCommand(this.talon));
+        //SmartDashboard.putData("Auto Tune CANTalon", new PIDAutoTuneCommand(this.talon));
         SmartDashboard.putData("Set PID", new DebugPIDCommand(this.talon));
         SmartDashboard.putNumber("talon.set(value)", this.targetValue);
     }
@@ -71,7 +67,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
 
-        double leftYstick = Utils.scale( this.xboxController.getAxis(AxisType.kY) );
+        double leftYstick = this.xboxController.getAxis(AxisType.kY);
 
         double motorOutput = this.talon.getOutputVoltage() / this.talon.getBusVoltage();
         SmartDashboard.putNumber("leftYstick input", leftYstick);
@@ -82,8 +78,8 @@ public class Robot extends IterativeRobot {
 
         // XBox button A or B?
         if (this.xboxController.getRawButton(1)) {
-            // leftYstick range [-1, 1].  Speed range [-1500, 1500] RPM
             this.talon.changeControlMode(TalonControlMode.Speed);
+
             double targetSpeed = 0.5 * CIMMotorSpecs.MAX_SPEED_RPM;
             this.talon.set(targetSpeed);
             
@@ -112,8 +108,6 @@ public class Robot extends IterativeRobot {
 
         // keep the motor and sensor in phase
         this.talon.reverseSensor(false);
-        this.talon.reverseOutput(false);
-        this.talon.setCloseLoopRampRate(RAMP_RATE);
 
         // Soft limits can be used to disable motor drive when the sensor position
         // is outside of the limits
@@ -143,16 +137,6 @@ public class Robot extends IterativeRobot {
         this.talon.setD(D_VALUE);
         this.talon.setF(F_VALUE);
         this.talon.setIZone(IZONE_VALUE);
-//        // Set the appropriate target value on the talon, depending on the mode.
-//        // In Current mode, the value is in amperes
-//        // In PercentVbus mode, the value is between -1.0 and 1.0, with 0.0 as stopped
-//        // In Follower mode, the value is the integer device ID of the talon to duplicate
-//        // In Voltage mode, the value is in volts
-//        // In Speed mode, the value is in position change per 100ms
-//        // In Position mode, value is in encoder ticks or an analog value, depending on the sensor
-//        this.talon.changeControlMode(TalonControlMode.Speed);
-//        this.targetValue = 0.5 * 1000.0; // 50% speed x 1000 RPM
-//        this.talon.set(this.targetValue);
         //this.talon.setCloseLoopRampRate(RAMP_RATE);
     }
 
