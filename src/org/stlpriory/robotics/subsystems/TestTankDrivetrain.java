@@ -1,9 +1,9 @@
 package org.stlpriory.robotics.subsystems;
 
-import org.stlpriory.robotics.RobotMap;
+import org.stlpriory.robotics.OI;
+import org.stlpriory.robotics.Robot;
 import org.stlpriory.robotics.commands.drivetrain.DriveWithGamepad;
-import org.stlpriory.robotics.utils.Constants;
-import org.stlpriory.robotics.utils.ControllerMap;
+import org.stlpriory.robotics.hardware.CIMcoderSpecs;
 import org.stlpriory.robotics.utils.Debug;
 import org.stlpriory.robotics.utils.Ramper;
 
@@ -27,13 +27,13 @@ public class TestTankDrivetrain extends Subsystem {
 
     public TestTankDrivetrain() {
         Debug.println("[test drivetrain Subsystem] Instantiating...");
-        this.rightFront = new CANTalon(RobotMap.RIGHT_FRONT_TALON_CHANNEL);
+        this.rightFront = new CANTalon(Robot.RIGHT_FRONT_TALON_CHANNEL);
         initTalon(this.rightFront);
-        this.rightRear = new CANTalon(RobotMap.RIGHT_REAR_TALON_CHANNEL);
+        this.rightRear = new CANTalon(Robot.RIGHT_REAR_TALON_CHANNEL);
         initTalon(this.rightRear);
-        this.leftFront = new CANTalon(RobotMap.LEFT_FRONT_TALON_CHANNEL);
+        this.leftFront = new CANTalon(Robot.LEFT_FRONT_TALON_CHANNEL);
         initTalon(this.leftFront);
-        this.leftRear = new CANTalon(RobotMap.LEFT_REAR_TALON_CHANNEL);
+        this.leftRear = new CANTalon(Robot.LEFT_REAR_TALON_CHANNEL);
         initTalon(this.leftRear);
         this.leftRamper = new Ramper();
         this.rightRamper = new Ramper();
@@ -61,7 +61,7 @@ public class TestTankDrivetrain extends Subsystem {
     }
 
     public void tankDrive(final Joystick joystick) {
-        tankDrive(joystick.getRawAxis(ControllerMap.LEFT_STICK_Y_AXIS), joystick.getRawAxis(ControllerMap.RIGHT_STICK_Y_AXIS));
+        tankDrive(joystick.getRawAxis(OI.LEFT_STICK_Y_AXIS), joystick.getRawAxis(OI.RIGHT_STICK_Y_AXIS));
     }
 
     public double getRobotSpeed() {
@@ -114,7 +114,7 @@ public class TestTankDrivetrain extends Subsystem {
     private void initTalon(final CANTalon talon) {
         talon.changeControlMode(TalonControlMode.Speed);
         talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-        talon.configEncoderCodesPerRev(Constants.COUNTS_PER_REV);
+        talon.configEncoderCodesPerRev(CIMcoderSpecs.PULSES_PER_REV);
         talon.setProfile(0);
         talon.setP(0);
         talon.setI(0);
@@ -126,7 +126,7 @@ public class TestTankDrivetrain extends Subsystem {
 //                     Constants.TALON_FEEDFORWARD, 
 //                     0,
 //                     0, 0);
-        talon.setVoltageRampRate(Constants.VOLTAGE_RAMP_RATE);
+        talon.setVoltageRampRate(Robot.RAMP_RATE);
         talon.enable();
         talon.reverseSensor(false);
     }

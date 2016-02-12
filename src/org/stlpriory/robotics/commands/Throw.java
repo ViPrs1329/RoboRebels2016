@@ -9,6 +9,7 @@ public class Throw extends Command {
     public Throw() {
         requires(Robot.shooter);
     }
+
     @Override
     protected void initialize() {
     }
