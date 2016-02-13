@@ -6,6 +6,7 @@ import org.stlpriory.robotics.commands.drivetrain.DriveWithGamepad;
 import org.stlpriory.robotics.hardware.AMOpticalEncoderSpecs;
 import org.stlpriory.robotics.hardware.CIMMotorSpecs;
 import org.stlpriory.robotics.utils.Debug;
+import org.stlpriory.robotics.utils.Utils;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
@@ -16,14 +17,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Robot drive train subsystem consisting of 4 CIM motors configured in 2 master/slave arrangements. The motors are controlled by Talon SRX
- * speed controllers wired for PWM control.
+ * Robot drive train subsystem consisting of 4 CIM motors configured in 2 master/slave arrangements. 
+ * The motors are controlled by Talon SRX speed controllers wired for PWM control.
  */
 public class DrivetrainSubsystem extends Subsystem {
 
-    public static final int LF_MOTOR_ID = 3;
-    public static final int LR_MOTOR_ID = 5;
-    public static final int RF_MOTOR_ID = 4;
+    public static final int LF_MOTOR_ID = 4;
+    public static final int LR_MOTOR_ID = 3;
+    public static final int RF_MOTOR_ID = 2;
     public static final int RR_MOTOR_ID = 1;
 
     public static final double P_VALUE = 0.5;
@@ -31,6 +32,9 @@ public class DrivetrainSubsystem extends Subsystem {
     public static final double D_VALUE = 0;
     public static final double F_VALUE = 0.5;
     public static final int IZONE_VALUE = (int) (0.2 * AMOpticalEncoderSpecs.PULSES_PER_REV);
+    
+    public static final boolean MASTER_SLAVE_MODE = false;
+    public static final boolean FLIP_LEFT_RIGHT = true;
 
     private final CANTalon rightFront;
     private final CANTalon rightRear;
@@ -52,12 +56,24 @@ public class DrivetrainSubsystem extends Subsystem {
         Debug.println("[Drivetrain Subsystem] Instantiating...");
 
         this.leftFront = createMaster(LF_MOTOR_ID);
-        this.leftRear  = createSlave(LR_MOTOR_ID, this.leftFront);
+        if (MASTER_SLAVE_MODE) {
+            this.leftRear  = createSlave(LR_MOTOR_ID, this.leftFront);        	
+        } else {
+            this.leftRear  = createMaster(LR_MOTOR_ID);
+        }
 
         this.rightFront = createMaster(RF_MOTOR_ID);
-        this.rightRear  = createSlave(RR_MOTOR_ID, this.rightFront);
+        if (MASTER_SLAVE_MODE) {
+            this.rightRear  = createSlave(RR_MOTOR_ID, this.rightFront);        	
+        } else {
+            this.rightRear  = createMaster(RR_MOTOR_ID);
+        }
 
-        this.drive = new RobotDrive(this.leftFront, this.leftRear, this.rightFront, this.rightRear);
+        if (FLIP_LEFT_RIGHT) {
+            this.drive = new RobotDrive(this.rightFront, this.rightRear, this.leftFront, this.leftRear);
+        } else {
+            this.drive = new RobotDrive(this.leftFront, this.leftRear, this.rightFront, this.rightRear);
+        }
         this.drive.setSafetyEnabled(false);
         this.drive.setExpiration(0.1);
         this.drive.setSensitivity(0.5);
@@ -65,6 +81,8 @@ public class DrivetrainSubsystem extends Subsystem {
         // invert the left side motors
         this.drive.setInvertedMotor(MotorType.kFrontLeft, true);
         this.drive.setInvertedMotor(MotorType.kRearLeft, true);
+        this.drive.setInvertedMotor(MotorType.kFrontRight, true);
+        this.drive.setInvertedMotor(MotorType.kRearRight, true);
 
         Debug.println("[DriveTrain Subsystem] Instantiation complete.");
     }
@@ -78,8 +96,8 @@ public class DrivetrainSubsystem extends Subsystem {
     }
 
     public void tankDrive(final Joystick joystick) {
-        double leftStickValue  = joystick.getRawAxis(OI.LEFT_STICK_Y_AXIS);
-        double rightStickValue = joystick.getRawAxis(OI.RIGHT_STICK_Y_AXIS);
+        double leftStickValue  = Utils.scale( joystick.getRawAxis(OI.LEFT_STICK_Y_AXIS) );
+        double rightStickValue = Utils.scale( joystick.getRawAxis(OI.RIGHT_STICK_Y_AXIS) );
         tankDrive(leftStickValue, rightStickValue);
     }
 
@@ -134,7 +152,7 @@ public class DrivetrainSubsystem extends Subsystem {
 
             // Voltage ramp rate in volts/sec (works regardless of mode)
             // (e.g. setVoltageRampRate(6.0) results in 0V to 6V in one sec)
-            talon.setVoltageRampRate(6.0);
+            talon.setVoltageRampRate(12.0);
 
             return talon;
 

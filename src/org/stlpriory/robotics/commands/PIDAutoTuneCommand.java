@@ -129,8 +129,8 @@ public class PIDAutoTuneCommand extends Command {
             }
 
             int errorInNativeUnits = this.talon.getClosedLoopError();
-            // Adjust the throttle by a fixed value of 10%. The “Positive Peak Output” or
-            // “Forward Peak Output” refers to the “strongest” motor output when the Closed-Loop
+            // Adjust the throttle by a fixed value of 10%. The "Positive Peak Output" or
+            // "Forward Peak Output" refers to the "strongest" motor output when the Closed-Loop
             // motor output is positive. If the Closed-Loop Output exceeds this setting, the
             // motor output is capped. The default value is +1023 as read in the web-based
             // configuration Self-Test. The peak outputs are +1023 representing full forward,

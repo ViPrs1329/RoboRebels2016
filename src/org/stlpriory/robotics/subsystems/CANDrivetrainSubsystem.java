@@ -22,6 +22,7 @@ public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
     public static double D_VALUE = 0;
     public static double F_VALUE = 0.5;
     public static int IZONE_VALUE = (int) (0.2 * AMOpticalEncoderSpecs.PULSES_PER_REV);
+    public static double RAMP_RATE = 2;
     
     private final CANTalon rightFront;
     private final CANTalon rightRear;
@@ -48,10 +49,12 @@ public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
         Debug.println("   I Zone = " + IZONE_VALUE);
 
         this.leftFront = createMaster(LF_MOTOR_ID);
-        this.leftRear  = createSlave(LR_MOTOR_ID, this.leftFront);
+        this.leftRear  = createMaster(LR_MOTOR_ID);
+//        this.leftRear  = createSlave(LR_MOTOR_ID, this.leftFront);
 
         this.rightFront = createMaster(RF_MOTOR_ID);
-        this.rightRear  = createSlave(RR_MOTOR_ID, this.rightFront);
+        this.rightRear  = createMaster(RR_MOTOR_ID);
+//        this.rightRear  = createSlave(RR_MOTOR_ID, this.rightFront);
 
         this.drive = new RobotDrive(this.leftFront, this.leftRear, this.rightFront, this.rightRear);
         this.drive.setSafetyEnabled(false);
@@ -126,7 +129,7 @@ public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
 
             // Voltage ramp rate in volts/sec (works regardless of mode)
             // 0V to 6V in one sec
-            talon.setVoltageRampRate(6.0);
+//            talon.setVoltageRampRate(6.0);
 
             // The allowable close-loop error whereby the motor output is neutral regardless
             // of the calculated result. When the closed-loop error is within the allowable
@@ -143,7 +146,7 @@ public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
             talon.setF(F_VALUE);
             talon.setIZone(IZONE_VALUE);
 
-            //talon.setCloseLoopRampRate(RAMP_RATE);
+            talon.setCloseLoopRampRate(RAMP_RATE);
             return talon;
 
         } catch (Exception e) {

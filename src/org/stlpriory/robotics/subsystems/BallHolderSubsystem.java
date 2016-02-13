@@ -9,7 +9,7 @@ public class BallHolderSubsystem extends Subsystem {
     public static final int RIGHT_WINDOW_MOTOR = 0; 
     public static final int LEFT_WINDOW_MOTOR = 2;
     public static final int POTENTIOMETER = 0;
-    public static final int POTENTIOMETER_SCALE_FACTOR = 270;
+    public static final int POTENTIOMETER_SCALE_FACTOR = 1;
     public static final int POTENTIOMETER_OFFSET = 0;
     
     public enum Direction {
