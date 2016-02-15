@@ -12,11 +12,6 @@ public class BallHolderSubsystem extends Subsystem {
     public static final int POTENTIOMETER_SCALE_FACTOR = 1;
     public static final int POTENTIOMETER_OFFSET = 0;
     
-    // These are for the potentiometer specifically
-    public static final double MAX_ANGLE = .66;
-    public static final double MIN_ANGLE = .6;
-    public static final double TOLERANCE = .0005;
-    
     public enum Direction {
         UP, DOWN
     };
@@ -46,19 +41,12 @@ public class BallHolderSubsystem extends Subsystem {
     }
 
     public double getAngle() {
-    	// The potentiometer is backwards. 
-        return 1.0 - this.pot.get();
+        return this.pot.get();
     }
 
     public void set(final Direction dir, double speed) {
         speed = Math.abs(speed) * (dir == Direction.UP ? 1 : -1);
         this.set(speed);
-    }
-    public boolean inRange()
-    {
-    	double angle = getAngle();
-    	System.out.printf("%f > %f > %f ???%n", MAX_ANGLE, angle, MIN_ANGLE);
-    	return angle > MIN_ANGLE && angle < MAX_ANGLE;
     }
 
     public void stop() {
@@ -68,7 +56,7 @@ public class BallHolderSubsystem extends Subsystem {
     public void updateStatus() {
         SmartDashboard.putNumber("Right ballholder speed", this.rightMotor.getSpeed());
         SmartDashboard.putNumber("Left ballholder speed", this.leftMotor.getSpeed());
-        SmartDashboard.putNumber("Ballholder potentiometer", this.getAngle());
+        SmartDashboard.putNumber("Ballholder potentiometer", this.pot.get());
     }
     
     // ==================================================================================

@@ -1,42 +1,36 @@
 package org.stlpriory.robotics.commands;
 
 import org.stlpriory.robotics.Robot;
-import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
 import org.stlpriory.robotics.subsystems.BallHolderSubsystem.Direction;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class BallHolderDown extends Command {
     public static final double BALL_HOLDER_DOWN_SPEED = 1;
-	private boolean forceable;
 
-    public BallHolderDown(boolean forceable) {
+    public BallHolderDown() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.ballHolder);
-        this.forceable = forceable;
     }
 
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	if(!isFinished())
         Robot.ballHolder.set(Direction.DOWN, BALL_HOLDER_DOWN_SPEED);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-    	return Robot.ballHolder.getAngle() < BallHolderSubsystem.MIN_ANGLE && !(Robot.oi.forceButton.get() && forceable);
+        return false;
     }
 
     // Called once after isFinished returns true
