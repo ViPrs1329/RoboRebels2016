@@ -106,8 +106,6 @@ public class OI {
         this.forceButton = new JoystickButton(this.xboxController, X_BUTTON);
 
         Debug.println("[OI] Instantiation complete.");
-        
-        SmartDashboard.putData("Speed", new SetSpeed());
     }
 
     public Joystick getController() {
