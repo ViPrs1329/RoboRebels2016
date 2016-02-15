@@ -12,6 +12,7 @@ import org.stlpriory.robotics.utils.Debug;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator interface 
@@ -48,8 +49,8 @@ public class OI {
     public static final int B_BUTTON = 2;
     public static final int X_BUTTON = 3;
     public static final int Y_BUTTON = 4;
-    public static final int RIGHT_BUMPER = 5;
-    public static final int LEFT_BUMPER  = 6;
+    public static final int RIGHT_BUMPER = 6;
+    public static final int LEFT_BUMPER  = 5;
     public static final int BACK_BUTTON  = 7;
     public static final int START_BUTTON = 8;
     public static final int LEFT_STICK   = 9;
@@ -71,6 +72,9 @@ public class OI {
     private final JoystickButton holdSwitch;
     private final JoystickButton holderTop;
     private final JoystickButton holderBottom;
+    
+    public final JoystickButton forceButton;
+
 
     public OI() {
         Debug.println("[OI] Instantiating ...");
@@ -79,7 +83,6 @@ public class OI {
 
         this.holderUpButton = new JoystickButton(this.xboxController, B_BUTTON);
         this.holderUpButton.whileHeld(new BallHolderUp());
-        this.holderUpButton.whenReleased(new BallHolderStop());
 
         this.holderDownButton = new JoystickButton(this.xboxController, A_BUTTON);
         this.holderDownButton.whileHeld(new BallHolderDown());
@@ -94,12 +97,16 @@ public class OI {
         this.holdSwitch.toggleWhenPressed(new Hold());
 
         this.holderTop = new JoystickButton(this.xboxController, RIGHT_BUMPER);
-        this.holderTop.whenPressed(new HolderToTop());
+        this.holderTop.whenPressed(new BallHolderUp());
 
         this.holderBottom = new JoystickButton(this.xboxController, LEFT_BUMPER);
-        this.holderBottom.whenPressed(new HolderToBottom());
+        this.holderBottom.whenPressed(new BallHolderDown());
+        
+        this.forceButton = new JoystickButton(this.xboxController, X_BUTTON);
 
         Debug.println("[OI] Instantiation complete.");
+        
+//        SmartDashboard.putData("Speed", new SetSpeed());
     }
 
     public Joystick getController() {
