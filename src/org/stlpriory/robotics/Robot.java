@@ -2,7 +2,6 @@
 package org.stlpriory.robotics;
 
 import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
-import org.stlpriory.robotics.subsystems.CANDrivetrainSubsystem;
 import org.stlpriory.robotics.subsystems.DrivetrainSubsystem;
 import org.stlpriory.robotics.subsystems.ShooterSubsystem;
 import org.stlpriory.robotics.utils.Debug;
