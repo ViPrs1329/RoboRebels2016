@@ -6,6 +6,7 @@ import org.stlpriory.robotics.commands.BallHolderUp;
 import org.stlpriory.robotics.commands.Hold;
 import org.stlpriory.robotics.commands.HolderToBottom;
 import org.stlpriory.robotics.commands.HolderToTop;
+import org.stlpriory.robotics.commands.SetSpeed;
 import org.stlpriory.robotics.commands.Suck;
 import org.stlpriory.robotics.commands.Throw;
 import org.stlpriory.robotics.utils.Debug;
@@ -82,10 +83,10 @@ public class OI {
         this.xboxController = new Joystick(CONTROLLER_PORT);
 
         this.holderUpButton = new JoystickButton(this.xboxController, B_BUTTON);
-        this.holderUpButton.whileHeld(new BallHolderUp());
+        this.holderUpButton.whileHeld(new BallHolderUp(true));
 
         this.holderDownButton = new JoystickButton(this.xboxController, A_BUTTON);
-        this.holderDownButton.whileHeld(new BallHolderDown());
+        this.holderDownButton.whileHeld(new BallHolderDown(true));
 
         this.throwButton = new JoystickButton(this.xboxController, Y_BUTTON);
         this.throwButton.whileHeld(new Throw());
@@ -97,16 +98,16 @@ public class OI {
         this.holdSwitch.toggleWhenPressed(new Hold());
 
         this.holderTop = new JoystickButton(this.xboxController, RIGHT_BUMPER);
-        this.holderTop.whenPressed(new BallHolderUp());
+        this.holderTop.whenPressed(new BallHolderUp(false));
 
         this.holderBottom = new JoystickButton(this.xboxController, LEFT_BUMPER);
-        this.holderBottom.whenPressed(new BallHolderDown());
+        this.holderBottom.whenPressed(new BallHolderDown(false));
         
         this.forceButton = new JoystickButton(this.xboxController, X_BUTTON);
 
         Debug.println("[OI] Instantiation complete.");
         
-//        SmartDashboard.putData("Speed", new SetSpeed());
+        SmartDashboard.putData("Speed", new SetSpeed());
     }
 
     public Joystick getController() {

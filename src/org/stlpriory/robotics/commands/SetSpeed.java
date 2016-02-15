@@ -7,6 +7,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SetSpeed extends Command {
 	
+	public SetSpeed() {
+		requires(Robot.drivetrain);
+	}
 	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub
