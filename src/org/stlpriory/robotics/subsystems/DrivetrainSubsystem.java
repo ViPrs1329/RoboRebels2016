@@ -23,8 +23,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DrivetrainSubsystem extends Subsystem {
 
-    public static final int LF_MOTOR_ID = 4;
-    public static final int LR_MOTOR_ID = 3;
+    public static final int LF_MOTOR_ID = 3;
+    public static final int LR_MOTOR_ID = 4;
     public static final int RF_MOTOR_ID = 2;
     public static final int RR_MOTOR_ID = 1;
 
@@ -34,7 +34,7 @@ public class DrivetrainSubsystem extends Subsystem {
     public static final double F_VALUE = 0.5;
     public static final int IZONE_VALUE = (int) (0.2 * AMOpticalEncoderSpecs.PULSES_PER_REV);
     
-    public static final boolean MASTER_SLAVE_MODE = false;
+    public static final boolean MASTER_SLAVE_MODE = true;
 
     private final CANTalon rightFront;
     private final CANTalon rightRear;
@@ -70,19 +70,19 @@ public class DrivetrainSubsystem extends Subsystem {
         }
 
         if (Robot.robotType == RobotType.TANKBOT) {
-            this.drive = new RobotDrive(this.rightFront, this.rightRear, this.leftFront, this.leftRear);
+            this.drive = new RobotDrive(this.rightFront, this.leftFront);
         } else {
-            this.drive = new RobotDrive(this.leftFront, this.leftRear, this.rightFront, this.rightRear);
+            this.drive = new RobotDrive(this.leftFront, this.rightFront);
         }
         this.drive.setSafetyEnabled(false);
         this.drive.setExpiration(0.1);
         this.drive.setSensitivity(0.5);
 
         // Invert the left side motors
-        this.drive.setInvertedMotor(MotorType.kFrontLeft, true);
-        this.drive.setInvertedMotor(MotorType.kRearLeft, true);
-        this.drive.setInvertedMotor(MotorType.kFrontRight, true);
+        // Note that, since we only give two motors in the constructor, it assumes that they are
+        // the rear ones, so we only invert them.  
         this.drive.setInvertedMotor(MotorType.kRearRight, true);
+        this.drive.setInvertedMotor(MotorType.kRearLeft, true);
 
         Debug.println("[DriveTrain Subsystem] Instantiation complete.");
     }
@@ -166,6 +166,7 @@ public class DrivetrainSubsystem extends Subsystem {
         CANTalon slaveMotor = new CANTalon(deviceNumber);
         slaveMotor.changeControlMode(TalonControlMode.Follower);
         slaveMotor.set(masterMotor.getDeviceID());
+        System.out.printf("Slave motor set to id %d%n", masterMotor.getDeviceID());
         return slaveMotor;
     }
 
