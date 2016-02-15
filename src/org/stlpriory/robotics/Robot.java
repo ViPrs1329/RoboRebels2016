@@ -221,7 +221,7 @@ public class Robot extends IterativeRobot {
      */
     public void updateStatus() {
         // drivetrain.updateStatus();
-        // ballHolder.updateStatus();
+         ballHolder.updateStatus();
         // shooter.updateStatus();
     }
 
