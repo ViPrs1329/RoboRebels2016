@@ -21,6 +21,10 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  * resource directory.
  */
 public class Robot extends IterativeRobot {
+    public enum RobotType {PNEUMABOT, TANKBOT};
+
+    // Select which robot to compile for
+    public static final RobotType robotType = RobotType.PNEUMABOT;
 
     // Initialize robot subsystems
     public static final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();;

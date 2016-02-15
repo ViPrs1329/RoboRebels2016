@@ -2,6 +2,7 @@ package org.stlpriory.robotics.subsystems;
 
 import org.stlpriory.robotics.OI;
 import org.stlpriory.robotics.Robot;
+import org.stlpriory.robotics.Robot.RobotType;
 import org.stlpriory.robotics.commands.drivetrain.DriveWithGamepad;
 import org.stlpriory.robotics.hardware.AMOpticalEncoderSpecs;
 import org.stlpriory.robotics.hardware.CIMMotorSpecs;
@@ -34,7 +35,6 @@ public class DrivetrainSubsystem extends Subsystem {
     public static final int IZONE_VALUE = (int) (0.2 * AMOpticalEncoderSpecs.PULSES_PER_REV);
     
     public static final boolean MASTER_SLAVE_MODE = false;
-    public static final boolean FLIP_LEFT_RIGHT = true;
 
     private final CANTalon rightFront;
     private final CANTalon rightRear;
@@ -69,7 +69,7 @@ public class DrivetrainSubsystem extends Subsystem {
             this.rightRear  = createMaster(RR_MOTOR_ID);
         }
 
-        if (FLIP_LEFT_RIGHT) {
+        if (Robot.robotType == RobotType.TANKBOT) {
             this.drive = new RobotDrive(this.rightFront, this.rightRear, this.leftFront, this.leftRear);
         } else {
             this.drive = new RobotDrive(this.leftFront, this.leftRear, this.rightFront, this.rightRear);
@@ -78,7 +78,7 @@ public class DrivetrainSubsystem extends Subsystem {
         this.drive.setExpiration(0.1);
         this.drive.setSensitivity(0.5);
 
-        // invert the left side motors
+        // Invert the left side motors
         this.drive.setInvertedMotor(MotorType.kFrontLeft, true);
         this.drive.setInvertedMotor(MotorType.kRearLeft, true);
         this.drive.setInvertedMotor(MotorType.kFrontRight, true);
