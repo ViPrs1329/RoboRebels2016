@@ -71,6 +71,7 @@ public class OI {
     private final JoystickButton holdSwitch;
     private final JoystickButton holderTop;
     private final JoystickButton holderBottom;
+    private final JoystickButton forceButton;
 
     public OI() {
         Debug.println("[OI] Instantiating ...");
@@ -99,6 +100,7 @@ public class OI {
         this.holderBottom = new JoystickButton(this.xboxController, LEFT_BUMPER);
         this.holderBottom.whenPressed(new HolderToBottom());
 
+        this.forceButton = new JoystickButton(this.xboxController, X_BUTTON);
         Debug.println("[OI] Instantiation complete.");
     }
 
