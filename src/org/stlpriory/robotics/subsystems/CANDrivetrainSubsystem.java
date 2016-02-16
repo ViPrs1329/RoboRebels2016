@@ -24,7 +24,13 @@ public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
     public static double D_VALUE = 0;
     public static double F_VALUE = 0.5;
     public static int IZONE_VALUE = (int) (0.2 * AMOpticalEncoderSpecs.PULSES_PER_REV);
+    
     public static double RAMP_RATE = 2;
+
+    // For a Talon SRX these are the closed-loop outputs which, if exceeded, 
+    // the motor output is capped
+    private static final double TALON_SRX_POS_PEAK_OUTPUT = +1023.0d;
+    private static final double TALON_SRX_NEG_PEAK_OUTPUT = -1023.0d;
     
     private final CANTalon rightFront;
     private final CANTalon rightRear;
@@ -132,7 +138,7 @@ public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
 
             // Soft limits can be used to disable motor drive when the sensor position
             // is outside of the limits
-            talon.setForwardSoftLimit(CIMMotorSpecs.MAX_SPEED_RPM);
+            talon.setForwardSoftLimit( CIMMotorSpecs.MAX_SPEED_RPM);
             talon.enableForwardSoftLimit(false);
             talon.setReverseSoftLimit(-CIMMotorSpecs.MAX_SPEED_RPM);
             talon.enableReverseSoftLimit(false);
@@ -140,9 +146,10 @@ public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
             // brake mode: true for brake; false for coast
             talon.enableBrakeMode(true);
 
-            // Voltage ramp rate in volts/sec (works regardless of mode)
-            // 0V to 6V in one sec
-//            talon.setVoltageRampRate(6.0);
+            // Voltage ramp rate, in volts/sec, which limits the rate at which the 
+            // throttle will change. Affects all  modes.
+            // For example, 0V to 6V in one sec would be a value of 6.0
+//            talon.setVoltageRampRate(RAMP_RATE);
 
             // The allowable close-loop error whereby the motor output is neutral regardless
             // of the calculated result. When the closed-loop error is within the allowable
@@ -160,6 +167,9 @@ public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
             talon.setF(F_VALUE);
             talon.setIZone(IZONE_VALUE);
 
+            // Closed loop ramp rate, in volts/sec, which limits the rate at which the 
+            // throttle will change. Only affects position and speed closed loop modes.
+            // For example, 0V to 6V in one sec would be a value of 6.0
             talon.setCloseLoopRampRate(RAMP_RATE);
             return talon;
 
