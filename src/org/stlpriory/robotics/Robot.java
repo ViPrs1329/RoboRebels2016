@@ -2,6 +2,8 @@
 package org.stlpriory.robotics;
 
 import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
+import org.stlpriory.robotics.subsystems.CANDrivetrainSubsystem;
+import org.stlpriory.robotics.subsystems.Drivetrain;
 import org.stlpriory.robotics.subsystems.DrivetrainSubsystem;
 import org.stlpriory.robotics.subsystems.ShooterSubsystem;
 import org.stlpriory.robotics.utils.Debug;
@@ -26,7 +28,7 @@ public class Robot extends IterativeRobot {
     public static final RobotType robotType = RobotType.PNEUMABOT;
 
     // Initialize robot subsystems
-    public static final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();;
+    public static final DrivetrainSubsystem drivetrain = new CANDrivetrainSubsystem();
     public static final BallHolderSubsystem ballHolder = new BallHolderSubsystem();
     public static final ShooterSubsystem shooter = new ShooterSubsystem();
     
@@ -102,7 +104,7 @@ public class Robot extends IterativeRobot {
      * Call the updateStatus methods on all subsystems
      */
     public void updateStatus() {
-        // drivetrain.updateStatus();
+         drivetrain.updateStatus();
          ballHolder.updateStatus();
         // shooter.updateStatus();
     }

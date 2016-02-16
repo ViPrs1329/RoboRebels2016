@@ -83,6 +83,8 @@ public class DrivetrainSubsystem extends Subsystem {
         // the rear ones, so we only invert them.  
         this.drive.setInvertedMotor(MotorType.kRearRight, true);
         this.drive.setInvertedMotor(MotorType.kRearLeft, true);
+        
+        this.drive.setMaxOutput(CIMMotorSpecs.MAX_SPEED_RPM);
 
         Debug.println("[DriveTrain Subsystem] Instantiation complete.");
     }

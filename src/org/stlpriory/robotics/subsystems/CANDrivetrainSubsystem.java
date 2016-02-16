@@ -56,13 +56,12 @@ public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
         this.rightRear  = createMaster(RR_MOTOR_ID);
 //        this.rightRear  = createSlave(RR_MOTOR_ID, this.rightFront);
 
-        this.drive = new RobotDrive(this.leftFront, this.leftRear, this.rightFront, this.rightRear);
+        this.drive = new RobotDrive(this.leftFront, this.rightFront);
         this.drive.setSafetyEnabled(false);
         this.drive.setExpiration(0.1);
         this.drive.setSensitivity(0.5);
 
         // invert the left side motors
-        this.drive.setInvertedMotor(MotorType.kFrontLeft, true);
         this.drive.setInvertedMotor(MotorType.kRearLeft, true);
 
         Debug.println("[CANDrivetrain Subsystem] Instantiation complete.");
@@ -114,11 +113,11 @@ public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
 
             talon.configEncoderCodesPerRev(AMOpticalEncoderSpecs.CYCLES_PER_REV);
 
-            // keep the motor and sensor in phase
+//             keep the motor and sensor in phase
             talon.reverseSensor(false);
 
-            // Soft limits can be used to disable motor drive when the sensor position
-            // is outside of the limits
+//             Soft limits can be used to disable motor drive when the sensor position
+//             is outside of the limits
             talon.setForwardSoftLimit(CIMMotorSpecs.MAX_SPEED_RPM);
             talon.enableForwardSoftLimit(false);
             talon.setReverseSoftLimit(-CIMMotorSpecs.MAX_SPEED_RPM);
@@ -137,7 +136,7 @@ public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
             // accumulator is cleared. Value is in the same units as the closed loop error.
             // Initially make the allowable error 10% of a revolution
             int allowableClosedLoopErr = (int) (0.1 * AMOpticalEncoderSpecs.PULSES_PER_REV);
-            talon.setAllowableClosedLoopErr(allowableClosedLoopErr);
+            talon.setAllowableClosedLoopErr(2000);
 
             talon.setProfile(0);
             talon.setP(P_VALUE);
@@ -153,6 +152,11 @@ public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
             Debug.err(e.getLocalizedMessage());
             throw e;
         }
+    }
+    public void tankDrive(final double leftStickValue, final double rightStickValue)
+    {
+    	System.out.printf("Max speed is %d, and the speed is %f%n", CIMMotorSpecs.MAX_SPEED_RPS, CIMMotorSpecs.MAX_SPEED_RPM * leftStickValue);
+    	super.tankDrive(leftStickValue, rightStickValue);
     }
 
 }
