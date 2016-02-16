@@ -1,5 +1,7 @@
 package org.stlpriory.robotics.subsystems;
 
+import org.stlpriory.robotics.Robot;
+import org.stlpriory.robotics.Robot.RobotType;
 import org.stlpriory.robotics.hardware.AMOpticalEncoderSpecs;
 import org.stlpriory.robotics.hardware.CIMMotorSpecs;
 import org.stlpriory.robotics.utils.Debug;
@@ -48,21 +50,33 @@ public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
         Debug.println("   F = " + F_VALUE);
         Debug.println("   I Zone = " + IZONE_VALUE);
 
-        this.leftFront = createMaster(LF_MOTOR_ID);
-        this.leftRear  = createMaster(LR_MOTOR_ID);
-//        this.leftRear  = createSlave(LR_MOTOR_ID, this.leftFront);
-
+        this.leftFront  = createMaster(LF_MOTOR_ID);
         this.rightFront = createMaster(RF_MOTOR_ID);
-        this.rightRear  = createMaster(RR_MOTOR_ID);
-//        this.rightRear  = createSlave(RR_MOTOR_ID, this.rightFront);
+        if (MASTER_SLAVE_MODE) {
+            this.leftRear  = createSlave(LR_MOTOR_ID, this.leftFront);          
+            this.rightRear = createSlave(RR_MOTOR_ID, this.rightFront);            
+        } else {
+            this.leftRear  = createMaster(LR_MOTOR_ID);
+            this.rightRear = createMaster(RR_MOTOR_ID);
+        }
 
-        this.drive = new RobotDrive(this.leftFront, this.rightFront);
+        if (Robot.robotType == RobotType.TANKBOT) {
+            this.drive = new RobotDrive(this.rightFront, this.leftFront);
+        } else {
+            this.drive = new RobotDrive(this.leftFront, this.rightFront);
+        }
+
         this.drive.setSafetyEnabled(false);
         this.drive.setExpiration(0.1);
         this.drive.setSensitivity(0.5);
 
         // invert the left side motors
         this.drive.setInvertedMotor(MotorType.kRearLeft, true);
+        
+        // Set the scaling factor used by RobotDrive when motor controllers are in
+        // a mode other than PercentVbus. The scaling factor is multiplied with the 
+        // output percentage [-1,1] computed by the drive functions. 
+        this.drive.setMaxOutput(CIMMotorSpecs.MAX_SPEED_RPM);
 
         Debug.println("[CANDrivetrain Subsystem] Instantiation complete.");
     }
@@ -113,11 +127,11 @@ public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
 
             talon.configEncoderCodesPerRev(AMOpticalEncoderSpecs.CYCLES_PER_REV);
 
-//             keep the motor and sensor in phase
+            // keep the motor and sensor in phase
             talon.reverseSensor(false);
 
-//             Soft limits can be used to disable motor drive when the sensor position
-//             is outside of the limits
+            // Soft limits can be used to disable motor drive when the sensor position
+            // is outside of the limits
             talon.setForwardSoftLimit(CIMMotorSpecs.MAX_SPEED_RPM);
             talon.enableForwardSoftLimit(false);
             talon.setReverseSoftLimit(-CIMMotorSpecs.MAX_SPEED_RPM);
@@ -136,7 +150,8 @@ public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
             // accumulator is cleared. Value is in the same units as the closed loop error.
             // Initially make the allowable error 10% of a revolution
             int allowableClosedLoopErr = (int) (0.1 * AMOpticalEncoderSpecs.PULSES_PER_REV);
-            talon.setAllowableClosedLoopErr(2000);
+//          talon.setAllowableClosedLoopErr(allowableClosedLoopErr)
+            talon.setAllowableClosedLoopErr(2000); 
 
             talon.setProfile(0);
             talon.setP(P_VALUE);

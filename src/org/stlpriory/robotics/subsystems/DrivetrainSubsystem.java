@@ -55,18 +55,14 @@ public class DrivetrainSubsystem extends Subsystem {
         super(name);
         Debug.println("[Drivetrain Subsystem] Instantiating...");
 
-        this.leftFront = createMaster(LF_MOTOR_ID);
-        if (MASTER_SLAVE_MODE) {
-            this.leftRear  = createSlave(LR_MOTOR_ID, this.leftFront);        	
-        } else {
-            this.leftRear  = createMaster(LR_MOTOR_ID);
-        }
-
+        this.leftFront  = createMaster(LF_MOTOR_ID);
         this.rightFront = createMaster(RF_MOTOR_ID);
         if (MASTER_SLAVE_MODE) {
-            this.rightRear  = createSlave(RR_MOTOR_ID, this.rightFront);        	
+            this.leftRear  = createSlave(LR_MOTOR_ID, this.leftFront);        	
+            this.rightRear = createSlave(RR_MOTOR_ID, this.rightFront);            
         } else {
-            this.rightRear  = createMaster(RR_MOTOR_ID);
+            this.leftRear  = createMaster(LR_MOTOR_ID);
+            this.rightRear = createMaster(RR_MOTOR_ID);
         }
 
         if (Robot.robotType == RobotType.TANKBOT) {
@@ -83,8 +79,6 @@ public class DrivetrainSubsystem extends Subsystem {
         // the rear ones, so we only invert them.  
         this.drive.setInvertedMotor(MotorType.kRearRight, true);
         this.drive.setInvertedMotor(MotorType.kRearLeft, true);
-        
-        this.drive.setMaxOutput(CIMMotorSpecs.MAX_SPEED_RPM);
 
         Debug.println("[DriveTrain Subsystem] Instantiation complete.");
     }
