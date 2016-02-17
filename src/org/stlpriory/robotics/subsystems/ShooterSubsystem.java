@@ -1,8 +1,5 @@
 package org.stlpriory.robotics.subsystems;
 
-import org.stlpriory.robotics.hardware.CIMcoderSpecs;
-
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -10,7 +7,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterSubsystem extends Subsystem {
     public static final int EXTEND_CHANNEL = 4;
-    public static final int RETRACT_CHANNEL = 5;
 
     public static final int LEFT_MOTOR_CHANNEL  = 3;
     public static final int LEFT_MOTOR_ENCODER_CHANNEL_A = 6;
@@ -32,7 +28,6 @@ public class ShooterSubsystem extends Subsystem {
     
     //private final DoubleSolenoid ballLoader;
     private final Solenoid extendLoaderArm;
-    private final Solenoid retractLoaderArm;
 
     // ==================================================================================
     //                        C O N S T R U C T O R S
@@ -48,9 +43,7 @@ public class ShooterSubsystem extends Subsystem {
 //        this.leftEncoder  = new Encoder(LEFT_MOTOR_ENCODER_CHANNEL_A, LEFT_MOTOR_ENCODER_CHANNEL_B, true);
 //        this.leftEncoder.setDistancePerPulse(CIMcoderSpecs.PULSES_PER_REV);
         
-        //this.ballLoader = new DoubleSolenoid(EXTEND_CHANNEL, RETRACT_CHANNEL);
         this.extendLoaderArm  = new Solenoid(EXTEND_CHANNEL);
-        this.retractLoaderArm = new Solenoid(RETRACT_CHANNEL);
     }
     
     // ==================================================================================
@@ -59,16 +52,14 @@ public class ShooterSubsystem extends Subsystem {
 
     public void extendLoaderArm() {
         this.extendLoaderArm.set(true);
-        this.retractLoaderArm.set(false);
     }
 
     public void retractLoaderArm() {
-        this.retractLoaderArm.set(true);
         this.extendLoaderArm.set(false);
     }
     
     public boolean isLoaderArmRetracted() {
-        return this.retractLoaderArm.get() && !this.extendLoaderArm.get();
+        return !this.extendLoaderArm.get();
     }
     
     public void startShooter() {
