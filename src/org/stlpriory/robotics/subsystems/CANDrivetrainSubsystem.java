@@ -27,10 +27,10 @@ public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
     
     public static double RAMP_RATE = 2;
 
-    // For a Talon SRX these are the closed-loop outputs which, if exceeded, 
-    // the motor output is capped
-    private static final double TALON_SRX_POS_PEAK_OUTPUT = +1023.0d;
-    private static final double TALON_SRX_NEG_PEAK_OUTPUT = -1023.0d;
+//    // For a Talon SRX these are the closed-loop outputs which, if exceeded, 
+//    // the motor output is capped
+//    public static final double TALON_SRX_POS_PEAK_OUTPUT = +1023.0d;
+//    public static final double TALON_SRX_NEG_PEAK_OUTPUT = -1023.0d;
     
     private final CANTalon rightFront;
     private final CANTalon rightRear;
@@ -157,8 +157,8 @@ public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
             // accumulator is cleared. Value is in the same units as the closed loop error.
             // Initially make the allowable error 10% of a revolution
             int allowableClosedLoopErr = (int) (0.1 * AMOpticalEncoderSpecs.PULSES_PER_REV);
-//          talon.setAllowableClosedLoopErr(allowableClosedLoopErr)
-            talon.setAllowableClosedLoopErr(2000); 
+            talon.setAllowableClosedLoopErr(allowableClosedLoopErr);
+//            talon.setAllowableClosedLoopErr(2000); 
 
             talon.setProfile(0);
             talon.setP(P_VALUE);

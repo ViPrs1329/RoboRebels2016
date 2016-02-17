@@ -3,7 +3,6 @@ package org.stlpriory.robotics;
 
 import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
 import org.stlpriory.robotics.subsystems.CANDrivetrainSubsystem;
-import org.stlpriory.robotics.subsystems.Drivetrain;
 import org.stlpriory.robotics.subsystems.DrivetrainSubsystem;
 import org.stlpriory.robotics.subsystems.ShooterSubsystem;
 import org.stlpriory.robotics.utils.Debug;
@@ -49,7 +48,6 @@ public class Robot extends IterativeRobot {
         timer.start();
 
         // Initialize the human operator interface ...
-        //OI oi = new OI();
         this.xboxController = oi.getController();
         
         timer.stop();
