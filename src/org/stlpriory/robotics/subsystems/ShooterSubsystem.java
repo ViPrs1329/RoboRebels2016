@@ -26,7 +26,6 @@ public class ShooterSubsystem extends Subsystem {
 //    private final Encoder rightEncoder;
 //    private final Encoder leftEncoder; 
     
-    //private final DoubleSolenoid ballLoader;
     private final Solenoid extendLoaderArm;
 
     // ==================================================================================
