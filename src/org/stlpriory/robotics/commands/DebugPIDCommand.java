@@ -1,41 +1,62 @@
 package org.stlpriory.robotics.commands;
 
 import org.stlpriory.robotics.Robot;
+import org.stlpriory.robotics.utils.Debug;
 
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DebugPIDCommand extends Command {
 
-	public DebugPIDCommand()
-	{
-		requires(Robot.drivetrain);
-	}
-	@Override
-	protected void initialize() {
-		System.out.println(SmartDashboard.getNumber("P"));
-	}
+    private final CANTalon talon;
 
-	@Override
-	protected void execute() {
-		Robot.drivetrain.setPID(SmartDashboard.getNumber("P"), SmartDashboard.getNumber("I"), SmartDashboard.getNumber("D"));
-	}
+    public DebugPIDCommand(final CANTalon talon) {
+        requires(Robot.drivetrain);
+        this.talon = talon;
+    }
 
-	@Override
-	protected boolean isFinished() {
-		return true;
-	}
+    @Override
+    protected void initialize() {
+        Debug.println("DebugPIDCommand ...");
+        Debug.println("   device ID = " + this.talon.getDeviceID());
+        Debug.println("   P = " + this.talon.getP());
+        Debug.println("   I = " + this.talon.getI());
+        Debug.println("   D = " + this.talon.getD());
+        Debug.println("   F = " + this.talon.getF());
+    }
 
-	@Override
-	protected void end() {
-		// TODO Auto-generated method stub
+    @Override
+    protected void execute() {
+        this.talon.setProfile(0); // can be 0 or 1
+        this.talon.setP(SmartDashboard.getNumber("P"));
+        this.talon.setI(SmartDashboard.getNumber("I"));
+        this.talon.setD(SmartDashboard.getNumber("D"));
+        this.talon.setF(SmartDashboard.getNumber("F"));
 
-	}
+        SmartDashboard.putNumber("P", this.talon.getP());
+        SmartDashboard.putNumber("I", this.talon.getI());
+        SmartDashboard.putNumber("D", this.talon.getD());
+        SmartDashboard.putNumber("F", this.talon.getF());
+    }
 
-	@Override
-	protected void interrupted() {
-		// TODO Auto-generated method stub
+    @Override
+    protected boolean isFinished() {
+        return true;
+    }
 
-	}
+    @Override
+    protected void end() {
+        SmartDashboard.putNumber("P", this.talon.getP());
+        SmartDashboard.putNumber("I", this.talon.getI());
+        SmartDashboard.putNumber("D", this.talon.getD());
+        SmartDashboard.putNumber("F", this.talon.getF());
+    }
+
+    @Override
+    protected void interrupted() {
+        // TODO Auto-generated method stub
+
+    }
 
 }

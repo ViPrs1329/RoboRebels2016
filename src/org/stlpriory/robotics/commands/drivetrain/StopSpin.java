@@ -7,26 +7,26 @@ import edu.wpi.first.wpilibj.command.Command;
 public class StopSpin extends Command {
     private int counter;
 
-    public StopSpin()
-    {
+    public StopSpin() {
         super("StopSpin");
         requires(Robot.drivetrain);
-        counter = 0;
+        this.counter = 0;
     }
+
     @Override
     protected void initialize() {
-        counter = 0;
+        this.counter = 0;
     }
 
     @Override
     protected void execute() {
         Robot.drivetrain.tankDrive(0, 0);
-        counter++;
+        this.counter++;
     }
 
     @Override
     protected boolean isFinished() {
-        return counter >= 10;
+        return this.counter >= 10;
     }
 
     @Override

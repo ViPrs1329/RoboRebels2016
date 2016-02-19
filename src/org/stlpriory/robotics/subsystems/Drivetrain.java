@@ -1,117 +1,156 @@
 package org.stlpriory.robotics.subsystems;
 
-import org.stlpriory.robotics.RobotMap;
-import org.stlpriory.robotics.commands.drivetrain.DriveWithGamepad;
+import org.stlpriory.robotics.OI;
+import org.stlpriory.robotics.hardware.AMOpticalEncoderSpecs;
+import org.stlpriory.robotics.hardware.CIMMotorSpecs;
 import org.stlpriory.robotics.utils.Debug;
+import org.stlpriory.robotics.utils.Utils;
 
-import edu.wpi.first.wpilibj.Jaguar;
+import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- *
- */
-public class Drivetrain extends Subsystem {
+public abstract class Drivetrain extends Subsystem {
+	
+	public static final double P_VALUE = 0.5;
+    public static final double I_VALUE = 0.02;
+    public static final double D_VALUE = 0;
+    public static final double F_VALUE = 0.5;
+    public static final int IZONE_VALUE = (int) (0.2 * AMOpticalEncoderSpecs.PULSES_PER_REV);
+    public static final double CAN_RAMP_RATE = 2;
+    public static final double VOLTAGE_RAMP_RATE = 12;
+    
+    public static final int LF_MOTOR_ID = 3;
+    public static final int LR_MOTOR_ID = 4;
+    public static final int RF_MOTOR_ID = 2;
+    public static final int RR_MOTOR_ID = 1;
 
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-
-    Jaguar left_front, right_front, left_rear, right_rear;
-    RobotDrive drive;
-
-    public Drivetrain() {
-        super("Drivetrain");
-        Debug.println("[Drivetrain Subsystem] Instantiating...");
-
-        this.left_front = new Jaguar(RobotMap.LEFT_FRONT_WHEEL_JAGUAR_PWM_CHANNEL);
-        this.right_front = new Jaguar(RobotMap.RIGHT_FRONT_WHEEL_JAGUAR_PWM_CHANNEL);
-        this.left_rear = new Jaguar(RobotMap.LEFT_REAR_WHEEL_JAGUAR_PWM_CHANNEL);
-        this.right_rear = new Jaguar(RobotMap.RIGHT_REAR_WHEEL_JAGUAR_PWM_CHANNEL);
-        
-        Debug.println("[DriveTrain Subsystem] Initializing left front Jaguar to PWM channel " + RobotMap.LEFT_FRONT_WHEEL_JAGUAR_PWM_CHANNEL);
-        Debug.println("[DriveTrain Subsystem] Initializing left rear Jaguar to PWM channel " + RobotMap.LEFT_REAR_WHEEL_JAGUAR_PWM_CHANNEL);
-        Debug.println("[DriveTrain Subsystem] Initializing right front Jaguar to PWM channel " + RobotMap.RIGHT_FRONT_WHEEL_JAGUAR_PWM_CHANNEL);
-        Debug.println("[DriveTrain Subsystem] Initializing right rear Jaguar to PWM channel " + RobotMap.RIGHT_REAR_WHEEL_JAGUAR_PWM_CHANNEL);
-
-        this.drive = new RobotDrive(this.left_front, this.left_rear, this.right_front, this.right_rear);
-        this.drive.setSafetyEnabled(false);
-        this.drive.setExpiration(0.1);
-        this.drive.setSensitivity(0.5);
-        //drive.setMaxOutput(Constants.DRIVE_MAX_OUTPUT);
-        this.drive.setInvertedMotor(MotorType.kFrontLeft, true);  // invert the left side motors
-        this.drive.setInvertedMotor(MotorType.kRearLeft, true);   // you may need to change or remove this to match your robot
-
-        Debug.println("[DriveTrain Subsystem] Instantiation complete.");
+    protected CANTalon rightFront;
+    protected CANTalon rightRear;
+    protected CANTalon leftFront;
+    protected CANTalon leftRear;
+	protected RobotDrive drive;
+    
+    public Drivetrain(final String name)
+    {
+    	super(name);
     }
-
+    
+    public abstract void tankDrive(double left, double right);
+    
+    public void tankDrive(final Joystick joystick) {
+        double leftStickValue  = Utils.scale( joystick.getRawAxis(OI.LEFT_STICK_Y_AXIS) );
+        double rightStickValue = Utils.scale( joystick.getRawAxis(OI.RIGHT_STICK_Y_AXIS) );
+        tankDrive(leftStickValue, rightStickValue);
+    }
+    
     public void stop() {
-        drive.stopMotor();
+        this.drive.stopMotor();
     }
-
-    /**
-     * Drive method for Mecanum wheeled robots.
-     */
-    public void mecanum_drive(Joystick joystick) {
-        //Robot.drivetrain.mecanum_drive(Robot.oi.getGamePad().getRawAxis(1),Robot.oi.getGamePad().getRawAxis(0),Robot.oi.getGamePad().getRawAxis(2));
-        /*
-         * Three-axis joystick mecanum control.
-         * Let x represent strafe left/right
-         * Let y represent rev/fwd
-         * Let z represent spin CCW/CW axes
-         * where each varies from -1 to +1.
-         * So:
-         * y = -1 corresponds to full speed reverse,
-         * y= +1 corresponds to full speed forward,
-         * x= -1 corresponds to full speed strafe left,
-         * x= +1 corresponds to full speed strafe right,
-         * z= -1 corresponds to full speed spin CCW,
-         * z= +1 corresponds to full speed spin CW
-         *
-         * Axis indexes:
-         * 1 - LeftX
-         * 2 - LeftY
-         * 3 - Triggers (Each trigger = 0 to 1, axis value = right - left)
-         * 4 - RightX
-         * 5 - RightY
-         * 6 - DPad Left/Right
-         */
-
-//        double rawLeftX = joystick.getRawAxis(ControllerMap.LEFT_STICK_X_AXIS);
-//        double rawLeftY = joystick.getRawAxis(ControllerMap.LEFT_STICK_Y_AXIS);
-////        double rawZ = joystick.getRawAxis(ControllerMap.TRIGGERS);
-//
-//        double scaledLeftX = Utils.scale(rawLeftX);
-//        double scaledLeftY = Utils.scale(rawLeftY);
-//
-//        double right = -scaledLeftX;
-//        double forward = scaledLeftY;
-//        double rotation = -rawZ;
-//        double clockwise = rawZ;
-//
-//        this.drive.mecanumDrive_Cartesian(right, -forward, rotation, clockwise);
-    }
-
-    public void mecanum_drive(final double forward, final double right, final double rotation) {
-        this.drive.mecanumDrive_Cartesian(right, forward, rotation, 0);
-    }
-
-    public void arcade_drive(final double forward, final double rotation) {
-        // put arcade drive logic here
-    }
+    
 
     @Override
     public void initDefaultCommand() {
-        Debug.println("[DriveTrain.initDefaultCommand()] Setting default command to " + DriveWithGamepad.class.getName());
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-        setDefaultCommand(new DriveWithGamepad());
+      //  setDefaultCommand(new DriveWithGamepad());
+    }
+    public abstract double getSpeedInRPM();
+    public void updateStatus() {
+        double leftFrontMotorOutput  = this.leftFront.getOutputVoltage() / this.leftFront.getBusVoltage();
+        double leftRearMotorOutput   = this.leftRear.getOutputVoltage() / this.leftRear.getBusVoltage();
+        double rightFrontMotorOutput = this.rightFront.getOutputVoltage() / this.rightFront.getBusVoltage();
+        double rightRearMotorOutput  = this.rightRear.getOutputVoltage() / this.rightRear.getBusVoltage();
+
+        SmartDashboard.putString("Control Mode", "Speed");
+        SmartDashboard.putNumber("LF motor output", leftFrontMotorOutput);
+        SmartDashboard.putNumber("LR motor output", leftRearMotorOutput);
+        SmartDashboard.putNumber("RF motor output", rightFrontMotorOutput);
+        SmartDashboard.putNumber("RR motor output", rightRearMotorOutput);
+        
+
+        SmartDashboard.putNumber("left speed", this.leftFront.getSpeed());
+        SmartDashboard.putNumber("right speed", this.rightFront.getSpeed());
     }
     
-    public void updateStatus() {
-    	/*
-    	 * TODO: Put in SmartDashboard values to monitor here
-    	 */
+
+    // ==================================================================================
+    //                    P R O T E C T E D   M E T H O D S
+    // ==================================================================================
+
+    protected CANTalon createMaster(final int deviceNumber, boolean isCAN) {
+        try {
+            CANTalon talon = new CANTalon(deviceNumber);
+            
+            if(isCAN){
+	            talon.changeControlMode(TalonControlMode.Speed);
+	            talon.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+	            int allowableClosedLoopErr = (int) (0.1 * AMOpticalEncoderSpecs.PULSES_PER_REV);
+	            talon.setAllowableClosedLoopErr(allowableClosedLoopErr);
+
+	            talon.setProfile(0);
+	            talon.setP(P_VALUE);
+	            talon.setI(I_VALUE);
+	            talon.setD(D_VALUE);
+	            talon.setF(F_VALUE);
+	            talon.setIZone(IZONE_VALUE);
+
+	            talon.setCloseLoopRampRate(CAN_RAMP_RATE);
+	                        
+	            talon.reverseSensor(false);
+	            talon.configEncoderCodesPerRev(AMOpticalEncoderSpecs.CYCLES_PER_REV);
+
+
+
+            } else {
+            	talon.changeControlMode(TalonControlMode.PercentVbus); 
+            	talon.setVoltageRampRate(VOLTAGE_RAMP_RATE);
+            }
+            talon.configNominalOutputVoltage(+0.0f, -0.0f);
+            talon.configPeakOutputVoltage(+12.0f, -12.0f);
+
+            
+            // keep the motor and sensor in phase
+            
+
+            // Soft limits can be used to disable motor drive when the sensor position
+            // is outside of the limits
+            talon.setForwardSoftLimit(CIMMotorSpecs.MAX_SPEED_RPM);
+            talon.enableForwardSoftLimit(false);
+            talon.setReverseSoftLimit(-CIMMotorSpecs.MAX_SPEED_RPM);
+            talon.enableReverseSoftLimit(false);
+
+            // brake mode: true for brake; false for coast
+            talon.enableBrakeMode(true);
+
+            // Voltage ramp rate in volts/sec (works regardless of mode)
+            // 0V to 6V in one sec
+//            talon.setVoltageRampRate(6.0);
+
+            // The allowable close-loop error whereby the motor output is neutral regardless
+            // of the calculated result. When the closed-loop error is within the allowable
+            // error the PID terms are zeroed (F term remains in effect) and the integral
+            // accumulator is cleared. Value is in the same units as the closed loop error.
+            // Initially make the allowable error 10% of a revolution
+            
+
+            return talon;
+            
+        } catch (Exception e) {
+            Debug.err(e.getLocalizedMessage());
+            throw e;
+        }
+
     }
+    
+    protected CANTalon createSlave(final int deviceNumber, final CANTalon masterMotor) {
+        CANTalon slaveMotor = new CANTalon(deviceNumber);
+        slaveMotor.changeControlMode(TalonControlMode.Follower);
+        slaveMotor.set(masterMotor.getDeviceID());
+        System.out.printf("Slave motor set to id %d%n", masterMotor.getDeviceID());
+        return slaveMotor;
+    }
+
 }

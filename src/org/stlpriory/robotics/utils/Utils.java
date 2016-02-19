@@ -3,12 +3,13 @@
  * and open the template in the editor.
  */
 package org.stlpriory.robotics.utils;
-import org.stlpriory.robotics.utils.Constants;
 
 /**
  * Utility class
  */
 public class Utils {
+    // conversion factor from feet to 'TALON' units
+    public static final double TALON_UNIT = 63;
     
     // Threshold below which joystick inputs will be ignored
     public static final double JOYSTICK_THRESHOLD = 0.2;
@@ -22,7 +23,7 @@ public class Utils {
      * specified.
      */
     public static double TALONdistance(double feet){
-    	double TALON = feet * (Constants.TALON_UNIT);
+    	double TALON = feet * (TALON_UNIT);
     	return TALON;
     }
     public static double roundDecimals(double x, int decimals) {

@@ -5,10 +5,10 @@ import org.stlpriory.robotics.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class Hold extends Command {
-    public Hold()
-    {
+    public Hold() {
         requires(Robot.shooter);
     }
+
     @Override
     protected void initialize() {
     }

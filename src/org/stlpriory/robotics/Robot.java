@@ -1,112 +1,117 @@
 
 package org.stlpriory.robotics;
 
-import org.stlpriory.robotics.commands.autonomous.AutonomousCommand;
-import org.stlpriory.robotics.subsystems.BallHolder;
-import org.stlpriory.robotics.subsystems.ExampleSubsystem;
-import org.stlpriory.robotics.subsystems.Shooter;
-import org.stlpriory.robotics.subsystems.TestTankDrivetrain;
+import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
+import org.stlpriory.robotics.subsystems.CANDrivetrainSubsystem;
+import org.stlpriory.robotics.subsystems.DrivetrainSubsystem;
+import org.stlpriory.robotics.subsystems.ShooterSubsystem;
 import org.stlpriory.robotics.utils.Debug;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-//import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
+ * The VM is configured to automatically run this class, and to call the functions corresponding 
+ * to each mode, as described in the IterativeRobot documentation. If you change the name of this 
+ * class or the package after creating this project, you must also update the manifest file in the 
+ * resource directory.
  */
 public class Robot extends IterativeRobot {
+    public enum RobotType {PNEUMABOT, TANKBOT};
 
-    public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-    public static OI oi;
-    public static TestTankDrivetrain drivetrain = new TestTankDrivetrain();
-    public static BallHolder ballHolder = new BallHolder();
-	public static Shooter shooter = new Shooter();
-//    private Timer timer = new Timer();
+    // Select which robot to compile for
+    public static final RobotType robotType = RobotType.PNEUMABOT;
 
-    Command autonomousCommand;
-
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
-    public void robotInit() {
-        System.out.println("Starting robot");
-        oi = new OI();
-        
-        // See all commands running on the scheduler
-        if (Debug.isDebugMode()) SmartDashboard.putData(Scheduler.getInstance());
-    }
+    // Initialize robot subsystems
+    public static final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
+    public static final BallHolderSubsystem ballHolder = new BallHolderSubsystem();
+    public static final ShooterSubsystem shooter = new ShooterSubsystem();
     
-    public void disabledPeriodic() {
-        Scheduler.getInstance().run();
-        updateStatus();
+    // Human operator interface
+    public static final OI oi = new OI();
+    public Joystick xboxController;
+    
+    private Command autonomousCommand;
+    private Timer timer = new Timer();
+
+    // ==================================================================================
+    //                            ROBOT INIT SECTION
+    // ==================================================================================
+
+    @Override
+    public void robotInit() {
+        Debug.println("[Robot.robotInit()] Initializing...");
+        timer.start();
+
+        // Initialize the human operator interface ...
+        this.xboxController = oi.getController();
+        
+        timer.stop();
+        Debug.println("[RoboRebels.robotInit()] Done in " + timer.get() * 1e6 + " ms");
+        Debug.println("------------------------------------------");
+        Debug.println("           Robot ready!");
+        Debug.println("------------------------------------------");
     }
 
+    @Override
+    public void disabledInit() {
+    }
+
+    // ==================================================================================
+    //                          AUTONOMOUS MODE SECTION
+    // ==================================================================================
+
+    @Override
     public void autonomousInit() {
-
-        autonomousCommand = new AutonomousCommand();
-        if (autonomousCommand != null) { 
-            autonomousCommand.start();
-        }
     }
 
-    /**
-     * This function is called periodically during autonomous
-     */
+    @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
     }
 
-    public void teleopInit() {
-        // This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
-        if (autonomousCommand != null) autonomousCommand.cancel();
+    // ==================================================================================
+    //                            TELEOP MODE SECTION
+    // ==================================================================================
 
+    @Override
+    public void teleopInit() {
+        if (autonomousCommand != null) {
+            autonomousCommand.cancel();
+        }
+        // Record initial status values
         updateStatus();
     }
 
-    /**
-     * This function is called when the disabled button is hit.
-     * You can use it to reset subsystems before shutting down.
-     */
-    public void disabledInit(){
-
-    }
-
-    /**
-     * This function is called periodically during operator control
-     */
+    @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        // Record updated status values
         updateStatus();
     }
     
-    /**
-     * This function is called periodically during test mode
-     */
-    public void testPeriodic() {
-        LiveWindow.run();
+    @Override
+    public void disabledPeriodic() {
     }
-    
+
     /**
      * Call the updateStatus methods on all subsystems
      */
     public void updateStatus() {
-    	if (Debug.isDebugMode()) {
-            drivetrain.updateStatus();
-            ballHolder.updateStatus();
-            shooter.updateStatus();
-    	}
+         drivetrain.updateStatus();
+         ballHolder.updateStatus();
+        // shooter.updateStatus();
     }
+
+    @Override
+    public void testInit() {
+        LiveWindow.run();
+    }
+
+    
     
 }
