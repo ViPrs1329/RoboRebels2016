@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Robot drive train subsystem consisting of 4 CIM motors configured in 2 master/slave arrangements. 
  * The motors are controlled by Talon SRX speed controllers through a CAN bus and encoder feedback.
  */
-public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
+public class CANDrivetrainSubsystem extends Subsystem {
 
     public static double P_VALUE = 0.5;
     public static double I_VALUE = 0.02;
@@ -56,14 +56,14 @@ public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
         Debug.println("   F = " + F_VALUE);
         Debug.println("   I Zone = " + IZONE_VALUE);
 
-        this.leftFront  = createMaster(LF_MOTOR_ID);
-        this.rightFront = createMaster(RF_MOTOR_ID);
+        this.leftFront  = createMaster(DrivetrainSubsystem.LF_MOTOR_ID);
+        this.rightFront = createMaster(DrivetrainSubsystem.RF_MOTOR_ID);
         if (MASTER_SLAVE_MODE) {
-            this.leftRear  = createSlave(LR_MOTOR_ID, this.leftFront);          
-            this.rightRear = createSlave(RR_MOTOR_ID, this.rightFront);            
+            this.leftRear  = createSlave(DrivetrainSubsystem.LR_MOTOR_ID, this.leftFront);          
+            this.rightRear = createSlave(DrivetrainSubsystem.RR_MOTOR_ID, this.rightFront);            
         } else {
-            this.leftRear  = createMaster(LR_MOTOR_ID);
-            this.rightRear = createMaster(RR_MOTOR_ID);
+            this.leftRear  = createMaster(DrivetrainSubsystem.LR_MOTOR_ID);
+            this.rightRear = createMaster(DrivetrainSubsystem.RR_MOTOR_ID);
         }
 
         if (Robot.robotType == RobotType.TANKBOT) {
@@ -122,7 +122,7 @@ public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
     // ==================================================================================
 
     @Override
-    protected CANTalon createMaster(final int deviceNumber) {
+    static protected CANTalon createMaster(final int deviceNumber) {
         try {
             CANTalon talon = new CANTalon(deviceNumber);
             talon.changeControlMode(TalonControlMode.Speed);
@@ -138,7 +138,7 @@ public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
 
             // Soft limits can be used to disable motor drive when the sensor position
             // is outside of the limits
-            talon.setForwardSoftLimit( CIMMotorSpecs.MAX_SPEED_RPM);
+            talon.setForwardSoftLimit(CIMMotorSpecs.MAX_SPEED_RPM);
             talon.enableForwardSoftLimit(false);
             talon.setReverseSoftLimit(-CIMMotorSpecs.MAX_SPEED_RPM);
             talon.enableReverseSoftLimit(false);
@@ -178,10 +178,61 @@ public class CANDrivetrainSubsystem extends DrivetrainSubsystem {
             throw e;
         }
     }
-    public void tankDrive(final double leftStickValue, final double rightStickValue)
-    {
-    	System.out.printf("Max speed is %d, and the speed is %f%n", CIMMotorSpecs.MAX_SPEED_RPS, CIMMotorSpecs.MAX_SPEED_RPM * leftStickValue);
-    	super.tankDrive(leftStickValue, rightStickValue);
+
+    static protected CANTalon createSlave(final int deviceNumber, final CANTalon masterMotor) {
+        CANTalon slaveMotor = new CANTalon(deviceNumber);
+        slaveMotor.changeControlMode(TalonControlMode.Follower);
+        slaveMotor.set(masterMotor.getDeviceID());
+        System.out.printf("Slave motor set to id %d%n", masterMotor.getDeviceID());
+        return slaveMotor;
     }
 
+
+
+    public void tankDrive(final double leftStickValue, final double rightStickValue)
+    {
+        drive.tankDrive(leftStickValue, rightStickValue);
+    }
+
+    public void tankDrive(final Joystick joystick) {
+        double leftStickValue  = Utils.scale(joystick.getRawAxis(OI.LEFT_STICK_Y_AXIS) );
+        double rightStickValue = Utils.scale(joystick.getRawAxis(OI.RIGHT_STICK_Y_AXIS) );
+        tankDrive(leftStickValue, rightStickValue);
+    }
+    public void stop() {
+        this.drive.stopMotor();
+    }
+    @Override
+    public void initDefaultCommand() {
+        setDefaultCommand(new DriveWithGamepad());
+    }    
+    public double getSpeedInRPM() {
+        // Since the 2 left motors and 2 right motors are paired in a 
+        // master/slave arrangement we only need to check the master
+        Joystick joystick  = Robot.oi.getController();
+        double leftYstick  = joystick.getRawAxis(OI.LEFT_STICK_Y_AXIS);
+        double rightYstick = joystick.getRawAxis(OI.RIGHT_STICK_Y_AXIS);
+        double leftSide  = leftYstick * CIMMotorSpecs.MAX_SPEED_RPM;
+        double rightSide = rightYstick * CIMMotorSpecs.MAX_SPEED_RPM;
+        
+        return (leftSide + rightSide) / 2.0;
+    }
+
+    public void updateStatus() {
+        double leftFrontMotorOutput  = this.leftFront.getOutputVoltage() / this.leftFront.getBusVoltage();
+        double leftRearMotorOutput   = this.leftRear.getOutputVoltage() / this.leftRear.getBusVoltage();
+        double rightFrontMotorOutput = this.rightFront.getOutputVoltage() / this.rightFront.getBusVoltage();
+        double rightRearMotorOutput  = this.rightRear.getOutputVoltage() / this.rightRear.getBusVoltage();
+
+        SmartDashboard.putString("Control Mode", rightFront.getControlMode().toString());
+        SmartDashboard.putNumber("LF motor output", leftFrontMotorOutput);
+        SmartDashboard.putNumber("LR motor output", leftRearMotorOutput);
+        SmartDashboard.putNumber("RF motor output", rightFrontMotorOutput);
+        SmartDashboard.putNumber("RR motor output", rightRearMotorOutput);
+
+        SmartDashboard.putNumber("LF encoder output", leftFront.get(););
+        SmartDashboard.putNumber("LR encoder output", leftRear.get());
+        SmartDashboard.putNumber("RF encoder output", rightFront.get());
+        SmartDashboard.putNumber("RR encoder output", rightRear.get());
+    }
 }

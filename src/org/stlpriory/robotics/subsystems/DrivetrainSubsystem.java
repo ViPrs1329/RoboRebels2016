@@ -28,12 +28,6 @@ public class DrivetrainSubsystem extends Subsystem {
     public static final int RF_MOTOR_ID = 2;
     public static final int RR_MOTOR_ID = 1;
 
-    public static final double P_VALUE = 0.5;
-    public static final double I_VALUE = 0.02;
-    public static final double D_VALUE = 0;
-    public static final double F_VALUE = 0.5;
-    public static final int IZONE_VALUE = (int) (0.2 * AMOpticalEncoderSpecs.PULSES_PER_REV);
-    
     public static final boolean MASTER_SLAVE_MODE = true;
 
     private final CANTalon rightFront;
@@ -92,8 +86,8 @@ public class DrivetrainSubsystem extends Subsystem {
     }
 
     public void tankDrive(final Joystick joystick) {
-        double leftStickValue  = Utils.scale( joystick.getRawAxis(OI.LEFT_STICK_Y_AXIS) );
-        double rightStickValue = Utils.scale( joystick.getRawAxis(OI.RIGHT_STICK_Y_AXIS) );
+        double leftStickValue  = Utils.scale(joystick.getRawAxis(OI.LEFT_STICK_Y_AXIS) );
+        double rightStickValue = Utils.scale(joystick.getRawAxis(OI.RIGHT_STICK_Y_AXIS) );
         tankDrive(leftStickValue, rightStickValue);
     }
 
