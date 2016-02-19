@@ -23,9 +23,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * The motors are controlled by Talon SRX speed controllers through a CAN bus and encoder feedback.
  */
 public class CANDrivetrainSubsystem extends Subsystem {
-
-    public static double P_VALUE = 0.5;
-    public static double I_VALUE = 0.02;
+//    public static double P_VALUE = .5;
+//    public static double I_VALUE = 0.02;
+//    public static double D_VALUE = 0;
+	
+	
+    public static double P_VALUE = .41;
+    public static double I_VALUE = 0.01;
     public static double D_VALUE = 0;
     public static double F_VALUE = 0.5;
     public static int IZONE_VALUE = (int) (0.2 * AMOpticalEncoderSpecs.PULSES_PER_REV);
