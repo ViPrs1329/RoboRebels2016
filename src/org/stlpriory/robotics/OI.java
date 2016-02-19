@@ -4,8 +4,6 @@ import org.stlpriory.robotics.commands.BallHolderDown;
 import org.stlpriory.robotics.commands.BallHolderStop;
 import org.stlpriory.robotics.commands.BallHolderUp;
 import org.stlpriory.robotics.commands.Hold;
-import org.stlpriory.robotics.commands.HolderToBottom;
-import org.stlpriory.robotics.commands.HolderToTop;
 import org.stlpriory.robotics.commands.Suck;
 import org.stlpriory.robotics.commands.Throw;
 import org.stlpriory.robotics.utils.Debug;

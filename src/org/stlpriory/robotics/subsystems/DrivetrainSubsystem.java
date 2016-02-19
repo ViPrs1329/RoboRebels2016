@@ -4,7 +4,6 @@ import org.stlpriory.robotics.OI;
 import org.stlpriory.robotics.Robot;
 import org.stlpriory.robotics.Robot.RobotType;
 import org.stlpriory.robotics.commands.drivetrain.DriveWithGamepad;
-import org.stlpriory.robotics.hardware.AMOpticalEncoderSpecs;
 import org.stlpriory.robotics.hardware.CIMMotorSpecs;
 import org.stlpriory.robotics.utils.Debug;
 import org.stlpriory.robotics.utils.Utils;
@@ -24,9 +23,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DrivetrainSubsystem extends Subsystem {
 
     public static final int LF_MOTOR_ID = 3;
-    public static final int LR_MOTOR_ID = 4;
+    public static final int LR_MOTOR_ID = 1;
     public static final int RF_MOTOR_ID = 2;
-    public static final int RR_MOTOR_ID = 1;
+    public static final int RR_MOTOR_ID = 4;
 
     public static final boolean MASTER_SLAVE_MODE = true;
 

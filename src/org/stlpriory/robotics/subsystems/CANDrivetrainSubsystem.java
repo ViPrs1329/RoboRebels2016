@@ -1,16 +1,21 @@
 package org.stlpriory.robotics.subsystems;
 
+import org.stlpriory.robotics.OI;
 import org.stlpriory.robotics.Robot;
 import org.stlpriory.robotics.Robot.RobotType;
+import org.stlpriory.robotics.commands.drivetrain.DriveWithGamepad;
 import org.stlpriory.robotics.hardware.AMOpticalEncoderSpecs;
 import org.stlpriory.robotics.hardware.CIMMotorSpecs;
 import org.stlpriory.robotics.utils.Debug;
+import org.stlpriory.robotics.utils.Utils;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -58,7 +63,7 @@ public class CANDrivetrainSubsystem extends Subsystem {
 
         this.leftFront  = createMaster(DrivetrainSubsystem.LF_MOTOR_ID);
         this.rightFront = createMaster(DrivetrainSubsystem.RF_MOTOR_ID);
-        if (MASTER_SLAVE_MODE) {
+        if (DrivetrainSubsystem.MASTER_SLAVE_MODE) {
             this.leftRear  = createSlave(DrivetrainSubsystem.LR_MOTOR_ID, this.leftFront);          
             this.rightRear = createSlave(DrivetrainSubsystem.RR_MOTOR_ID, this.rightFront);            
         } else {
@@ -86,42 +91,12 @@ public class CANDrivetrainSubsystem extends Subsystem {
 
         Debug.println("[CANDrivetrain Subsystem] Instantiation complete.");
     }
-
-    // ==================================================================================
-    //                      P U B L I C   M E T H O D S
-    // ==================================================================================
-
-    @Override
-    public void updateStatus() {
-        double leftFrontMotorOutput  = this.leftFront.getOutputVoltage() / this.leftFront.getBusVoltage();
-        double leftRearMotorOutput   = this.leftRear.getOutputVoltage() / this.leftRear.getBusVoltage();
-        double rightFrontMotorOutput = this.rightFront.getOutputVoltage() / this.rightFront.getBusVoltage();
-        double rightRearMotorOutput  = this.rightRear.getOutputVoltage() / this.rightRear.getBusVoltage();
-
-        SmartDashboard.putString("Control Mode", "Speed");
-        SmartDashboard.putNumber("LF motor output", leftFrontMotorOutput);
-        SmartDashboard.putNumber("LR motor output", leftRearMotorOutput);
-        SmartDashboard.putNumber("RF motor output", rightFrontMotorOutput);
-        SmartDashboard.putNumber("RR motor output", rightRearMotorOutput);
-
-        SmartDashboard.putNumber("left speed", this.leftFront.getSpeed());
-        SmartDashboard.putNumber("right speed", this.rightFront.getSpeed());
-    }
     
-    public double getSpeedInRPM() {
-        // Since the 2 left motors and 2 right motors are paired in a 
-        // master/slave arrangement we only need to check the master
-        double leftSide  = this.leftFront.getSpeed();
-        double rightSide = this.rightFront.getSpeed();
-        
-        return (leftSide + rightSide) / 2.0;
-    }
     
     // ==================================================================================
     //                    P R O T E C T E D   M E T H O D S
     // ==================================================================================
 
-    @Override
     static protected CANTalon createMaster(final int deviceNumber) {
         try {
             CANTalon talon = new CANTalon(deviceNumber);
@@ -230,7 +205,7 @@ public class CANDrivetrainSubsystem extends Subsystem {
         SmartDashboard.putNumber("RF motor output", rightFrontMotorOutput);
         SmartDashboard.putNumber("RR motor output", rightRearMotorOutput);
 
-        SmartDashboard.putNumber("LF encoder output", leftFront.get(););
+        SmartDashboard.putNumber("LF encoder output", leftFront.get());
         SmartDashboard.putNumber("LR encoder output", leftRear.get());
         SmartDashboard.putNumber("RF encoder output", rightFront.get());
         SmartDashboard.putNumber("RR encoder output", rightRear.get());

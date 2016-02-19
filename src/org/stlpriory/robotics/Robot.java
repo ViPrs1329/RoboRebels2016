@@ -27,7 +27,7 @@ public class Robot extends IterativeRobot {
     public static final RobotType robotType = RobotType.PNEUMABOT;
 
     // Initialize robot subsystems
-    public static final DrivetrainSubsystem drivetrain = new CANDrivetrainSubsystem();
+    public static final DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
     public static final BallHolderSubsystem ballHolder = new BallHolderSubsystem();
     public static final ShooterSubsystem shooter = new ShooterSubsystem();
     

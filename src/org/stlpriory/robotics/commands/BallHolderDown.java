@@ -5,7 +5,6 @@ import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
 import org.stlpriory.robotics.subsystems.BallHolderSubsystem.Direction;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
