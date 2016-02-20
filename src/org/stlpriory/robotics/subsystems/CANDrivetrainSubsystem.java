@@ -170,7 +170,14 @@ public class CANDrivetrainSubsystem extends Subsystem {
 
     public void tankDrive(final double leftStickValue, final double rightStickValue)
     {
-        drive.tankDrive(leftStickValue, rightStickValue);
+//        drive.tankDrive(leftStickValue, rightStickValue);
+    	leftFront.set(leftStickValue * CIMMotorSpecs.MAX_SPEED_RPM);
+    	rightFront.set(rightStickValue * CIMMotorSpecs.MAX_SPEED_RPM);
+    	if(!DrivetrainSubsystem.MASTER_SLAVE_MODE)
+    	{
+    		leftRear.set(leftStickValue * CIMMotorSpecs.MAX_SPEED_RPM);
+    		rightRear.set(rightStickValue * CIMMotorSpecs.MAX_SPEED_RPM);
+    	}
     }
 
     public void tankDrive(final Joystick joystick) {

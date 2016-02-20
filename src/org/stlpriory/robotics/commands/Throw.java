@@ -17,6 +17,8 @@ public class Throw extends Command {
     @Override
     protected void execute() {
         Robot.shooter.shoot();
+        // if(they're going fast enough)
+        Robot.shooter.extendLoaderArm();
     }
 
     @Override
@@ -26,12 +28,14 @@ public class Throw extends Command {
 
     @Override
     protected void end() {
+    	Robot.shooter.retractLoaderArm();
         Robot.shooter.stop();
     }
 
     @Override
     protected void interrupted() {
         Robot.shooter.stop();
+        Robot.shooter.retractLoaderArm();
     }
 
 }

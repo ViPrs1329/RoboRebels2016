@@ -7,11 +7,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class BallHolderSubsystem extends Subsystem {
-    public static final int RIGHT_WINDOW_MOTOR = 0;
+    public static final int RIGHT_WINDOW_MOTOR = 1;
     public static final int LEFT_WINDOW_MOTOR = 2;
 
     public static final int POT_CHANNEL = 0;
     public static final int SWITCH_CHANNEL = 1;
+    
     
     /*
      * The scaling factor multiplied by the analog voltage value to obtain the angle in degrees
@@ -49,7 +50,7 @@ public class BallHolderSubsystem extends Subsystem {
     };
 
     private final Talon rightMotor;
-    private final Talon leftMotor;
+    private final Talon leftMotor; 
     
     private final AnalogPotentiometer pot;
     private final double potOffsetInDeg;

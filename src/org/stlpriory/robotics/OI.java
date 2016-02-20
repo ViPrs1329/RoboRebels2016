@@ -10,6 +10,7 @@ import org.stlpriory.robotics.utils.Debug;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * This class is the glue that binds the controls on the physical operator interface 
@@ -78,7 +79,6 @@ public class OI {
 
         this.holderUpButton = new JoystickButton(this.xboxController, B_BUTTON);
         this.holderUpButton.whileHeld(new BallHolderUp(true));
-        this.holderUpButton.whenReleased(new BallHolderStop());
 
         this.holderDownButton = new JoystickButton(this.xboxController, A_BUTTON);
         this.holderDownButton.whileHeld(new BallHolderDown(true));
@@ -98,7 +98,7 @@ public class OI {
         this.holderBottom = new JoystickButton(this.xboxController, LEFT_BUMPER);
         this.holderBottom.whenPressed(new BallHolderDown(false));
 
-        this.forceButton = new JoystickButton(this.xboxController, X_BUTTON);
+        this.forceButton = new JoystickButton(this.xboxController, LEFT_STICK);
         Debug.println("[OI] Instantiation complete.");
     }
 

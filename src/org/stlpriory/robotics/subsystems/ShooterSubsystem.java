@@ -1,18 +1,18 @@
 package org.stlpriory.robotics.subsystems;
 
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterSubsystem extends Subsystem {
-    public static final int EXTEND_CHANNEL = 4;
+    public static final int SERVO_CHANNEL = 9;
 
     public static final int LEFT_MOTOR_CHANNEL  = 3;
     public static final int LEFT_MOTOR_ENCODER_CHANNEL_A = 6;
     public static final int LEFT_MOTOR_ENCODER_CHANNEL_B = 7;
     
-    public static final int RIGHT_MOTOR_CHANNEL = 1;
+    public static final int RIGHT_MOTOR_CHANNEL = 0;
     public static final int RIGHT_MOTOR_ENCODER_CHANNEL_A = 8;
     public static final int RIGHT_MOTOR_ENCODER_CHANNEL_B = 9;
     
@@ -20,13 +20,17 @@ public class ShooterSubsystem extends Subsystem {
     public static final double SUCK_SPEED = 1;
     public static final double SHOOT_SPEED = 1;
 
+	private static final double KICKER_OUT_POSITION = 0;
+
+	private static final double KICKER_IN_POSITION = 180;
+
     private final Talon rightShooter;
     private final Talon leftShooter;
     
 //    private final Encoder rightEncoder;
 //    private final Encoder leftEncoder; 
     
-    private final Solenoid extendLoaderArm;
+    private final Servo kicker;
 
     // ==================================================================================
     //                        C O N S T R U C T O R S
@@ -42,7 +46,7 @@ public class ShooterSubsystem extends Subsystem {
 //        this.leftEncoder  = new Encoder(LEFT_MOTOR_ENCODER_CHANNEL_A, LEFT_MOTOR_ENCODER_CHANNEL_B, true);
 //        this.leftEncoder.setDistancePerPulse(CIMcoderSpecs.PULSES_PER_REV);
         
-        this.extendLoaderArm  = new Solenoid(EXTEND_CHANNEL);
+        this.kicker  = new Servo(SERVO_CHANNEL);
     }
     
     // ==================================================================================
@@ -50,15 +54,15 @@ public class ShooterSubsystem extends Subsystem {
     // ==================================================================================
 
     public void extendLoaderArm() {
-        this.extendLoaderArm.set(true);
+        this.kicker.set(KICKER_OUT_POSITION);
     }
 
     public void retractLoaderArm() {
-        this.extendLoaderArm.set(false);
+        this.kicker.set(KICKER_IN_POSITION);
     }
     
     public boolean isLoaderArmRetracted() {
-        return !this.extendLoaderArm.get();
+        return this.kicker.get() == KICKER_IN_POSITION;
     }
     
     public void startShooter() {

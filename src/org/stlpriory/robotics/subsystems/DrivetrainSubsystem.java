@@ -22,10 +22,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DrivetrainSubsystem extends Subsystem {
 
-    public static final int LF_MOTOR_ID = 3;
-    public static final int LR_MOTOR_ID = 1;
-    public static final int RF_MOTOR_ID = 2;
-    public static final int RR_MOTOR_ID = 4;
+    public static final int LF_MOTOR_ID = 2;
+    public static final int LR_MOTOR_ID = 4;
+    public static final int RF_MOTOR_ID = 3;
+    public static final int RR_MOTOR_ID = 0;
 
     public static final boolean MASTER_SLAVE_MODE = true;
 
@@ -34,7 +34,7 @@ public class DrivetrainSubsystem extends Subsystem {
     private final CANTalon leftFront;
     private final CANTalon leftRear;
 
-    public final RobotDrive drive;
+//    public final RobotDrive drive;
 
     // ==================================================================================
     //                        C O N S T R U C T O R S
@@ -58,20 +58,20 @@ public class DrivetrainSubsystem extends Subsystem {
             this.rightRear = createMaster(RR_MOTOR_ID);
         }
 
-        if (Robot.robotType == RobotType.TANKBOT) {
-            this.drive = new RobotDrive(this.rightFront, this.leftFront);
-        } else {
-            this.drive = new RobotDrive(this.leftFront, this.rightFront);
-        }
-        this.drive.setSafetyEnabled(false);
-        this.drive.setExpiration(0.1);
-        this.drive.setSensitivity(0.5);
+//        if (Robot.robotType == RobotType.TANKBOT) {
+//            this.drive = new RobotDrive(this.rightFront, this.leftFront);
+//        } else {
+//            this.drive = new RobotDrive(this.leftFront, this.rightFront);
+//        }
+//        this.drive.setSafetyEnabled(false);
+//        this.drive.setExpiration(0.1);
+//        this.drive.setSensitivity(0.5);
 
         // Invert the left side motors
         // Note that, since we only give two motors in the constructor, it assumes that they are
         // the rear ones, so we only invert them.  
-        this.drive.setInvertedMotor(MotorType.kRearRight, true);
-        this.drive.setInvertedMotor(MotorType.kRearLeft, true);
+//        this.drive.setInvertedMotor(MotorType.kRearRight, true);
+//        this.drive.setInvertedMotor(MotorType.kRearLeft, true);
 
         Debug.println("[DriveTrain Subsystem] Instantiation complete.");
     }
@@ -81,7 +81,14 @@ public class DrivetrainSubsystem extends Subsystem {
     // ==================================================================================
 
     public void tankDrive(final double leftStickValue, final double rightStickValue) {
-        this.drive.tankDrive(leftStickValue, rightStickValue);
+//        this.drive.tankDrive(leftStickValue, rightStickValue);
+    	leftFront.set(-leftStickValue);
+    	rightFront.set(rightStickValue);
+    	if(!MASTER_SLAVE_MODE)
+    	{
+    		leftRear.set(-leftStickValue);
+    		rightRear.set(rightStickValue);
+    	}
     }
 
     public void tankDrive(final Joystick joystick) {
@@ -91,7 +98,13 @@ public class DrivetrainSubsystem extends Subsystem {
     }
 
     public void stop() {
-        this.drive.stopMotor();
+        rightFront.set(0);
+        leftFront.set(0);
+        if(!MASTER_SLAVE_MODE)
+        {
+        	leftRear.set(0);
+        	rightRear.set(0);
+        }
     }
 
     @Override
@@ -117,11 +130,16 @@ public class DrivetrainSubsystem extends Subsystem {
         double rightFrontMotorOutput = this.rightFront.getOutputVoltage() / this.rightFront.getBusVoltage();
         double rightRearMotorOutput  = this.rightRear.getOutputVoltage() / this.rightRear.getBusVoltage();
 
-        SmartDashboard.putString("Control Mode", "PercentVbus");
+        SmartDashboard.putString("Control Mode", rightFront.getControlMode().toString());
         SmartDashboard.putNumber("LF motor output", leftFrontMotorOutput);
         SmartDashboard.putNumber("LR motor output", leftRearMotorOutput);
         SmartDashboard.putNumber("RF motor output", rightFrontMotorOutput);
         SmartDashboard.putNumber("RR motor output", rightRearMotorOutput);
+        
+        SmartDashboard.putNumber("LF power draw", leftFront.getOutputCurrent());
+        SmartDashboard.putNumber("LR power draw", leftRear.getOutputCurrent());
+        SmartDashboard.putNumber("RF power draw", rightFront.getOutputCurrent());
+        SmartDashboard.putNumber("RR power draw", rightRear.getOutputCurrent());
     }
 
     // ==================================================================================
@@ -141,7 +159,7 @@ public class DrivetrainSubsystem extends Subsystem {
 
             // Voltage ramp rate in volts/sec (works regardless of mode)
             // (e.g. setVoltageRampRate(6.0) results in 0V to 6V in one sec)
-            talon.setVoltageRampRate(12.0);
+            talon.setVoltageRampRate(0);
 
             return talon;
 
