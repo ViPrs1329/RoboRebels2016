@@ -104,7 +104,7 @@ public class Robot extends IterativeRobot {
     public void updateStatus() {
          drivetrain.updateStatus();
          ballHolder.updateStatus();
-        // shooter.updateStatus();
+         shooter.updateStatus();
     }
 
     @Override

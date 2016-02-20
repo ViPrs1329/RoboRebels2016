@@ -1,5 +1,8 @@
 package org.stlpriory.robotics.subsystems;
 
+import org.stlpriory.robotics.hardware.CIMcoderSpecs;
+
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -27,8 +30,8 @@ public class ShooterSubsystem extends Subsystem {
     private final Talon rightShooter;
     private final Talon leftShooter;
     
-//    private final Encoder rightEncoder;
-//    private final Encoder leftEncoder; 
+    private final Encoder rightEncoder;
+    private final Encoder leftEncoder; 
     
     private final Servo kicker;
 
@@ -42,9 +45,9 @@ public class ShooterSubsystem extends Subsystem {
         
         this.rightEncoder = new Encoder(RIGHT_MOTOR_ENCODER_CHANNEL_A, RIGHT_MOTOR_ENCODER_CHANNEL_B);
         this.rightEncoder.setDistancePerPulse(CIMcoderSpecs.PULSES_PER_REV);
-//        
-//        this.leftEncoder  = new Encoder(LEFT_MOTOR_ENCODER_CHANNEL_A, LEFT_MOTOR_ENCODER_CHANNEL_B, true);
-//        this.leftEncoder.setDistancePerPulse(CIMcoderSpecs.PULSES_PER_REV);
+
+        this.leftEncoder  = new Encoder(LEFT_MOTOR_ENCODER_CHANNEL_A, LEFT_MOTOR_ENCODER_CHANNEL_B, true);
+        this.leftEncoder.setDistancePerPulse(CIMcoderSpecs.PULSES_PER_REV);
         
         this.kicker  = new Servo(SERVO_CHANNEL);
     }
@@ -126,6 +129,15 @@ public class ShooterSubsystem extends Subsystem {
         SmartDashboard.putNumber("Left shooter speed", this.leftShooter.getSpeed());
         SmartDashboard.putNumber("Right encoder speed", this.rightEncoder.getRate());
     }
+    
+    public double getRightSpeed()
+    {
+    	return rightEncoder.getRate();
+    }
+    
+    public double getLeftSpeed() {
+		return leftEncoder.getRate();
+	}
     
     // ==================================================================================
     //                    P R O T E C T E D   M E T H O D S
