@@ -2,3 +2,4 @@
 /build/
 /sysProps.xml
 /dist/
+*.class
