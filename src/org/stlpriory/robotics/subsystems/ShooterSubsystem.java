@@ -40,8 +40,8 @@ public class ShooterSubsystem extends Subsystem {
         this.rightShooter = new Talon(RIGHT_MOTOR_CHANNEL);
         this.leftShooter  = new Talon(LEFT_MOTOR_CHANNEL);
         
-//        this.rightEncoder = new Encoder(RIGHT_MOTOR_ENCODER_CHANNEL_A, RIGHT_MOTOR_ENCODER_CHANNEL_B, false);
-//        this.rightEncoder.setDistancePerPulse(CIMcoderSpecs.PULSES_PER_REV);
+        this.rightEncoder = new Encoder(RIGHT_MOTOR_ENCODER_CHANNEL_A, RIGHT_MOTOR_ENCODER_CHANNEL_B);
+        this.rightEncoder.setDistancePerPulse(CIMcoderSpecs.PULSES_PER_REV);
 //        
 //        this.leftEncoder  = new Encoder(LEFT_MOTOR_ENCODER_CHANNEL_A, LEFT_MOTOR_ENCODER_CHANNEL_B, true);
 //        this.leftEncoder.setDistancePerPulse(CIMcoderSpecs.PULSES_PER_REV);
@@ -124,6 +124,7 @@ public class ShooterSubsystem extends Subsystem {
     public void updateStatus() {
         SmartDashboard.putNumber("Right shooter speed", this.rightShooter.getSpeed());
         SmartDashboard.putNumber("Left shooter speed", this.leftShooter.getSpeed());
+        SmartDashboard.putNumber("Right encoder speed", this.rightEncoder.getRate());
     }
     
     // ==================================================================================
