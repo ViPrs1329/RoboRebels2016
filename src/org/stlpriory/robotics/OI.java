@@ -71,6 +71,8 @@ public class OI {
     private final JoystickButton holderTop;
     private final JoystickButton holderBottom;
     public final JoystickButton forceButton;
+    private final TriggerTrigger rightTriggerOn;
+    private final TriggerTrigger leftTriggerOn;
 
     public OI() {
         Debug.println("[OI] Instantiating ...");
@@ -99,6 +101,13 @@ public class OI {
         this.holderBottom.whenPressed(new BallHolderDown(false));
 
         this.forceButton = new JoystickButton(this.xboxController, LEFT_STICK);
+
+        this.rightTriggerOn = new TriggerTrigger(this.xboxController, RIGHT_TRIGGER);
+        rightTriggerOn.whilePressed(new DriveStraight(DriveStraight.Direction.FORWARD, rightTriggerOn.getPort()));
+
+        this.leftTriggerOn = new TriggerTrigger(this.xboxController, LEFT_TRIGGER);
+        leftTriggerOn.whilePressed(new DriveStraight(DriveStraight.Direction.REVERSE, leftTriggerOn.getPort()));
+
         Debug.println("[OI] Instantiation complete.");
     }
 
