@@ -27,7 +27,10 @@ public class Shoot extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(Robot.shooter.getSpeed() < ShooterSubsystem.MIN_SHOOTING_SPEED)
+    	{
+    		Robot.shooter.startShooter();
     		return;
+    	}
 		if(!shooting)
     	{
     		double times = 1;
