@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.CANTalon;
 public class Utils {
     // conversion factor from feet to 'TALON' units
     public static final double TALON_UNIT = 63;
-    
     // Threshold below which joystick inputs will be ignored
     public static final double JOYSTICK_THRESHOLD = 0.2;
 
@@ -28,7 +27,7 @@ public class Utils {
     	double TALON = feet * (TALON_UNIT);
     	return TALON;
     }
-    public static double getTalonTemp(CANTalon talon)
+    public static double getCANTalonTemp(CANTalon talon)
     {
     	return talon.getTemperature();
     }
