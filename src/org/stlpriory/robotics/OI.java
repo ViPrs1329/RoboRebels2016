@@ -1,7 +1,6 @@
 package org.stlpriory.robotics;
 
 import org.stlpriory.robotics.commands.BallHolderDown;
-import org.stlpriory.robotics.commands.BallHolderStop;
 import org.stlpriory.robotics.commands.BallHolderUp;
 import org.stlpriory.robotics.commands.Hold;
 import org.stlpriory.robotics.commands.Suck;
@@ -12,7 +11,6 @@ import org.stlpriory.robotics.utils.TriggerTrigger;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * This class is the glue that binds the controls on the physical operator interface 

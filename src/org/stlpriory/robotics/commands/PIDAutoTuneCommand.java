@@ -29,7 +29,8 @@ public class PIDAutoTuneCommand extends Command {
 
     // If the closed-loop output exceeds these settings the motor output is capped
     private final double posPeakOutput = +1023.0d;
-    private final double negPeakOutput = -1023.0d;
+    @SuppressWarnings("unused")
+	private final double negPeakOutput = -1023.0d;
 
     private String sensorStatus = "";
     private boolean reverseSensor = false;
