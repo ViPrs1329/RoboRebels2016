@@ -4,6 +4,8 @@
  */
 package org.stlpriory.robotics.utils;
 
+import edu.wpi.first.wpilibj.CANTalon;
+
 /**
  * Utility class
  */
@@ -25,6 +27,10 @@ public class Utils {
     public static double TALONdistance(double feet){
     	double TALON = feet * (TALON_UNIT);
     	return TALON;
+    }
+    public static double getTalonTemp(CANTalon talon)
+    {
+    	return talon.getTemperature();
     }
     public static double roundDecimals(double x, int decimals) {
         if (decimals > 9) {
