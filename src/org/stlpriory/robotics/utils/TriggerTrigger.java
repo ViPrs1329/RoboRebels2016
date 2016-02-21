@@ -1,12 +1,15 @@
 package org.stlpriory.robotics.utils;
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Trigger;
+
 public class TriggerTrigger extends Trigger {
     // This might be unnecessary, but I have a sneaking suspicion that the 
     // zero point for the triggers isn't 0, so I have this. 
     public static final double ZERO_POINT = .5;
     private Joystick joystick;
     private int port;
-    public RightTrigger(Joystick joystick, int port)
+    public TriggerTrigger(Joystick joystick, int port)
     {
         super();
         this.port = port;

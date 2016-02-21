@@ -6,7 +6,9 @@ import org.stlpriory.robotics.commands.BallHolderUp;
 import org.stlpriory.robotics.commands.Hold;
 import org.stlpriory.robotics.commands.Suck;
 import org.stlpriory.robotics.commands.Throw;
+import org.stlpriory.robotics.commands.drivetrain.DriveStraight;
 import org.stlpriory.robotics.utils.Debug;
+import org.stlpriory.robotics.utils.TriggerTrigger;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -103,10 +105,10 @@ public class OI {
         this.forceButton = new JoystickButton(this.xboxController, LEFT_STICK);
 
         this.rightTriggerOn = new TriggerTrigger(this.xboxController, RIGHT_TRIGGER);
-        rightTriggerOn.whilePressed(new DriveStraight(DriveStraight.Direction.FORWARD, rightTriggerOn.getPort()));
+        rightTriggerOn.whileActive(new DriveStraight(DriveStraight.Direction.FORWARD, rightTriggerOn.getPort()));
 
         this.leftTriggerOn = new TriggerTrigger(this.xboxController, LEFT_TRIGGER);
-        leftTriggerOn.whilePressed(new DriveStraight(DriveStraight.Direction.REVERSE, leftTriggerOn.getPort()));
+        leftTriggerOn.whileActive(new DriveStraight(DriveStraight.Direction.REVERSE, leftTriggerOn.getPort()));
 
         Debug.println("[OI] Instantiation complete.");
     }

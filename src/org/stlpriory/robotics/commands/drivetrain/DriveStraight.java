@@ -1,11 +1,15 @@
 package org.stlpriory.robotics.commands.drivetrain;
 
+import org.stlpriory.robotics.Robot;
+
+import edu.wpi.first.wpilibj.command.Command;
+
 
 public class DriveStraight extends Command {
     // If we are using PID, we have to change this to 
     // match the max speed we can input. 
     public static final double COEFFICIENT = 1;
-    public static final enum Direction {FORWARD, REVERSE};
+    public static enum Direction {FORWARD, REVERSE};
 
     private Direction direction;
     private int axisNumber;
@@ -26,7 +30,7 @@ public class DriveStraight extends Command {
     }
     public void execute()
     {
-        double i = getInput() * direction == Direction.REVERSE ? -1 : 1;
+        double i = getInput() * (direction == Direction.REVERSE ? -1 : 1);
         Robot.drivetrain.tankDrive(i * COEFFICIENT, i * COEFFICIENT);
     }
     public boolean isFinished()
