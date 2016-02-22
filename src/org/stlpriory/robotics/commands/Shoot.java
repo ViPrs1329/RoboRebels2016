@@ -25,13 +25,15 @@ public class Shoot extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+        double rightSpeed = Robot.shooter.getRightSpeed();
+        double leftSpeed  = Robot.shooter.getLeftSpeed();
+        double minSpeed   = Math.min(rightSpeed, leftSpeed);
+
         // Get shooter motors up to full speed
-        if (Robot.shooter.getSpeed() < ShooterSubsystem.MIN_SHOOTING_SPEED) {
+        if (minSpeed < ShooterSubsystem.MIN_SHOOTING_SPEED) {
             Robot.shooter.setSpeeds(ShooterSubsystem.SHOOT_SPEED, ShooterSubsystem.SHOOT_SPEED);
 
         } else {
-            double rightSpeed = Robot.shooter.getRightSpeed();
-            double leftSpeed  = Robot.shooter.getLeftSpeed();
             double diffSpeed  = Math.abs(rightSpeed - leftSpeed);
             System.out.println("right speed = "+rightSpeed+", leftSpeed = "+leftSpeed+", diff = "+diffSpeed+
                                ", arm extended = "+Robot.shooter.isLoaderArmExtended()+", arm retracted = "+
