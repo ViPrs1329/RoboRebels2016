@@ -25,8 +25,11 @@ public class ShooterSubsystem extends Subsystem {
     public static final double SHOOT_SPEED = 1;
     
     // This is the minimum encoder reading that we should try to shoot at. 
+    // Minimum shooting speed is 90% of the max speed for the CIM motor
     public static final double MIN_SHOOTING_SPEED = 0.9 * MiniCIMMotorSpecs.MAX_SPEED_RPM; 
-    public static final int MAX_DIFFERENCE = 1000;
+    // Allowable error between left and right motors is 5% of the max speed for the CIM motor 
+    public static final double MAX_DIFFERENCE = 0.05 * MiniCIMMotorSpecs.MAX_SPEED_RPM;
+    // Increment to use when decreasing the throttle setting [-1.0, 1.0]
     public static final double DECREASE_VALUE = .01;
 
 	private static final double KICKER_OUT_POSITION = 0;

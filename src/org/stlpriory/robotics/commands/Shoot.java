@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class Shoot extends Command {
-	private boolean isDone;
+	private boolean isDone = false;
 	private int times = 1;
 
 	public Shoot() {
@@ -32,22 +32,23 @@ public class Shoot extends Command {
         } else {
             double rightSpeed = Robot.shooter.getRightSpeed();
             double leftSpeed  = Robot.shooter.getLeftSpeed();
-            System.out.println("right speed = "+rightSpeed+", leftSpeed = "+leftSpeed);
+            double diffSpeed  = Math.abs(rightSpeed - leftSpeed);
+            System.out.println("right speed = "+rightSpeed+", leftSpeed = "+leftSpeed+", diff = "+diffSpeed);
             
-            if (leftSpeed > rightSpeed) {
+            if (diffSpeed < ShooterSubsystem.MAX_DIFFERENCE) {
+                Robot.shooter.extendLoaderArm();
+                pause(2);
+                isDone = true;
+                
+            } else if (leftSpeed > rightSpeed) {
                 rightSpeed = ShooterSubsystem.SHOOT_SPEED;
                 leftSpeed  = leftSpeed - ShooterSubsystem.DECREASE_VALUE;
                 Robot.shooter.setSpeeds(rightSpeed, leftSpeed);
                 
-            } else if (rightSpeed > leftSpeed) {
+            } else {
                 rightSpeed = rightSpeed - ShooterSubsystem.DECREASE_VALUE;
                 leftSpeed  = ShooterSubsystem.SHOOT_SPEED;
                 Robot.shooter.setSpeeds(rightSpeed, leftSpeed);
-                
-            } else {
-                Robot.shooter.extendLoaderArm();
-                pause(2);
-                isDone = true;
             }
         }
 	    
