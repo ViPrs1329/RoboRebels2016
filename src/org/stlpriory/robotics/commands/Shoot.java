@@ -1,5 +1,7 @@
 package org.stlpriory.robotics.commands;
 
+import java.util.concurrent.TimeUnit;
+
 import org.stlpriory.robotics.Robot;
 import org.stlpriory.robotics.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,12 +11,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class Shoot extends Command {
 	private boolean isDone;
-	double times = 1;
-	public Shoot() {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
-		requires(Robot.shooter);
+	private int times = 1;
 
+	public Shoot() {
+		requires(Robot.shooter);
 	}
 
 	// Called just before this Command runs the first time
@@ -25,23 +25,32 @@ public class Shoot extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (Robot.shooter.getSpeed() < ShooterSubsystem.MIN_SHOOTING_SPEED) {
-			Robot.shooter.shoot();
-			return;
-		}
-		if (Math.abs((Robot.shooter.getRightSpeed() - Robot.shooter.getLeftSpeed())) <= ShooterSubsystem.MAX_DIFFERENCE) {
-			Robot.shooter.extendLoaderArm();
-			isDone = true;
-			System.out.println("Extending arm");
-		} 
-//		else if (Robot.shooter.getLeftSpeed() > Robot.shooter.getRightSpeed()) {
-//			Robot.shooter.setSpeeds(ShooterSubsystem.SHOOT_SPEED, ShooterSubsystem.SHOOT_SPEED
-//							- (ShooterSubsystem.DECREASE_VALUE * times));
-//		} 
-//		else if (Robot.shooter.getRightSpeed() > Robot.shooter.getLeftSpeed()) {
-//			Robot.shooter.setSpeeds(ShooterSubsystem.SHOOT_SPEED - (ShooterSubsystem.DECREASE_VALUE * times),
-//					ShooterSubsystem.SHOOT_SPEED);
-//		}
+        // Get shooter motors up to full speed
+        if (Robot.shooter.getSpeed() < ShooterSubsystem.MIN_SHOOTING_SPEED) {
+            Robot.shooter.setSpeeds(ShooterSubsystem.SHOOT_SPEED, ShooterSubsystem.SHOOT_SPEED);
+
+        } else {
+            double rightSpeed = Robot.shooter.getRightSpeed();
+            double leftSpeed  = Robot.shooter.getLeftSpeed();
+            System.out.println("right speed = "+rightSpeed+", leftSpeed = "+leftSpeed);
+            
+            if (leftSpeed > rightSpeed) {
+                rightSpeed = ShooterSubsystem.SHOOT_SPEED;
+                leftSpeed  = leftSpeed - ShooterSubsystem.DECREASE_VALUE;
+                Robot.shooter.setSpeeds(rightSpeed, leftSpeed);
+                
+            } else if (rightSpeed > leftSpeed) {
+                rightSpeed = rightSpeed - ShooterSubsystem.DECREASE_VALUE;
+                leftSpeed  = ShooterSubsystem.SHOOT_SPEED;
+                Robot.shooter.setSpeeds(rightSpeed, leftSpeed);
+                
+            } else {
+                Robot.shooter.extendLoaderArm();
+                pause(2);
+                isDone = true;
+            }
+        }
+	    
 		times++;
 	}
 
@@ -61,4 +70,14 @@ public class Shoot extends Command {
 	protected void interrupted() {
 		this.end();
 	}
+	
+    private void pause(final double seconds) {
+        long t0 = System.nanoTime();
+        long elapsedTime = TimeUnit.NANOSECONDS.toSeconds(System.nanoTime() - t0);
+        
+        while (elapsedTime < seconds) {
+            elapsedTime = TimeUnit.NANOSECONDS.toSeconds(System.nanoTime() - t0);
+        }
+    }
+
 }

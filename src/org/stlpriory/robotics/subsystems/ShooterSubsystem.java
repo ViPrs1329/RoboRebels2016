@@ -1,6 +1,7 @@
 package org.stlpriory.robotics.subsystems;
 
 import org.stlpriory.robotics.hardware.CIMcoderSpecs;
+import org.stlpriory.robotics.hardware.MiniCIMMotorSpecs;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Servo;
@@ -24,7 +25,7 @@ public class ShooterSubsystem extends Subsystem {
     public static final double SHOOT_SPEED = 1;
     
     // This is the minimum encoder reading that we should try to shoot at. 
-    public static final double MIN_SHOOTING_SPEED = 40000; 
+    public static final double MIN_SHOOTING_SPEED = 0.9 * MiniCIMMotorSpecs.MAX_SPEED_RPM; 
     public static final int MAX_DIFFERENCE = 1000;
     public static final double DECREASE_VALUE = .01;
 
@@ -64,25 +65,27 @@ public class ShooterSubsystem extends Subsystem {
     // ==================================================================================
 
     public void extendLoaderArm() {
-    	System.out.println("Extending arm");
+    	System.out.println("extendLoaderArm():  servo.get() = " + this.kicker.get() + ", servo.set(" + KICKER_OUT_POSITION + ")");
         this.kicker.set(KICKER_OUT_POSITION);
     }    
     public void retractLoaderArm() {
-    	System.out.println("Retracting arm");
+        System.out.println("retractLoaderArm():  servo.get() = " + this.kicker.get() + ", servo.set(" + KICKER_IN_POSITION + ")");
         this.kicker.set(KICKER_IN_POSITION);
     }
     
-    public boolean isLoaderArmRetracted() 
-    {
-        return this.kicker.get() == KICKER_IN_POSITION;
+    public boolean isLoaderArmRetracted()  {
+        System.out.println("isLoaderArmRetracted():  " + this.kicker.get() + " == " + KICKER_IN_POSITION);
+        return Math.abs(this.kicker.get() - KICKER_IN_POSITION) < 0.01;
     }
-    public boolean isLoaderArmExtended()
-    {
-    	return this.kicker.get() == KICKER_OUT_POSITION;
+    
+    public boolean isLoaderArmExtended() {
+        System.out.println("isLoaderArmExtended():  " + this.kicker.get() + " == " + KICKER_OUT_POSITION);
+        return Math.abs(this.kicker.get() - KICKER_OUT_POSITION) < 0.01;
     }
+    
     public void shoot() {
 //        (new Exception()).printStackTrace();
-    	System.out.println("Starting up shooter");
+    	System.out.println("shoot(): setting speeds to " + SHOOT_SPEED);
         this.leftShooter.set(-SHOOT_SPEED);
         this.rightShooter.set(SHOOT_SPEED);
     }
@@ -94,6 +97,7 @@ public class ShooterSubsystem extends Subsystem {
         // (2) precondition - assume the loader arm is retracted
         // (3) start the shooter motors spinning inward
         // (4) stop the shooter motors once we detect a ball is loaded???
+        System.out.println("suck(): setting speeds to " + SUCK_SPEED);
         this.rightShooter.set(-SUCK_SPEED);
         this.leftShooter.set(SUCK_SPEED);
     }
@@ -102,16 +106,17 @@ public class ShooterSubsystem extends Subsystem {
         this.rightShooter.set(-KEEPING_SPEED);
         this.leftShooter.set(KEEPING_SPEED);
     }
-    public void setSpeeds(double right, double left)
-    {
+    
+    public void setSpeeds(double right, double left) {
+        System.out.println("setSpeeds( "+right+", "+left+")");
     	this.rightShooter.set(-right);
     	this.leftShooter.set(left);
-    	System.out.println("Setting shooter speeds to "+right+", "+left);
     }
+    
     public void stop() {
+        System.out.println("stop(): setting speeds to " + 0);
         this.rightShooter.set(0);
         this.leftShooter.set(0);
-        System.out.println("Stopping shooter");
 //        (new Exception()).printStackTrace();
     }
 
