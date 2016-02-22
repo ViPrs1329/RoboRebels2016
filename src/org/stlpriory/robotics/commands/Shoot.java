@@ -33,7 +33,9 @@ public class Shoot extends Command {
             double rightSpeed = Robot.shooter.getRightSpeed();
             double leftSpeed  = Robot.shooter.getLeftSpeed();
             double diffSpeed  = Math.abs(rightSpeed - leftSpeed);
-            System.out.println("right speed = "+rightSpeed+", leftSpeed = "+leftSpeed+", diff = "+diffSpeed);
+            System.out.println("right speed = "+rightSpeed+", leftSpeed = "+leftSpeed+", diff = "+diffSpeed+
+                               ", arm extended = "+Robot.shooter.isLoaderArmExtended()+", arm retracted = "+
+                               Robot.shooter.isLoaderArmRetracted());
             
             if (diffSpeed < ShooterSubsystem.MAX_DIFFERENCE) {
                 Robot.shooter.extendLoaderArm();
