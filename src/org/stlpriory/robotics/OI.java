@@ -3,6 +3,8 @@ package org.stlpriory.robotics;
 import org.stlpriory.robotics.commands.BallHolderDown;
 import org.stlpriory.robotics.commands.BallHolderUp;
 import org.stlpriory.robotics.commands.Hold;
+import org.stlpriory.robotics.commands.Shoot;
+import org.stlpriory.robotics.commands.StopShooter;
 import org.stlpriory.robotics.commands.Suck;
 import org.stlpriory.robotics.commands.Throw;
 import org.stlpriory.robotics.commands.drivetrain.DriveStraight;
@@ -86,7 +88,8 @@ public class OI {
         this.holderDownButton.whileHeld(new BallHolderDown(true));
 
         this.throwButton = new JoystickButton(this.xboxController, Y_BUTTON);
-        this.throwButton.whileHeld(new Throw());
+        this.throwButton.whenPressed(new Shoot());
+        this.throwButton.whenReleased(new StopShooter());
 
         this.suckButton = new JoystickButton(this.xboxController, X_BUTTON);
         this.suckButton.whileHeld(new Suck());

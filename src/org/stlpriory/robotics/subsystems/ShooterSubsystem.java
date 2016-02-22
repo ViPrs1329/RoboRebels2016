@@ -24,13 +24,13 @@ public class ShooterSubsystem extends Subsystem {
     public static final double SHOOT_SPEED = 1;
     
     // This is the minimum encoder reading that we should try to shoot at. 
-    public static final double MIN_SHOOTING_SPEED = 35000; 
-    public static final int MAX_DIFFERENCE = 10;
+    public static final double MIN_SHOOTING_SPEED = 40000; 
+    public static final int MAX_DIFFERENCE = 1000;
     public static final double DECREASE_VALUE = .01;
 
 	private static final double KICKER_OUT_POSITION = 0;
 
-	private static final double KICKER_IN_POSITION = 180;
+	private static final double KICKER_IN_POSITION = 1;
 	
 
     private final Talon rightShooter;
@@ -56,6 +56,7 @@ public class ShooterSubsystem extends Subsystem {
         this.leftEncoder.setDistancePerPulse(CIMcoderSpecs.PULSES_PER_REV);
         
         this.kicker  = new Servo(SERVO_CHANNEL);
+        retractLoaderArm();
     }
     
     // ==================================================================================
@@ -63,20 +64,25 @@ public class ShooterSubsystem extends Subsystem {
     // ==================================================================================
 
     public void extendLoaderArm() {
+    	System.out.println("Extending arm");
         this.kicker.set(KICKER_OUT_POSITION);
     }    
     public void retractLoaderArm() {
+    	System.out.println("Retracting arm");
         this.kicker.set(KICKER_IN_POSITION);
     }
     
-    public boolean isLoaderArmRetracted() {
+    public boolean isLoaderArmRetracted() 
+    {
         return this.kicker.get() == KICKER_IN_POSITION;
     }
     public boolean isLoaderArmExtended()
     {
     	return this.kicker.get() == KICKER_OUT_POSITION;
     }
-    public void startShooter() {
+    public void shoot() {
+//        (new Exception()).printStackTrace();
+    	System.out.println("Starting up shooter");
         this.leftShooter.set(-SHOOT_SPEED);
         this.rightShooter.set(SHOOT_SPEED);
     }
@@ -98,27 +104,32 @@ public class ShooterSubsystem extends Subsystem {
     }
     public void setSpeeds(double right, double left)
     {
-    	this.rightShooter.set(right);
+    	this.rightShooter.set(-right);
     	this.leftShooter.set(left);
+    	System.out.println("Setting shooter speeds to "+right+", "+left);
     }
     public void stop() {
         this.rightShooter.set(0);
         this.leftShooter.set(0);
+        System.out.println("Stopping shooter");
+//        (new Exception()).printStackTrace();
     }
 
     public void updateStatus() {
         SmartDashboard.putNumber("Right shooter speed", this.rightShooter.getSpeed());
         SmartDashboard.putNumber("Left shooter speed", this.leftShooter.getSpeed());
-        SmartDashboard.putNumber("Right encoder speed", this.rightEncoder.getRate());
+        SmartDashboard.putNumber("Right encoder speed", getRightSpeed());
+        SmartDashboard.putNumber("Left encoder speed", getLeftSpeed());
+        SmartDashboard.putNumber("Servo", kicker.get());
     }
     
     public double getRightSpeed()
     {
-    	return rightEncoder.getRate();
+    	return -rightEncoder.getRate();
     }
     
     public double getLeftSpeed() {
-		return leftEncoder.getRate();
+		return -leftEncoder.getRate();
 	}
     
     // ==================================================================================

@@ -12,6 +12,7 @@ public class Suck extends Command {
 
     @Override
     protected void initialize() {
+    	Robot.shooter.retractLoaderArm();
     }
 
     @Override

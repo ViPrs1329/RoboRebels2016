@@ -16,7 +16,7 @@ public class Throw extends Command {
 
     @Override
     protected void execute() {
-        Robot.shooter.startShooter();
+        Robot.shooter.shoot();
         // if(they're going fast enough)
         Robot.shooter.extendLoaderArm();
     }
