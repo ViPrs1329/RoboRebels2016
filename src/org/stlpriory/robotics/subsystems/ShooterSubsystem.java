@@ -23,14 +23,14 @@ public class ShooterSubsystem extends Subsystem {
     public static final double KEEPING_SPEED = .1;
     public static final double SUCK_SPEED = .5;
     public static final double SHOOT_SPEED = 1;
-    
+    public double difference = 0;
     // This is the minimum encoder reading that we should try to shoot at. 
     // Minimum shooting speed is 90% of the max speed for the CIM motor
     public static final double MIN_SHOOTING_SPEED = 0.9 * MiniCIMMotorSpecs.MAX_SPEED_RPM; 
     // Allowable error between left and right motors is 5% of the max speed for the CIM motor 
     public static final double MAX_DIFFERENCE = 0.05 * MiniCIMMotorSpecs.MAX_SPEED_RPM;
     // Increment to use when decreasing the throttle setting [-1.0, 1.0]
-    public static final double DECREASE_VALUE = .01;
+    public static final double DECREASE_VALUE = .001;
 
 	private static final double KICKER_OUT_POSITION = 0;
 
@@ -54,10 +54,10 @@ public class ShooterSubsystem extends Subsystem {
         this.leftShooter  = new Talon(LEFT_SHOOTER_MOTOR_CHANNEL);
         
         this.rightEncoder = new Encoder(RIGHT_MOTOR_ENCODER_CHANNEL_A, RIGHT_MOTOR_ENCODER_CHANNEL_B);
-        this.rightEncoder.setDistancePerPulse(CIMcoderSpecs.PULSES_PER_REV);
+        this.rightEncoder.setDistancePerPulse(1);
 
         this.leftEncoder  = new Encoder(LEFT_MOTOR_ENCODER_CHANNEL_A, LEFT_MOTOR_ENCODER_CHANNEL_B, true);
-        this.leftEncoder.setDistancePerPulse(CIMcoderSpecs.PULSES_PER_REV);
+        this.leftEncoder.setDistancePerPulse(1);
         
         this.kicker  = new Servo(SERVO_CHANNEL);
         retractLoaderArm();
@@ -129,15 +129,22 @@ public class ShooterSubsystem extends Subsystem {
         SmartDashboard.putNumber("Right encoder speed", getRightSpeed());
         SmartDashboard.putNumber("Left encoder speed", getLeftSpeed());
         SmartDashboard.putNumber("Servo", kicker.get());
+        SmartDashboard.putNumber("Difference",difference);
+//        System.out.println("UPDATING");
     }
-    
+    public void reset()
+    {
+        this.rightEncoder.reset();
+        this.leftEncoder.reset();
+    }
     public double getRightSpeed()
     {
-    	return -rightEncoder.getRate();
+//    	System.out.println(rightEncoder.getRaw());
+        return (rightEncoder.getPeriod() * 10000)/5;
     }
     
     public double getLeftSpeed() {
-		return -leftEncoder.getRate();
+		return (leftEncoder.getPeriod() * 10000)/5;
 	}
     
     // ==================================================================================
