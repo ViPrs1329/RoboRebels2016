@@ -2,11 +2,12 @@ package org.stlpriory.robotics.commands;
 
 import java.util.concurrent.TimeUnit;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.stlpriory.robotics.Robot;
-import org.stlpriory.robotics.hardware.MiniCIMMotorSpecs;
 import org.stlpriory.robotics.subsystems.ShooterSubsystem;
+
+import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -49,6 +50,8 @@ public class Shoot extends Command {
             if (diffSpeed < .011) {
                 Robot.shooter.extendLoaderArm();
                 System.out.println("extending");
+                Robot.oi.getController().setRumble(RumbleType.kLeftRumble,1);
+                Robot.oi.getController().setRumble(RumbleType.kRightRumble,1);
                 pause(1);
                 isDone = true;
                 

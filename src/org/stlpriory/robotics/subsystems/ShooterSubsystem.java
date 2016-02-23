@@ -1,6 +1,5 @@
 package org.stlpriory.robotics.subsystems;
 
-import org.stlpriory.robotics.hardware.CIMcoderSpecs;
 import org.stlpriory.robotics.hardware.MiniCIMMotorSpecs;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -137,13 +136,15 @@ public class ShooterSubsystem extends Subsystem {
         this.rightEncoder.reset();
         this.leftEncoder.reset();
     }
-    public double getRightSpeed()
+    @SuppressWarnings("deprecation")
+	public double getRightSpeed()
     {
 //    	System.out.println(rightEncoder.getRaw());
         return (rightEncoder.getPeriod() * 10000)/5;
     }
     
-    public double getLeftSpeed() {
+    @SuppressWarnings("deprecation")
+	public double getLeftSpeed() {
 		return (leftEncoder.getPeriod() * 10000)/5;
 	}
     
