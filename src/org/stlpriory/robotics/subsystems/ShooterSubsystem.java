@@ -1,5 +1,6 @@
 package org.stlpriory.robotics.subsystems;
 
+import org.stlpriory.robotics.hardware.CIMcoderSpecs;
 import org.stlpriory.robotics.hardware.MiniCIMMotorSpecs;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -11,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ShooterSubsystem extends Subsystem {
     public static final int SERVO_CHANNEL = 9;
 
-    public static final int LEFT_SHOOTER_MOTOR_CHANNEL  = 3;
+    public static final int LEFT_SHOOTER_MOTOR_CHANNEL  = 1;
     public static final int LEFT_MOTOR_ENCODER_CHANNEL_A = 6;
     public static final int LEFT_MOTOR_ENCODER_CHANNEL_B = 7;
     
@@ -136,15 +137,13 @@ public class ShooterSubsystem extends Subsystem {
         this.rightEncoder.reset();
         this.leftEncoder.reset();
     }
-    @SuppressWarnings("deprecation")
-	public double getRightSpeed()
+    public double getRightSpeed()
     {
 //    	System.out.println(rightEncoder.getRaw());
         return (rightEncoder.getPeriod() * 10000)/5;
     }
     
-    @SuppressWarnings("deprecation")
-	public double getLeftSpeed() {
+    public double getLeftSpeed() {
 		return (leftEncoder.getPeriod() * 10000)/5;
 	}
     

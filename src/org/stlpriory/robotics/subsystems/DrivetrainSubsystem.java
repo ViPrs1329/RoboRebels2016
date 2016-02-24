@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Robot drive train subsystem consisting of 4 CIM motors configured in 2 master/slave arrangements. 
@@ -18,10 +19,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DrivetrainSubsystem extends Subsystem {
 
-    public static final int LF_MOTOR_ID = 2;
+    public static final int LF_MOTOR_ID = 3;
     public static final int LR_MOTOR_ID = 4;
-    public static final int RF_MOTOR_ID = 3;
-    public static final int RR_MOTOR_ID = 0;
+    public static final int RF_MOTOR_ID = 2;
+    public static final int RR_MOTOR_ID = 1;
 
     public static final boolean MASTER_SLAVE_MODE = true;
 
