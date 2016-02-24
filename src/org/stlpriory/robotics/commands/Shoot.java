@@ -39,6 +39,7 @@ public class Shoot extends Command {
             System.out.println("not max");
             targetRightSpeed = ShooterSubsystem.SHOOT_SPEED;
             targetLeftSpeed = ShooterSubsystem.SHOOT_SPEED;
+            Robot.oi.vibrate(true);
 
         } else{
             double diffSpeed  = Math.abs(rightSpeed - leftSpeed);
@@ -49,6 +50,7 @@ public class Shoot extends Command {
             if (diffSpeed < .011) {
                 Robot.shooter.extendLoaderArm();
                 System.out.println("extending");
+                Robot.oi.vibrate(false);
                 pause(1);
                 isDone = true;
                 
@@ -56,10 +58,11 @@ public class Shoot extends Command {
 
                 targetLeftSpeed  = targetLeftSpeed - ShooterSubsystem.DECREASE_VALUE;
                 Robot.shooter.setSpeeds(targetRightSpeed, targetLeftSpeed);
-                
+                Robot.oi.vibrate(true);
             } else {
                 targetRightSpeed = targetRightSpeed - ShooterSubsystem.DECREASE_VALUE;
                 Robot.shooter.setSpeeds(targetRightSpeed, targetLeftSpeed);
+                Robot.oi.vibrate(true);
             }
         }
 	}
@@ -74,6 +77,7 @@ public class Shoot extends Command {
 	protected void end() {
 		Robot.shooter.stop();
 		Robot.shooter.retractLoaderArm();
+		Robot.oi.vibrate(false);
 	}
 
 	// Called when another command which requires one or more of the same

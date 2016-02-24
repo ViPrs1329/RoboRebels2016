@@ -12,6 +12,7 @@ import org.stlpriory.robotics.utils.Debug;
 import org.stlpriory.robotics.utils.TriggerTrigger;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
@@ -116,5 +117,18 @@ public class OI {
 
     public Joystick getController() {
         return this.xboxController;
+    }
+    public void vibrate(boolean on)
+    {
+    	if(on)
+    	{
+    		this.xboxController.setRumble(RumbleType.kLeftRumble, 1);
+    		this.xboxController.setRumble(RumbleType.kRightRumble, 1);
+    	}
+    	else
+    	{
+    		this.xboxController.setRumble(RumbleType.kLeftRumble, 0);
+    		this.xboxController.setRumble(RumbleType.kRightRumble, 0);
+    	}
     }
 }
