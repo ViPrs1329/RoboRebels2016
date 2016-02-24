@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class BallHolderUp extends Command {
-    public static final double BALL_HOLDER_UP_SPEED = 1;
+    public static final double BALL_HOLDER_UP_SPEED = .2;
     private boolean forceable;
 
     public BallHolderUp(boolean forceable) {

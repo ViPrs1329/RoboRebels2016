@@ -112,8 +112,8 @@ public class ShooterSubsystem extends Subsystem {
     
     public void setSpeeds(double right, double left) {
         System.out.println("setSpeeds( "+right+", "+left+")");
-    	this.rightShooter.set(-right);
-    	this.leftShooter.set(left);
+    	this.rightShooter.set(right);
+    	this.leftShooter.set(-left);
     }
     
     public void stop() {
