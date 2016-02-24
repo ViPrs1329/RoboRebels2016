@@ -10,13 +10,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterSubsystem extends Subsystem {
-    public static final int SERVO_CHANNEL = 9;
+    public static final int SERVO_CHANNEL = 5;
 
-    public static final int LEFT_SHOOTER_MOTOR_CHANNEL  = 1;
+    public static final int LEFT_SHOOTER_MOTOR_CHANNEL  = 0;
     public static final int LEFT_MOTOR_ENCODER_CHANNEL_A = 6;
     public static final int LEFT_MOTOR_ENCODER_CHANNEL_B = 7;
     
-    public static final int RIGHT_SHOOTER_MOTOR_CHANNEL = 0;
+    public static final int RIGHT_SHOOTER_MOTOR_CHANNEL = 1;
     public static final int RIGHT_MOTOR_ENCODER_CHANNEL_A = 8;
     public static final int RIGHT_MOTOR_ENCODER_CHANNEL_B = 9;
     
@@ -101,8 +101,8 @@ public class ShooterSubsystem extends Subsystem {
         // (3) start the shooter motors spinning inward
         // (4) stop the shooter motors once we detect a ball is loaded???
         System.out.println("suck(): setting speeds to " + SUCK_SPEED);
-        this.rightShooter.set(-SUCK_SPEED);
-        this.leftShooter.set(SUCK_SPEED);
+        this.rightShooter.set(SUCK_SPEED);
+        this.leftShooter.set(-SUCK_SPEED);
     }
 
     public void keep() {

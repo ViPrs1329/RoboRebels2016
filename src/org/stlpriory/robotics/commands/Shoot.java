@@ -33,7 +33,7 @@ public class Shoot extends Command {
 
 //        Robot.shooter.reset();
         // Get shooter motors up to full speed
-        if (minSpeed > 1.05 ) {
+        if (minSpeed > 1.5 ) {
             System.out.println("right speed " + rightSpeed + " left speed " +leftSpeed + " min speed "+ minSpeed);
             Robot.shooter.setSpeeds(ShooterSubsystem.SHOOT_SPEED, ShooterSubsystem.SHOOT_SPEED);
             System.out.println("not max");
@@ -47,7 +47,7 @@ public class Shoot extends Command {
             System.out.println("right speed = "+rightSpeed+", leftSpeed = "+leftSpeed+", diff = "+diffSpeed+
                                ", arm extended = "+Robot.shooter.isLoaderArmExtended()+", arm retracted = "+
                                Robot.shooter.isLoaderArmRetracted());
-            if (diffSpeed < .011) {
+            if (diffSpeed < .2) {
                 Robot.shooter.extendLoaderArm();
                 System.out.println("extending");
                 Robot.oi.vibrate(false);

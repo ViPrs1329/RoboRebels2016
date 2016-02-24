@@ -30,7 +30,7 @@ public class DriveStraight extends Command {
     }
     public void execute()
     {
-        double i = getInput() * (direction == Direction.REVERSE ? -1 : 1);
+        double i = getInput() * (direction == Direction.REVERSE ? 1 : -1);
         Robot.drivetrain.tankDrive(i * COEFFICIENT, i * COEFFICIENT);
     }
     public boolean isFinished()
