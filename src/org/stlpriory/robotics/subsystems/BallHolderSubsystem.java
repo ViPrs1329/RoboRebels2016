@@ -46,7 +46,7 @@ public class BallHolderSubsystem extends Subsystem {
     public static final double TOLERANCE = 0.5d;
 
     public enum Direction {
-        UP, DOWN
+        UP, DOWN, ELEVEN
     };
 
     private final Talon rightMotor;
