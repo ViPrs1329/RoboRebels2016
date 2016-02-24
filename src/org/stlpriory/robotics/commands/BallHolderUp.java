@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class BallHolderUp extends Command {
-    public static final double BALL_HOLDER_UP_SPEED = .2;
+    public static final double BALL_HOLDER_UP_SPEED = .5;
     private boolean forceable;
 
     public BallHolderUp(boolean forceable) {
@@ -29,7 +29,7 @@ public class BallHolderUp extends Command {
     @Override
     protected void execute() {
     	if(!isFinished())
-        Robot.ballHolder.set(Direction.UP, BALL_HOLDER_UP_SPEED);
+        Robot.ballHolder.set(Direction.UP, BallHolderSubsystem.ARM_SPEED);
     }
 
     // Make this return true when this Command no longer needs to run execute()
