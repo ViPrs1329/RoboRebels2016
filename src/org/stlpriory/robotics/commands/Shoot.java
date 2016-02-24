@@ -34,6 +34,7 @@ public class Shoot extends Command {
         {
         	Robot.shooter.setSpeeds(ShooterSubsystem.SHOOT_SPEED,ShooterSubsystem.SHOOT_SPEED);
         	Robot.shooter.extendLoaderArm();
+        	System.out.println("forced");
         	return;
         }
 //        Robot.shooter.reset();
