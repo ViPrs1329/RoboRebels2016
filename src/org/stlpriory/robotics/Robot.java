@@ -12,6 +12,12 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import org.stlpriory.robotics.utils.PropertiesUtils;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding 
@@ -31,12 +37,13 @@ public class Robot extends IterativeRobot {
     public static ShooterSubsystem shooter = new ShooterSubsystem();
     
     // Human operator interface
-    public static final OI oi = new OI();
+    public static OI oi = new OI();
     public Joystick xboxController;
     
     private Command autonomousCommand;
     private Timer timer = new Timer();
-
+    private static Properties properties = new Properties();
+//    public Properties properties;
     // ==================================================================================
     //                            ROBOT INIT SECTION
     // ==================================================================================
@@ -48,8 +55,20 @@ public class Robot extends IterativeRobot {
 
         // Initialize the human operator interface ...
         this.xboxController = oi.getController();
+
         
         timer.stop();
+
+        try
+        {
+            properties = PropertiesUtils.load(new File("~/config.txt"));
+        } catch (IOException e)
+        {
+            properties = new Properties();
+            properties.setProperty("pot-zero-value","42");
+            e.printStackTrace();
+            System.err.println("!!Cannot load config file, setting default values.!!");
+        }
         Debug.println("[RoboRebels.robotInit()] Done in " + timer.get() * 1e6 + " ms");
         Debug.println("------------------------------------------");
         Debug.println("           Robot ready!");
@@ -62,7 +81,7 @@ public class Robot extends IterativeRobot {
 
     // ==================================================================================
     //                          AUTONOMOUS MODE SECTION
-    // ==================================================================================
+//     ==================================================================================
 
     @Override
     public void autonomousInit() {
@@ -105,7 +124,14 @@ public class Robot extends IterativeRobot {
          ballHolder.updateStatus();
          shooter.updateStatus();
     }
-
+    public static Properties getProperties()
+    {
+        return properties;
+    }
+    public static void updateProperties(Properties changedProperties)
+    {
+         properties = changedProperties;
+    }
     @Override
     public void testInit() {
         LiveWindow.run();
