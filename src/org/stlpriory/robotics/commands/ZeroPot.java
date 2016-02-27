@@ -19,13 +19,7 @@ public class ZeroPot extends Command
     @Override
     protected void initialize()
     {
-<<<<<<< HEAD
-        properties = Robot.getProperties();
-        properties.setProperty("pot-zero-value",String.valueOf(Robot.ballHolder.getAngle()));
-        isFinished = false;
-=======
-        System.out.println("errors");
->>>>>>> c925e7f09421f5bd114535c3cfdd3a67dad89910
+        System.out.println("Zeroing potentiometer");
     }
 
     @Override
