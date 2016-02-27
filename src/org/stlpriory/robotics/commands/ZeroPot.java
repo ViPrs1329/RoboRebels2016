@@ -20,7 +20,6 @@ public class ZeroPot extends Command
     {
         properties = Robot.getProperties();
         properties.setProperty("pot-zero-value",String.valueOf(Robot.ballHolder.getAngle()));
-        System.out.println("errors");
         isFinished = false;
     }
 

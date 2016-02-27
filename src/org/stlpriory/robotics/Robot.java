@@ -43,7 +43,6 @@ public class Robot extends IterativeRobot {
     private Command autonomousCommand;
     private Timer timer = new Timer();
     private static Properties properties = new Properties();
-//    public Properties properties;
     // ==================================================================================
     //                            ROBOT INIT SECTION
     // ==================================================================================
@@ -51,6 +50,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
         Debug.println("[Robot.robotInit()] Initializing...");
+        System.out.println("init started");
         timer.start();
 
         // Initialize the human operator interface ...
@@ -58,7 +58,7 @@ public class Robot extends IterativeRobot {
 
         
         timer.stop();
-
+        System.out.println("Trying file");
         try
         {
             properties = PropertiesUtils.load(new File("~/config.txt"));

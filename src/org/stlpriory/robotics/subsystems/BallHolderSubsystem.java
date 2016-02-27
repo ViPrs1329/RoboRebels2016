@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.stlpriory.robotics.Robot;
 
 public class BallHolderSubsystem extends Subsystem {
     public static final int RIGHT_WINDOW_MOTOR = 8;
@@ -13,7 +14,7 @@ public class BallHolderSubsystem extends Subsystem {
     public static final int POT_CHANNEL = 0;
     public static final int SWITCH_CHANNEL = 1;
     
-    
+    public static final double MAX_DIFF = 5.0;
     /*
      * The scaling factor multiplied by the analog voltage value to obtain the angle in degrees
      * For example, let's say you have an ideal 10-turn linear potentiometer attached to a motor
@@ -23,7 +24,7 @@ public class BallHolderSubsystem extends Subsystem {
      * Since the RoboRebels ball holder uses a 1x gear reduction between the potentiometer and the
      * rotating arm the POT_FULL_RANGE scale factor would be 3600 degrees / 5V or 720 degrees/volt.
      */
-    public static final int POT_FULL_RANGE = 10 * 360;
+    public static final int POT_FULL_RANGE = 360;
     
     /*
      * The offset in degrees that the angle sensor will subtract from the underlying value before
@@ -33,7 +34,7 @@ public class BallHolderSubsystem extends Subsystem {
      * the potentiometer's range (for example 30 degrees). In this case, the offset value of 30 is
      * determined from the mechanical design.
      */
-    public static final int POT_OFFSET_DEG = 0;
+//    public static final int POT_OFFSET_DEG = 0;
     
     public static final double BALL_PICKUP_ANGLE    = 180.0d;
     public static final double LOW_GOAL_SHOOT_ANGLE = 120.0d;
@@ -52,7 +53,7 @@ public class BallHolderSubsystem extends Subsystem {
     private final Talon leftMotor; 
 //    private Ramper leftRamper, rightRamper;
     
-    private final AnalogPotentiometer pot;
+    private AnalogPotentiometer pot;
     private final double potOffsetInDeg = 0;
     
     private final DigitalInput stowSwitch;
@@ -70,8 +71,7 @@ public class BallHolderSubsystem extends Subsystem {
         
         this.stowSwitch = new DigitalInput(SWITCH_CHANNEL);
         
-        this.pot = new AnalogPotentiometer(POT_CHANNEL, POT_FULL_RANGE, POT_OFFSET_DEG);
-        
+        this.pot = new AnalogPotentiometer(POT_CHANNEL, POT_FULL_RANGE, 0);
         // Get the potentiometer reading at robot startup. All other angle readings
         // will be measured relative to this initial value. 
         // THIS ASSUMES A SINGLE CONSISTENT STARTING POSITION !!!!!!!
@@ -95,6 +95,25 @@ public class BallHolderSubsystem extends Subsystem {
         }
         stop();
     }
+    public boolean moveToAngle(double angle)
+    {
+        if (Math.abs(this.getAngle()-angle) <= MAX_ANGLE)
+        {
+            stop();
+            return true;
+        }
+        if(angle < this.getAngle())
+        {
+            this.set(-ARM_SPEED);
+        }
+        else
+        {
+            this.set(ARM_SPEED);
+        }
+        return false;
+
+    }
+
     
     public void moveToLowGoalShootPosition() {
         while ( getAngle() < LOW_GOAL_SHOOT_ANGLE ) {
@@ -128,7 +147,7 @@ public class BallHolderSubsystem extends Subsystem {
      * @return the potentiometer reading in degrees
      */
     public double getAngle() {
-        return this.pot.get() - this.potOffsetInDeg;
+        return this.pot.get() + Double.parseDouble(Robot.getProperties().getProperty("pot-zero-value"));
     }
 
     public void set(final Direction dir, double speed) {
