@@ -2,6 +2,8 @@ package org.stlpriory.robotics.commands;
 
 import java.util.concurrent.TimeUnit;
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.stlpriory.robotics.Robot;
 import org.stlpriory.robotics.hardware.MiniCIMMotorSpecs;
@@ -15,6 +17,8 @@ public class Shoot extends Command {
 	private boolean isDone = false;
     private double targetRightSpeed = ShooterSubsystem.SHOOT_SPEED;
     private double targetLeftSpeed = ShooterSubsystem.SHOOT_SPEED;
+    private static final int delayTime = 20;
+    private int counter;
 	public Shoot() {
 		requires(Robot.shooter);
 	}
@@ -22,11 +26,22 @@ public class Shoot extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		isDone = false;
-		System.out.printf("Started%n");
+		Robot.shooter.suck(); //make sure ball is ready to fire by moving it into sweet spot
+        Robot.oi.getController().setRumble(Joystick.RumbleType.kLeftRumble,1);
+        Robot.oi.getController().setRumble(Joystick.RumbleType.kRightRumble,1);
+        counter = 0;
+        System.out.printf("Started%n");
+
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+        if(counter < delayTime)
+        {
+            counter++;
+            System.out.println("waiting");
+            return;
+        }
         double rightSpeed = Robot.shooter.getRightSpeed();
         double leftSpeed  = Robot.shooter.getLeftSpeed();
         double minSpeed   = Math.max(rightSpeed, leftSpeed);
