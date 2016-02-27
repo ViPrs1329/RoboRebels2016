@@ -127,7 +127,7 @@ public class ShooterSubsystem extends Subsystem {
         SmartDashboard.putNumber("Right encoder speed", getRightSpeed());
         SmartDashboard.putNumber("Left encoder speed", getLeftSpeed());
         SmartDashboard.putNumber("Servo", kicker.get());
-        SmartDashboard.putNumber("Difference",difference);
+        SmartDashboard.putNumber("Difference", difference);
 //        System.out.println("UPDATING");
     }
     public void reset()

@@ -71,6 +71,7 @@ public class Robot extends IterativeRobot {
 			System.err.println("!!Cannot load config file, setting default values!!");
 		}
 		
+		SmartDashboard.putData("Zero Pot", new ZeroPot());
 		setProperties(properties);
         
         Debug.println("[RoboRebels.robotInit()] Done in " + timer.get() * 1e6 + " ms");

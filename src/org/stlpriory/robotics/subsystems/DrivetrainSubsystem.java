@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Robot drive train subsystem consisting of 4 CIM motors configured in 2 master/slave arrangements. 
@@ -124,21 +125,21 @@ public class DrivetrainSubsystem extends Subsystem {
     }
 
     public void updateStatus() {
-//        double leftFrontMotorOutput  = this.leftFront.getOutputVoltage() / this.leftFront.getBusVoltage();
-//        double leftRearMotorOutput   = this.leftRear.getOutputVoltage() / this.leftRear.getBusVoltage();
-//        double rightFrontMotorOutput = this.rightFront.getOutputVoltage() / this.rightFront.getBusVoltage();
-//        double rightRearMotorOutput  = this.rightRear.getOutputVoltage() / this.rightRear.getBusVoltage();
-//
-//        SmartDashboard.putString("Control Mode", rightFront.getControlMode().toString());
-//        SmartDashboard.putNumber("LF motor output", leftFrontMotorOutput);
-//        SmartDashboard.putNumber("LR motor output", leftRearMotorOutput);
-//        SmartDashboard.putNumber("RF motor output", rightFrontMotorOutput);
-//        SmartDashboard.putNumber("RR motor output", rightRearMotorOutput);
-//
-//        SmartDashboard.putNumber("LF power draw", leftFront.getOutputCurrent());
-//        SmartDashboard.putNumber("LR power draw", leftRear.getOutputCurrent());
-//        SmartDashboard.putNumber("RF power draw", rightFront.getOutputCurrent());
-//        SmartDashboard.putNumber("RR power draw", rightRear.getOutputCurrent());
+        double leftFrontMotorOutput  = this.leftFront.getOutputVoltage() / this.leftFront.getBusVoltage();
+        double leftRearMotorOutput   = this.leftRear.getOutputVoltage() / this.leftRear.getBusVoltage();
+        double rightFrontMotorOutput = this.rightFront.getOutputVoltage() / this.rightFront.getBusVoltage();
+        double rightRearMotorOutput  = this.rightRear.getOutputVoltage() / this.rightRear.getBusVoltage();
+
+        SmartDashboard.putString("Control Mode", rightFront.getControlMode().toString());
+        SmartDashboard.putNumber("LF motor output", leftFrontMotorOutput);
+        SmartDashboard.putNumber("LR motor output", leftRearMotorOutput);
+        SmartDashboard.putNumber("RF motor output", rightFrontMotorOutput);
+        SmartDashboard.putNumber("RR motor output", rightRearMotorOutput);
+
+        SmartDashboard.putNumber("LF power draw", leftFront.getOutputCurrent());
+        SmartDashboard.putNumber("LR power draw", leftRear.getOutputCurrent());
+        SmartDashboard.putNumber("RF power draw", rightFront.getOutputCurrent());
+        SmartDashboard.putNumber("RR power draw", rightRear.getOutputCurrent());
     }
 
     // ==================================================================================

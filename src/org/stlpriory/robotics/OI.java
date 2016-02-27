@@ -1,6 +1,5 @@
 package org.stlpriory.robotics;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.stlpriory.robotics.commands.*;
 import org.stlpriory.robotics.commands.drivetrain.DriveStraight;
 import org.stlpriory.robotics.utils.Debug;
@@ -72,6 +71,8 @@ public class OI {
     private final TriggerTrigger rightTriggerOn;
     private final TriggerTrigger leftTriggerOn;
 
+	private JoystickButton debugWriteButton;
+
     public OI() {
         Debug.println("[OI] Instantiating ...");
 
@@ -107,6 +108,7 @@ public class OI {
         this.leftTriggerOn = new TriggerTrigger(this.xboxController, LEFT_TRIGGER);
         leftTriggerOn.whileActive(new DriveStraight(DriveStraight.Direction.REVERSE, leftTriggerOn.getPort()));
 
+        
         Debug.println("[OI] Instantiation complete.");
     }
 

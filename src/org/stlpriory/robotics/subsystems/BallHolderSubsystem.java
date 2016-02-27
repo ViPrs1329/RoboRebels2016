@@ -27,7 +27,8 @@ public class BallHolderSubsystem extends Subsystem {
      * Since the RoboRebels ball holder uses a 1x gear reduction between the potentiometer and the
      * rotating arm the POT_FULL_RANGE scale factor would be 3600 degrees / 5V or 720 degrees/volt.
      */
-    public static final int POT_FULL_RANGE = 360;
+    public static final int POT_ROTATIONS = 10;
+    public static final int POT_FULL_RANGE = POT_ROTATIONS * 360;
     
     /*
      * The offset in degrees that the angle sensor will subtract from the underlying value before
@@ -48,7 +49,7 @@ public class BallHolderSubsystem extends Subsystem {
     public static final double TOLERANCE = 0.5d;
 
     public enum Direction {
-        UP, DOWN, ELEVEN
+        UP, DOWN
     };
 
     private final Talon rightMotor;
@@ -73,7 +74,7 @@ public class BallHolderSubsystem extends Subsystem {
         
         this.stowSwitch = new DigitalInput(SWITCH_CHANNEL);
         
-        this.pot = new AnalogPotentiometer(POT_CHANNEL, POT_FULL_RANGE, potOffsetInDeg);
+        this.pot = new AnalogPotentiometer(POT_CHANNEL, POT_FULL_RANGE, 0);
         
     }
 
@@ -149,6 +150,11 @@ public class BallHolderSubsystem extends Subsystem {
         return this.pot.get() + this.potOffsetInDeg;
     }
     
+    public double getAbsoluteAngle()
+    {
+    	return this.pot.get();
+    }
+    
 	public void setZeroValue(double value) {
 		this.potOffsetInDeg = value;
 	}
@@ -168,7 +174,6 @@ public class BallHolderSubsystem extends Subsystem {
     }
 
     public void updateStatus() {
-		SmartDashboard.putData("Zero Pot", new ZeroPot());
         SmartDashboard.putNumber("Right ballholder speed", this.rightMotor.getSpeed());
         SmartDashboard.putNumber("Left ballholder speed", this.leftMotor.getSpeed());
         SmartDashboard.putNumber("Potentiometer (deg)", this.pot.get());

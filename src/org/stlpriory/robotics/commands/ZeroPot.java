@@ -1,7 +1,9 @@
 package org.stlpriory.robotics.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+
 import org.stlpriory.robotics.Robot;
+import org.stlpriory.robotics.utils.Debug;
 import org.stlpriory.robotics.utils.PropertiesUtils;
 
 import java.io.FileNotFoundException;
@@ -23,7 +25,7 @@ public class ZeroPot extends Command {
 	protected void execute() {
 		properties = Robot.getProperties();
 		properties.setProperty(Robot.POT_ZERO_VALUE,
-				String.valueOf(Robot.ballHolder.getAngle()));
+				String.valueOf(Robot.ballHolder.getAbsoluteAngle()));
 		try {
 			PropertiesUtils.save(properties, Robot.CONFIG_FILE);
 		} catch (IOException e) {
@@ -39,7 +41,7 @@ public class ZeroPot extends Command {
 
 	@Override
 	protected void end() {
-
+		Debug.println("The pot value was " + Robot.ballHolder.getAbsoluteAngle());
 	}
 
 	@Override
