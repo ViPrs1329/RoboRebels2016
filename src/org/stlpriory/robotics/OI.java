@@ -107,8 +107,6 @@ public class OI {
         this.leftTriggerOn = new TriggerTrigger(this.xboxController, LEFT_TRIGGER);
         leftTriggerOn.whileActive(new DriveStraight(DriveStraight.Direction.REVERSE, leftTriggerOn.getPort()));
 
-        SmartDashboard.putData("Zero Pot", new ZeroPot());
-
         Debug.println("[OI] Instantiation complete.");
     }
 

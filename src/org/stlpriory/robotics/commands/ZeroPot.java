@@ -11,48 +11,39 @@ import java.util.Properties;
 /**
  * Created by Adam on 2/26/2016.
  */
-public class ZeroPot extends Command
-{
-    private Properties properties;
-    private boolean isFinished;
+public class ZeroPot extends Command {
+	private Properties properties;
 
-    @Override
-    protected void initialize()
-    {
-        System.out.println("Zeroing potentiometer");
-    }
+	@Override
+	protected void initialize() {
+		System.out.println("Zeroing potentiometer");
+	}
 
-    @Override
-    protected void execute()
-    {
-        properties = Robot.getProperties();
-        properties.setProperty(Robot.POT_ZERO_VALUE, String.valueOf(Robot.ballHolder.getAngle()));
-        try
-        {
-            PropertiesUtils.save(properties, Robot.CONFIG_FILE);
-        } 
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        Robot.setProperties(properties);
-    }
+	@Override
+	protected void execute() {
+		properties = Robot.getProperties();
+		properties.setProperty(Robot.POT_ZERO_VALUE,
+				String.valueOf(Robot.ballHolder.getAngle()));
+		try {
+			PropertiesUtils.save(properties, Robot.CONFIG_FILE);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Robot.setProperties(properties);
+	}
 
-    @Override
-    protected boolean isFinished()
-    {
-        return true;
-    }
+	@Override
+	protected boolean isFinished() {
+		return true;
+	}
 
-    @Override
-    protected void end()
-    {
+	@Override
+	protected void end() {
 
-    }
+	}
 
-    @Override
-    protected void interrupted()
-    {
+	@Override
+	protected void interrupted() {
 
-    }
+	}
 }

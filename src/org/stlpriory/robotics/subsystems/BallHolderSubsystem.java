@@ -5,7 +5,10 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.stlpriory.robotics.Robot;
+import org.stlpriory.robotics.commands.ZeroPot;
+import org.stlpriory.robotics.utils.Debug;
 
 public class BallHolderSubsystem extends Subsystem {
     public static final int RIGHT_WINDOW_MOTOR = 8;
@@ -145,10 +148,11 @@ public class BallHolderSubsystem extends Subsystem {
     public double getAngle() {
         return this.pot.get() + this.potOffsetInDeg;
     }
-    public void setZeroValue(double value)
-    { 
-        this.potOffsetInDeg = Double.parseDouble(Robot.getProperties().getProperty(Robot.POT_ZERO_VALUE));
-    }
+    
+	public void setZeroValue(double value) {
+		this.potOffsetInDeg = value;
+	}
+    
     public void set(final Direction dir, double speed) {
         speed = Math.abs(speed) * (dir == Direction.UP ? 1 : -1);
         this.set(speed);
@@ -164,6 +168,7 @@ public class BallHolderSubsystem extends Subsystem {
     }
 
     public void updateStatus() {
+		SmartDashboard.putData("Zero Pot", new ZeroPot());
         SmartDashboard.putNumber("Right ballholder speed", this.rightMotor.getSpeed());
         SmartDashboard.putNumber("Left ballholder speed", this.leftMotor.getSpeed());
         SmartDashboard.putNumber("Potentiometer (deg)", this.pot.get());
