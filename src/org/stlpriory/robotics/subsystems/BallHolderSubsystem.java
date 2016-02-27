@@ -34,7 +34,6 @@ public class BallHolderSubsystem extends Subsystem {
      * the potentiometer's range (for example 30 degrees). In this case, the offset value of 30 is
      * determined from the mechanical design.
      */
-    public int potOffsetDeg = 0;
     
     public static final double BALL_PICKUP_ANGLE    = 180.0d;
     public static final double LOW_GOAL_SHOOT_ANGLE = 120.0d;
@@ -54,7 +53,7 @@ public class BallHolderSubsystem extends Subsystem {
 //    private Ramper leftRamper, rightRamper;
     
     private AnalogPotentiometer pot;
-    private final double potOffsetInDeg = 0;
+    private double potOffsetInDeg = 0;
     
     private final DigitalInput stowSwitch;
 
@@ -71,7 +70,7 @@ public class BallHolderSubsystem extends Subsystem {
         
         this.stowSwitch = new DigitalInput(SWITCH_CHANNEL);
         
-        this.pot = new AnalogPotentiometer(POT_CHANNEL, POT_FULL_RANGE, POT_OFFSET_DEG);
+        this.pot = new AnalogPotentiometer(POT_CHANNEL, POT_FULL_RANGE, potOffsetInDeg);
         
     }
 
@@ -144,11 +143,11 @@ public class BallHolderSubsystem extends Subsystem {
      * @return the potentiometer reading in degrees
      */
     public double getAngle() {
-        return this.pot.get() + this.potOffsetDeg;
+        return this.pot.get() + this.potOffsetInDeg;
     }
     public void setZeroValue(double value)
     { 
-        this.potOffsetDeg = Double.parseDouble(Robot.getProperties.getProperty(Robot.POT_ZERO_VALUE));
+        this.potOffsetInDeg = Double.parseDouble(Robot.getProperties().getProperty(Robot.POT_ZERO_VALUE));
     }
     public void set(final Direction dir, double speed) {
         speed = Math.abs(speed) * (dir == Direction.UP ? 1 : -1);
