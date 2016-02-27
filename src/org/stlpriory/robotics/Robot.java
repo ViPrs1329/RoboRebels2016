@@ -71,6 +71,7 @@ public class Robot extends IterativeRobot {
             e.printStackTrace();
             System.err.println("!!Cannot load config file, setting default values!!");
         }
+        this.ballHolder.setZeroValue(properties.getProperty(POT_ZERO_VALUE));
         Debug.println("[RoboRebels.robotInit()] Done in " + timer.get() * 1e6 + " ms");
         Debug.println("------------------------------------------");
         Debug.println("           Robot ready!");
