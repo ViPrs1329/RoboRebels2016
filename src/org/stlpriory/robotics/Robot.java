@@ -33,14 +33,14 @@ public class Robot extends IterativeRobot {
     // Select which robot to compile for
     public static final RobotType robotType = RobotType.PNEUMABOT;
 
+    // Human operator interface
+    public static OI oi = new OI();
+    public Joystick xboxController;
+
     // Initialize robot subsystems
     public static DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
     public static BallHolderSubsystem ballHolder = new BallHolderSubsystem();
     public static ShooterSubsystem shooter = new ShooterSubsystem();
-    
-    // Human operator interface
-    public static OI oi = new OI();
-    public Joystick xboxController;
     
     private Command autonomousCommand;
     private Timer timer = new Timer();
