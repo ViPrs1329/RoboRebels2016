@@ -144,7 +144,7 @@ public class BallHolderSubsystem extends Subsystem {
      * @return the potentiometer reading in degrees
      */
     public double getAngle() {
-        return this.pot.get() + Double.parseDouble(Robot.getProperties().getProperty("pot-zero-value"));
+        return this.pot.get() + Double.parseDouble(Robot.getProperties().getProperty(Robot.POT_OFFSET_DEG));
     }
 
     public void set(final Direction dir, double speed) {
