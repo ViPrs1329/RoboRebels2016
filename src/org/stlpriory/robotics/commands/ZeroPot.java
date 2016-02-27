@@ -15,32 +15,39 @@ public class ZeroPot extends Command
 {
     private Properties properties;
     private boolean isFinished;
+
     @Override
     protected void initialize()
     {
+<<<<<<< HEAD
         properties = Robot.getProperties();
         properties.setProperty("pot-zero-value",String.valueOf(Robot.ballHolder.getAngle()));
         isFinished = false;
+=======
+        System.out.println("errors");
+>>>>>>> c925e7f09421f5bd114535c3cfdd3a67dad89910
     }
 
     @Override
     protected void execute()
     {
+        properties = Robot.getProperties();
+        properties.setProperty(Robot.POT_ZERO_VALUE, String.valueOf(Robot.ballHolder.getAngle()));
         try
         {
-            PropertiesUtils.save(properties,"~/config.txt");
-        } catch (IOException e)
+            PropertiesUtils.save(properties, Robot.CONFIG_FILE);
+        } 
+        catch (IOException e)
         {
             e.printStackTrace();
         }
-        Robot.updateProperties(properties);
-        isFinished = true;
+        Robot.setProperties(properties);
     }
 
     @Override
     protected boolean isFinished()
     {
-        return isFinished;
+        return true;
     }
 
     @Override

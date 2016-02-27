@@ -27,21 +27,24 @@ import java.util.Properties;
  */
 public class Robot extends IterativeRobot {
     public enum RobotType {PNEUMABOT, TANKBOT};
+    public static final String POT_ZERO_VALUE = "pot-zero-value";
+    public static final String CONFIG_FILE = "~/config.txt";
 
     // Select which robot to compile for
     public static final RobotType robotType = RobotType.PNEUMABOT;
+
+    // Human operator interface
+    public static OI oi = new OI();
+    public Joystick xboxController;
 
     // Initialize robot subsystems
     public static DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
     public static BallHolderSubsystem ballHolder = new BallHolderSubsystem();
     public static ShooterSubsystem shooter = new ShooterSubsystem();
     
-    // Human operator interface
-    public static OI oi = new OI();
-    public Joystick xboxController;
-    
     private Command autonomousCommand;
     private Timer timer = new Timer();
+    // This Properties is never used, it just keeps away NullPointerExceptions
     private static Properties properties = new Properties();
     // ==================================================================================
     //                            ROBOT INIT SECTION
@@ -55,19 +58,18 @@ public class Robot extends IterativeRobot {
 
         // Initialize the human operator interface ...
         this.xboxController = oi.getController();
-
-        
         timer.stop();
         System.out.println("Trying file");
         try
         {
-            properties = PropertiesUtils.load(new File("~/config.txt"));
-        } catch (IOException e)
+            properties = PropertiesUtils.load(new File(CONFIG_FILE));
+        } 
+        catch (IOException e)
         {
             properties = new Properties();
-            properties.setProperty("pot-zero-value","42");
+            properties.setProperty(POT_ZERO_VALUE, "42");
             e.printStackTrace();
-            System.err.println("!!Cannot load config file, setting default values.!!");
+            System.err.println("!!Cannot load config file, setting default values!!");
         }
         Debug.println("[RoboRebels.robotInit()] Done in " + timer.get() * 1e6 + " ms");
         Debug.println("------------------------------------------");
@@ -128,15 +130,12 @@ public class Robot extends IterativeRobot {
     {
         return properties;
     }
-    public static void updateProperties(Properties changedProperties)
+    public static void setProperties(Properties properties)
     {
-         properties = changedProperties;
+         Robot.properties = properties;
     }
     @Override
     public void testInit() {
         LiveWindow.run();
     }
-
-    
-    
 }

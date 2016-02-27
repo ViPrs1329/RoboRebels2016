@@ -71,11 +71,16 @@ public class BallHolderSubsystem extends Subsystem {
         
         this.stowSwitch = new DigitalInput(SWITCH_CHANNEL);
         
+<<<<<<< HEAD
         this.pot = new AnalogPotentiometer(POT_CHANNEL, POT_FULL_RANGE, 0);
         // Get the potentiometer reading at robot startup. All other angle readings
         // will be measured relative to this initial value. 
         // THIS ASSUMES A SINGLE CONSISTENT STARTING POSITION !!!!!!!
 //        this.potOffsetInDeg = this.pot.get();
+=======
+        this.pot = new AnalogPotentiometer(POT_CHANNEL, POT_FULL_RANGE, POT_OFFSET_DEG);
+        
+>>>>>>> c925e7f09421f5bd114535c3cfdd3a67dad89910
     }
 
     // ==================================================================================
