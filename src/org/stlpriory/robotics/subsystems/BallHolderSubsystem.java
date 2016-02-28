@@ -144,20 +144,26 @@ public class BallHolderSubsystem extends Subsystem {
     
     /**
      * Get the current ball holder arm angle relative to its initial position upon startup
+     * Based on what happens with the new system for setting the initial position, 
+     * this might end up being identical to getAbsoluteAngle(); if it is, make sure to 
+     * merge them.
      * @return the potentiometer reading in degrees
      */
     public double getAngle() {
         return this.pot.get() + this.potOffsetInDeg;
     }
     
-    public double getAbsoluteAngle()
-    {
+    /**
+     * Returns the angle of the potentiometer without any correction
+     * We have to use this for setting the highest and lowest points
+     */
+    public double getAbsoluteAngle() {
     	return this.pot.get();
     }
-    
-	public void setZeroValue(double value) {
-		this.potOffsetInDeg = value;
-	}
+
+    public void setZeroValue(double value) {
+        this.potOffsetInDeg = value; 
+    }
     
     public void set(final Direction dir, double speed) {
         speed = Math.abs(speed) * (dir == Direction.UP ? 1 : -1);
