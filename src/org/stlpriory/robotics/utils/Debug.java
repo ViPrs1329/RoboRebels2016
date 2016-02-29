@@ -1,15 +1,13 @@
 package org.stlpriory.robotics.utils;
 
-import java.io.File;
-
 /**
  *
  */
 public class Debug {
 	
     private static boolean DEBUG_MODE = true;
-    public static File DEBUG_FOLDER = FileUtils.createDirectory("temp");
-    public static File DEBUG_FILE = FileUtils.createFile("debug.out", DEBUG_FOLDER);
+//    public static File DEBUG_FOLDER = FileUtils.createDirectory("temp");
+//    public static File DEBUG_FILE = FileUtils.createFile("debug.out", DEBUG_FOLDER);
 
     /**
      * If in debug mode, prints specified string without a newline
