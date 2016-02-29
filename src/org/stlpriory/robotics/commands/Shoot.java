@@ -36,6 +36,13 @@ public class Shoot extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+        if(Robot.oi.forceButton.get())
+        {
+        	Robot.shooter.setSpeeds(ShooterSubsystem.SHOOT_SPEED,ShooterSubsystem.SHOOT_SPEED);
+        	Robot.shooter.extendLoaderArm();
+        	System.out.println("forced");
+        	return;
+        }
         if(counter < delayTime)
         {
             counter++;
@@ -45,13 +52,6 @@ public class Shoot extends Command {
         double rightSpeed = Robot.shooter.getRightSpeed();
         double leftSpeed  = Robot.shooter.getLeftSpeed();
         double minSpeed   = Math.max(rightSpeed, leftSpeed);
-        if(Robot.oi.forceButton.get())
-        {
-        	Robot.shooter.setSpeeds(ShooterSubsystem.SHOOT_SPEED,ShooterSubsystem.SHOOT_SPEED);
-        	Robot.shooter.extendLoaderArm();
-        	System.out.println("forced");
-        	return;
-        }
 //        Robot.shooter.reset();
         // Get shooter motors up to full speed
         if (minSpeed > 1.5 ) {
