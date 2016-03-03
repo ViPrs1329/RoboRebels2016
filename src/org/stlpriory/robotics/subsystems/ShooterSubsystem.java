@@ -87,7 +87,6 @@ public class ShooterSubsystem extends Subsystem {
     }
     
     public void shoot() {
-//        (new Exception()).printStackTrace();
     	System.out.println("shoot(): setting speeds to " + SHOOT_SPEED);
         this.leftShooter.set(SHOOT_SPEED);
         this.rightShooter.set(-SHOOT_SPEED);
@@ -128,7 +127,7 @@ public class ShooterSubsystem extends Subsystem {
         SmartDashboard.putNumber("Right encoder speed", getRightSpeed());
         SmartDashboard.putNumber("Left encoder speed", getLeftSpeed());
         SmartDashboard.putNumber("Servo", kicker.get());
-        SmartDashboard.putNumber("Difference",difference);
+        SmartDashboard.putNumber("Difference", difference);
 //        System.out.println("UPDATING");
     }
     public void reset()
@@ -143,8 +142,8 @@ public class ShooterSubsystem extends Subsystem {
     }
     
     public double getLeftSpeed() {
-		return (leftEncoder.getPeriod() * 10000)/5;
-	}
+        return (leftEncoder.getPeriod() * 10000)/5;
+    }
     
     // ==================================================================================
     //                    P R O T E C T E D   M E T H O D S
@@ -153,10 +152,8 @@ public class ShooterSubsystem extends Subsystem {
     @Override
     protected void initDefaultCommand() {
         // TODO Auto-generated method stub
+    } 
+    public double getSpeed() {
+        return Math.min(getLeftSpeed(), getRightSpeed());
     }
-
-	public double getSpeed() {
-		return Math.min(getLeftSpeed(), getRightSpeed());
-	}
-
 }
