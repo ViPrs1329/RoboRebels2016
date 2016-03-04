@@ -5,11 +5,11 @@ import java.io.File;
 import java.nio.file.Files;
 import java.util.Properties;
 
+import org.stlpriory.robotics.commands.ZeroPot;
 import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
 import org.stlpriory.robotics.subsystems.DrivetrainSubsystem;
 import org.stlpriory.robotics.subsystems.ShooterSubsystem;
 import org.stlpriory.robotics.utils.Debug;
-import org.stlpriory.robotics.utils.FileUtils;
 import org.stlpriory.robotics.utils.PropertiesUtils;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding 
@@ -40,8 +41,7 @@ public class Robot extends IterativeRobot {
     public static final OI oi = new OI();
     
     // Robot configuration file and properties
-    public static final File CONFIG_FILE_DIRECTORY = FileUtils.getSystemTempDirectory();
-    public static final File CONFIG_FILE = new File(CONFIG_FILE_DIRECTORY, "robotConfig.xml");
+    public static final File CONFIG_FILE  = new File("/home/lvuser/config.txt");;
     public static final Properties ROBOT_PROPS = new Properties();
     
     private Command autonomousCommand;
@@ -56,13 +56,14 @@ public class Robot extends IterativeRobot {
         Debug.println("[Robot.robotInit()] Initializing...");
         System.out.println("init started");
         timer.start();
-        
         // Load robot configuration file
         loadRobotConfigFile();
+        
+        
         oi.vibrate(false);
         
         timer.stop();
-        
+        SmartDashboard.putData("Zero Pot", new ZeroPot());
         Debug.println("[RoboRebels.robotInit()] Done in " + timer.get() * 1e6 + " ms");
         Debug.println("------------------------------------------");
         Debug.println("           Robot ready!");
@@ -71,6 +72,8 @@ public class Robot extends IterativeRobot {
     
     @Override
     public void disabledInit() {
+    	ballHolder.setZeroValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_ZERO_VALUE)));
+    	System.out.println("set zero value");
     }
 
     // ==================================================================================
@@ -79,6 +82,8 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void autonomousInit() {
+    	ballHolder.setZeroValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_ZERO_VALUE)));
+    	System.out.println("set zero value");
     }
 
     @Override
@@ -95,6 +100,8 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
+        ballHolder.setZeroValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_ZERO_VALUE)));
+    	System.out.println("set zero value");
         // Record initial status values
         updateStatus();
     }
@@ -125,6 +132,7 @@ public class Robot extends IterativeRobot {
                 Properties props = PropertiesUtils.load(CONFIG_FILE);
                 // Put all the loaded values into the robot properties
                 ROBOT_PROPS.putAll(props);
+                System.out.println("read file");
             } else {
                 // Create a new empty properties file
                 CONFIG_FILE.createNewFile();
@@ -136,9 +144,10 @@ public class Robot extends IterativeRobot {
     
     public static void saveRobotConfigFile() {
         try {
-            if (Files.exists(CONFIG_FILE.toPath())) {
+            if (CONFIG_FILE.exists()) {
                 // Write the properties file overwriting any existing file
                 PropertiesUtils.save(ROBOT_PROPS, CONFIG_FILE);
+                System.out.println("writing props");
             } else {
                 // Create a new empty properties file
                 CONFIG_FILE.createNewFile();

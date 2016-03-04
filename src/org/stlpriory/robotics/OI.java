@@ -118,6 +118,8 @@ public class OI {
 
         this.vibrator = new TwoButton(new JoystickButton(this.xboxController, LEFT_STICK), new JoystickButton(this.xboxController, RIGHT_STICK));
         this.vibrator.whileActive(new Vibrator());
+       
+        
         Debug.println("[OI] Instantiation complete.");
     }
 

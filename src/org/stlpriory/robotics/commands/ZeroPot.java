@@ -19,7 +19,9 @@ public class ZeroPot extends Command {
 	@Override
 	protected void execute() {
 		Robot.ROBOT_PROPS.setProperty(Robot.POT_ZERO_VALUE, Double.toString(Robot.ballHolder.getAbsoluteAngle()));
+		System.out.println("got angle");
 		Robot.saveRobotConfigFile();
+		System.out.println("saved file");
 		Robot.ballHolder.setZeroValue(Double.valueOf(Robot.ROBOT_PROPS.getProperty(Robot.POT_ZERO_VALUE)));
 	}
 
