@@ -6,10 +6,6 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.stlpriory.robotics.Robot;
-import org.stlpriory.robotics.commands.ZeroPot;
-import org.stlpriory.robotics.utils.Debug;
-
 public class BallHolderSubsystem extends Subsystem {
     public static final int RIGHT_WINDOW_MOTOR = 8;
     public static final int LEFT_WINDOW_MOTOR = 2;

@@ -2,13 +2,12 @@ package org.stlpriory.robotics.commands;
 
 import java.util.concurrent.TimeUnit;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.stlpriory.robotics.Robot;
-import org.stlpriory.robotics.hardware.MiniCIMMotorSpecs;
 import org.stlpriory.robotics.subsystems.ShooterSubsystem;
+
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *

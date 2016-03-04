@@ -1,14 +1,11 @@
 package org.stlpriory.robotics.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import java.util.Properties;
 
 import org.stlpriory.robotics.Robot;
 import org.stlpriory.robotics.utils.Debug;
-import org.stlpriory.robotics.utils.PropertiesUtils;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Properties;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Created by Adam on 2/26/2016.

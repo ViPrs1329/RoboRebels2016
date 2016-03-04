@@ -2,24 +2,21 @@
 package org.stlpriory.robotics;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Properties;
 import java.nio.file.Files;
+import java.util.Properties;
 
-import org.stlpriory.robotics.commands.ZeroPot;
 import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
 import org.stlpriory.robotics.subsystems.DrivetrainSubsystem;
 import org.stlpriory.robotics.subsystems.ShooterSubsystem;
 import org.stlpriory.robotics.utils.Debug;
-import org.stlpriory.robotics.utils.PropertiesUtils;
 import org.stlpriory.robotics.utils.FileUtils;
+import org.stlpriory.robotics.utils.PropertiesUtils;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding 
@@ -111,6 +108,7 @@ public class Robot extends IterativeRobot {
     
     @Override
     public void disabledPeriodic() {
+    	oi.vibrate(false);
     }
     
     // ==================================================================================
