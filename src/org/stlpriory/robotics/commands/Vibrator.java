@@ -9,12 +9,14 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class Vibrator extends Command {
 	private boolean isPopeCatholic;
+	private Pope pope;
 	@Override
 	protected void initialize() {
 		// TODO Auto-generated method stub
 		Robot.oi.getController().setRumble(RumbleType.kLeftRumble, 1);
 		Robot.oi.getController().setRumble(RumbleType.kRightRumble, 1);
-		isPopeCatholic = isPopeCatholic(new Pope());
+		this.pope = new Pope(religions.Catholic);
+		isPopeCatholic = isPopeCatholic(pope);
 		
 
 	}
@@ -25,7 +27,7 @@ public class Vibrator extends Command {
 		Robot.oi.getController().setRumble(RumbleType.kRightRumble, (float) Math.random());
 		Robot.oi.getController().setRumble(RumbleType.kLeftRumble, (float) Math.random());
 		System.out.println("THAT'S THE WRONG BUTTON");
-		isPopeCatholic = isPopeCatholic(new Pope());
+		isPopeCatholic = isPopeCatholic(pope);
 	}
 
 	@Override
