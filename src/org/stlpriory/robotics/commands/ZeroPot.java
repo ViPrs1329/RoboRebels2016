@@ -1,7 +1,5 @@
 package org.stlpriory.robotics.commands;
 
-import java.util.Properties;
-
 import org.stlpriory.robotics.Robot;
 import org.stlpriory.robotics.utils.Debug;
 
@@ -11,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  * Created by Adam on 2/26/2016.
  */
 public class ZeroPot extends Command {
-	private Properties properties;
+//	private Properties properties;
 
 	@Override
 	protected void initialize() {
