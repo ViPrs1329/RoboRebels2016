@@ -62,6 +62,7 @@ public class Robot extends IterativeRobot {
         
         // Load robot configuration file
         loadRobotConfigFile();
+        oi.vibrate(false);
         
         timer.stop();
         

@@ -4,6 +4,7 @@ import org.stlpriory.robotics.commands.*;
 import org.stlpriory.robotics.commands.drivetrain.DriveStraight;
 import org.stlpriory.robotics.utils.Debug;
 import org.stlpriory.robotics.utils.TriggerTrigger;
+import org.stlpriory.robotics.utils.TwoButton;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Joystick.RumbleType;
@@ -70,6 +71,7 @@ public class OI {
     public final JoystickButton forceButton;
     private final TriggerTrigger rightTriggerOn;
     private final TriggerTrigger leftTriggerOn;
+    private final TwoButton vibrator;
 
 	private JoystickButton debugWriteButton;
 
@@ -108,6 +110,7 @@ public class OI {
         this.leftTriggerOn = new TriggerTrigger(this.xboxController, LEFT_TRIGGER);
         leftTriggerOn.whileActive(new DriveStraight(DriveStraight.Direction.REVERSE, leftTriggerOn.getPort()));
 
+        this.vibrator = new TwoButton(new JoystickButton(this.xboxController, LEFT_STICK), new JoystickButton(this.xboxController, RIGHT_STICK), new Vibrator());
         
         Debug.println("[OI] Instantiation complete.");
     }

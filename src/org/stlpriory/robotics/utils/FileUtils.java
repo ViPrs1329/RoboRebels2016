@@ -123,7 +123,7 @@ public class FileUtils {
     /**
      * Read all content from a file and return it into a single string. Bytes from the file are 
      * decoded into characters using the UTF-8 charset. This quick method is targeted at reading 
-     * small byte/text files in a single shot. The underlying logic reads the entire file’s bytes 
+     * small byte/text files in a single shot. The underlying logic reads the entire file's bytes 
      * or lines, respectively, into a single read and takes care of opening and closing the stream 
      * for you after the file has been read or an I/O error or exception has occurred.
      * 
@@ -139,7 +139,7 @@ public class FileUtils {
     /**
      * Read all lines from a file. Bytes from the file are decoded into characters 
      * using the the UTF-8 charset. This quick method is targeted at reading small byte/text 
-     * files in a single shot. The underlying logic reads the entire file’s bytes or lines, 
+     * files in a single shot. The underlying logic reads the entire file's bytes or lines, 
      * respectively, into a single read and takes care of opening and closing the stream for 
      * you after the file has been read or an I/O error or exception has occurred.
      * 
