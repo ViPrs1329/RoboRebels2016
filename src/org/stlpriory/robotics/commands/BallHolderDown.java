@@ -35,7 +35,7 @@ public class BallHolderDown extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-    	return Robot.ballHolder.getAngle() < BallHolderSubsystem.MIN_ANGLE && !(Robot.oi.forceButton.get() && forceable);
+    	return Robot.ballHolder.getAngle() < Robot.ballHolder.potLowestValue && !(Robot.oi.forceButton.get() && forceable);
     }
 
     // Called once after isFinished returns true

@@ -40,8 +40,8 @@ public class BallHolderSubsystem extends Subsystem {
     public static final double HI_GOAL_SHOOT_ANGLE  = 60.0d;
     public static final double ARM_SPEED  = 0.5d;
 
-    public static final double MAX_ANGLE = 1855;
-    public static final double MIN_ANGLE = 1740;
+    public static final double EMPTY_VALUE = -1;
+    public static final String POT_SETTING_STATUS = "Pot reset status";
     public static final double TOLERANCE = 0.5d;
 
     public enum Direction {
@@ -53,9 +53,11 @@ public class BallHolderSubsystem extends Subsystem {
 //    private Ramper leftRamper, rightRamper;
     
     private AnalogPotentiometer pot;
-    private double potOffsetInDeg = 0;
+    public double potHighestValue = 0;
+    public double potLowestValue = 0;
     
     private final DigitalInput stowSwitch;
+	
 
 
     // ==================================================================================
@@ -93,7 +95,7 @@ public class BallHolderSubsystem extends Subsystem {
     }
     public boolean moveToAngle(double angle)
     {
-        if (Math.abs(this.getAngle()-angle) <= MAX_ANGLE)
+        if (Math.abs(this.getAngle() - angle) <= potHighestValue)
         {
             stop();
             return true;
@@ -146,7 +148,7 @@ public class BallHolderSubsystem extends Subsystem {
      * @return the potentiometer reading in degrees
      */
     public double getAngle() {
-        return this.pot.get() + this.potOffsetInDeg;
+        return this.pot.get() + this.potHighestValue;
     }
     
     /**
@@ -157,9 +159,13 @@ public class BallHolderSubsystem extends Subsystem {
     	return this.pot.get();
     }
 
-    public void setZeroValue(double value) {
-        this.potOffsetInDeg = value; 
+    public void setHighValue(double value) {
+        this.potHighestValue = value; 
     }
+    
+    public void setLowValue(double value) {
+		this.potLowestValue = value;
+	}
     
     public void set(final Direction dir, double speed) {
         speed = Math.abs(speed) * (dir == Direction.UP ? 1 : -1);
@@ -171,8 +177,8 @@ public class BallHolderSubsystem extends Subsystem {
      */
     public boolean inRange() {
         double angle = Math.abs( getAngle() );
-        System.out.printf("%f > %f > %f ???%n", MAX_ANGLE, angle, MIN_ANGLE);
-        return (angle > MIN_ANGLE) && (angle < MAX_ANGLE);
+        System.out.printf("%f > %f > %f ???%n", potHighestValue, angle, potLowestValue);
+        return (angle > potLowestValue) && (angle < potHighestValue);
     }
 
     public void updateStatus() {
@@ -189,5 +195,6 @@ public class BallHolderSubsystem extends Subsystem {
     protected void initDefaultCommand() {
         // TODO Auto-generated method stub
     }
+
 
 }

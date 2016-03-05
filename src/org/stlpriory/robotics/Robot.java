@@ -5,7 +5,8 @@ import java.io.File;
 import java.nio.file.Files;
 import java.util.Properties;
 
-import org.stlpriory.robotics.commands.ZeroPot;
+import org.stlpriory.robotics.commands.ZeroPotHigh;
+import org.stlpriory.robotics.commands.ZeroPotLow;
 import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
 import org.stlpriory.robotics.subsystems.DrivetrainSubsystem;
 import org.stlpriory.robotics.subsystems.ShooterSubsystem;
@@ -27,8 +28,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
     public enum RobotType {PNEUMABOT, TANKBOT};
-    public static final String POT_ZERO_VALUE = "pot-zero-value";
-
+    public static final String POT_HIGH_VALUE = "pot-zero-value";
+    public static final String POT_LOW_VALUE = "pot-low-value";
     // Select which robot to compile for
     public static final RobotType robotType = RobotType.TANKBOT;
 
@@ -43,6 +44,7 @@ public class Robot extends IterativeRobot {
     // Robot configuration file and properties
     public static final File CONFIG_FILE  = new File("/home/lvuser/config.txt");;
     public static final Properties ROBOT_PROPS = new Properties();
+
     
     private Command autonomousCommand;
     private Timer timer = new Timer();
@@ -63,7 +65,8 @@ public class Robot extends IterativeRobot {
         oi.vibrate(false);
         
         timer.stop();
-        SmartDashboard.putData("Zero Pot", new ZeroPot());
+        SmartDashboard.putData("Zero Pot High", new ZeroPotHigh());
+        SmartDashboard.putData("Zero pot low", new ZeroPotLow());
         Debug.println("[RoboRebels.robotInit()] Done in " + timer.get() * 1e6 + " ms");
         Debug.println("------------------------------------------");
         Debug.println("           Robot ready!");
@@ -72,7 +75,8 @@ public class Robot extends IterativeRobot {
     
     @Override
     public void disabledInit() {
-    	ballHolder.setZeroValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_ZERO_VALUE)));
+    	ballHolder.setHighValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_HIGH_VALUE)));
+    	ballHolder.setLowValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_LOW_VALUE)));
     	System.out.println("set zero value");
     }
 
@@ -82,7 +86,8 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void autonomousInit() {
-    	ballHolder.setZeroValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_ZERO_VALUE)));
+    	ballHolder.setHighValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_HIGH_VALUE)));
+    	ballHolder.setLowValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_LOW_VALUE)));
     	System.out.println("set zero value");
     }
 
@@ -100,7 +105,8 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
-        ballHolder.setZeroValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_ZERO_VALUE)));
+        ballHolder.setHighValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_HIGH_VALUE)));
+        ballHolder.setLowValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_LOW_VALUE)));
     	System.out.println("set zero value");
         // Record initial status values
         updateStatus();
@@ -151,6 +157,7 @@ public class Robot extends IterativeRobot {
             } else {
                 // Create a new empty properties file
                 CONFIG_FILE.createNewFile();
+                saveRobotConfigFile();
             }
         } catch (Exception e) {
             e.printStackTrace();
