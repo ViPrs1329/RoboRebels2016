@@ -72,8 +72,8 @@ public class OI {
     private final JoystickButton throwButton;
     private final JoystickButton suckButton;
     private final JoystickButton holdSwitch;
-    private final JoystickButton holderTop;
-    private final JoystickButton holderBottom;
+    private final JoystickButton holderShoot;
+    private final JoystickButton holderSuck;
     public final JoystickButton forceButton;
     private final TriggerTrigger rightTriggerOn;
     private final TriggerTrigger leftTriggerOn;
@@ -102,11 +102,11 @@ public class OI {
         this.holdSwitch = new JoystickButton(this.xboxController, START_BUTTON);
         this.holdSwitch.toggleWhenPressed(new Hold());
 
-        this.holderTop = new JoystickButton(this.xboxController, RIGHT_BUMPER);
-        this.holderTop.whenPressed(new BallHolderUp(false));
+        this.holderShoot = new JoystickButton(this.xboxController, RIGHT_BUMPER);
+        this.holderShoot.whenPressed(new MoveToShoot());
 
-        this.holderBottom = new JoystickButton(this.xboxController, LEFT_BUMPER);
-        this.holderBottom.whenPressed(new BallHolderDown(false));
+        this.holderSuck = new JoystickButton(this.xboxController, LEFT_BUMPER);
+        this.holderSuck.whenPressed(new MoveToSuck());
 
         this.forceButton = new JoystickButton(this.xboxController, LEFT_STICK);
 
