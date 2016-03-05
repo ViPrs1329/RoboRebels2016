@@ -25,8 +25,7 @@ public class ZeroPotLow extends Command {
 			System.out.println("got angle");
 			Robot.saveRobotConfigFile();
 			System.out.println("saved file");
-			Robot.ballHolder.setLowValue(Double.valueOf(Robot.ROBOT_PROPS
-					.getProperty(Robot.POT_LOW_VALUE)));
+                        Robot.setProperties();
 		}
 		else
 		{

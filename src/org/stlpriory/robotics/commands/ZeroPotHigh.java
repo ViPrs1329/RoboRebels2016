@@ -23,8 +23,7 @@ public class ZeroPotHigh extends Command {
 		System.out.println("got angle");
 		Robot.saveRobotConfigFile();
 		System.out.println("saved file");
-		Robot.ballHolder.setHighValue(Double.valueOf(Robot.ROBOT_PROPS.getProperty(Robot.POT_HIGH_VALUE)));
-		Robot.ballHolder.setLowValue(BallHolderSubsystem.EMPTY_VALUE);
+                Robot.setProperties();
 		SmartDashboard.putString(BallHolderSubsystem.POT_SETTING_STATUS, "All good");
 	}
 

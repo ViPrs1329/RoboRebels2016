@@ -72,8 +72,7 @@ public class Robot extends IterativeRobot {
     
     @Override
     public void disabledInit() {
-    	ballHolder.setHighValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_HIGH_VALUE)));
-    	ballHolder.setLowValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_LOW_VALUE)));
+        setProperties();
     	System.out.println("set zero value");
     }
 
@@ -83,8 +82,7 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void autonomousInit() {
-    	ballHolder.setHighValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_HIGH_VALUE)));
-    	ballHolder.setLowValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_LOW_VALUE)));
+        setProperties();
     	System.out.println("set zero value");
     }
 
@@ -102,8 +100,7 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
-        ballHolder.setHighValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_HIGH_VALUE)));
-        ballHolder.setLowValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_LOW_VALUE)));
+        setProperties();
     	System.out.println("set zero value");
         // Record initial status values
         updateStatus();
@@ -159,6 +156,12 @@ public class Robot extends IterativeRobot {
         } catch (Exception e) {
             e.printStackTrace();
         }        
+    }
+
+    public static void setProperties()
+    {
+    	ballHolder.setHighValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_HIGH_VALUE)));
+    	ballHolder.setLowValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_LOW_VALUE)));
     }
 
     /**
