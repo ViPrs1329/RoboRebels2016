@@ -11,8 +11,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Created by Adam on 2/26/2016.
  */
 public class ZeroPotLow extends Command {
-	// private Properties properties;
-
 	@Override
 	protected void initialize() {
 		System.out.println("Zeroing potentiometer low");
@@ -23,7 +21,7 @@ public class ZeroPotLow extends Command {
 		if (Double.parseDouble(Robot.ROBOT_PROPS
 				.getProperty(Robot.POT_LOW_VALUE)) == BallHolderSubsystem.EMPTY_VALUE) {
 			Robot.ROBOT_PROPS.setProperty(Robot.POT_LOW_VALUE,
-					Double.toString(Robot.ballHolder.getAbsoluteAngle()));
+					Double.toString(Robot.ballHolder.getAngle()));
 			System.out.println("got angle");
 			Robot.saveRobotConfigFile();
 			System.out.println("saved file");
@@ -44,7 +42,7 @@ public class ZeroPotLow extends Command {
 	@Override
 	protected void end() {
 		Debug.println("The pot value was "
-				+ Robot.ballHolder.getAbsoluteAngle());
+				+ Robot.ballHolder.getAngle());
 	}
 
 	@Override

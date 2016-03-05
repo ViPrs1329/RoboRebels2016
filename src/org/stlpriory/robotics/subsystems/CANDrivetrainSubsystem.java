@@ -75,11 +75,7 @@ public class CANDrivetrainSubsystem extends Subsystem {
             this.rightRear = createMaster(DrivetrainSubsystem.RR_MOTOR_ID);
         }
 
-        if (Robot.robotType == RobotType.TANKBOT) {
-            this.drive = new RobotDrive(this.rightFront, this.leftFront);
-        } else {
-            this.drive = new RobotDrive(this.leftFront, this.rightFront);
-        }
+        this.drive = new RobotDrive(this.leftFront, this.rightFront);
 
         this.drive.setSafetyEnabled(false);
         this.drive.setExpiration(0.1);

@@ -57,11 +57,7 @@ public class DrivetrainSubsystem extends Subsystem {
             this.rightRear = createMaster(RR_MOTOR_ID);
         }
 
-        if (Robot.robotType == RobotType.TANKBOT) {
-            this.drive = new RobotDrive(this.rightFront, this.leftFront);
-        } else {
-            this.drive = new RobotDrive(this.leftFront, this.rightFront);
-        }
+        this.drive = new RobotDrive(this.leftFront, this.rightFront);
         this.drive.setSafetyEnabled(false);
         this.drive.setExpiration(0.1);
         this.drive.setSensitivity(0.5);
@@ -80,7 +76,6 @@ public class DrivetrainSubsystem extends Subsystem {
     // ==================================================================================
 
     public void tankDrive(final double leftStickValue, final double rightStickValue) {
-//        this.drive.tankDrive(leftStickValue, rightStickValue);
     	leftFront.set(-leftStickValue);
     	rightFront.set(rightStickValue);
     	if(!MASTER_SLAVE_MODE)

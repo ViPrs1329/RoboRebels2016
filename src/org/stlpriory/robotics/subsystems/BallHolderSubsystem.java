@@ -13,7 +13,6 @@ public class BallHolderSubsystem extends Subsystem {
     public static final int POT_CHANNEL = 0;
     public static final int SWITCH_CHANNEL = 1;
     
-    public static final double MAX_DIFF = 5.0;
     /*
      * The scaling factor multiplied by the analog voltage value to obtain the angle in degrees
      * For example, let's say you have an ideal 10-turn linear potentiometer attached to a motor
@@ -141,22 +140,11 @@ public class BallHolderSubsystem extends Subsystem {
     }
     
     /**
-     * Get the current ball holder arm angle relative to its initial position upon startup
-     * Based on what happens with the new system for setting the initial position, 
-     * this might end up being identical to getAbsoluteAngle(); if it is, make sure to 
-     * merge them.
+     * Get the current ball holder arm angle  
      * @return the potentiometer reading in degrees
      */
     public double getAngle() {
-        return this.pot.get() + this.potHighestValue;
-    }
-    
-    /**
-     * Returns the angle of the potentiometer without any correction
-     * We have to use this for setting the highest and lowest points
-     */
-    public double getAbsoluteAngle() {
-    	return this.pot.get();
+        return this.pot.get();
     }
 
     public void setHighValue(double value) {

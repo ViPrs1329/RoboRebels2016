@@ -27,11 +27,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * resource directory.
  */
 public class Robot extends IterativeRobot {
-    public enum RobotType {PNEUMABOT, TANKBOT};
     public static final String POT_HIGH_VALUE = "pot-zero-value";
     public static final String POT_LOW_VALUE = "pot-low-value";
-    // Select which robot to compile for
-    public static final RobotType robotType = RobotType.TANKBOT;
 
     // Initialize robot subsystems
     public static DrivetrainSubsystem drivetrain = new DrivetrainSubsystem();
@@ -42,7 +39,7 @@ public class Robot extends IterativeRobot {
     public static final OI oi = new OI();
     
     // Robot configuration file and properties
-    public static final File CONFIG_FILE  = new File("/home/lvuser/config.txt");;
+    public static final File CONFIG_FILE  = new File("/home/lvuser/config.txt");
     public static final Properties ROBOT_PROPS = new Properties();
 
     
