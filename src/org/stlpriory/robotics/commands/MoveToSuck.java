@@ -2,6 +2,7 @@ package org.stlpriory.robotics.commands;
 
 import org.stlpriory.robotics.Robot;
 import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
+import org.stlpriory.robotics.subsystems.BallHolderSubsystem.Direction;
 
 import edu.wpi.first.wpilibj.command.Command;
 

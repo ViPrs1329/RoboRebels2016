@@ -3,6 +3,8 @@ package org.stlpriory.robotics;
 import org.stlpriory.robotics.commands.BallHolderDown;
 import org.stlpriory.robotics.commands.BallHolderUp;
 import org.stlpriory.robotics.commands.Hold;
+import org.stlpriory.robotics.commands.MoveToShoot;
+import org.stlpriory.robotics.commands.MoveToSuck;
 import org.stlpriory.robotics.commands.Shoot;
 import org.stlpriory.robotics.commands.StopShooter;
 import org.stlpriory.robotics.commands.Suck;
