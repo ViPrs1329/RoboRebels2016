@@ -22,11 +22,14 @@ public class DrivetrainSubsystem extends Subsystem {
     public static final int LR_MOTOR_ID = 4;
     public static final int RF_MOTOR_ID = 2;
     public static final int RR_MOTOR_ID = 1;
+    
+    public enum Direction {FORWARD, REVERSE};
 
 
     public static final double DEFAULT_FORWARD_SPEED = 1;
 
     public static final boolean MASTER_SLAVE_MODE = true;
+	public static final double FORWARD_SPEED = .9;
 
     private final CANTalon rightFront;
     private final CANTalon rightRear;

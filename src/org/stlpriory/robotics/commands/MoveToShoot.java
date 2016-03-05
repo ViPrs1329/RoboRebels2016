@@ -32,9 +32,9 @@ public class MoveToShoot extends Command {
             if(angle - Robot.ballHolder.shootAngle <= BallHolderSubsystem.TOLERANCE)
                 isDone = true;
             else if(angle > Robot.ballHolder.shootAngle)
-                Robot.ballHolder.set(Direction.UP, Robot.ballHolder.ARM_SPEED);
+                Robot.ballHolder.set(Direction.UP, BallHolderSubsystem.ARM_SPEED);
             else if(angle < Robot.ballHolder.shootAngle)
-                Robot.ballHolder.set(Direction.DOWN, Robot.ballHolder.ARM_SPEED);
+                Robot.ballHolder.set(Direction.DOWN, BallHolderSubsystem.ARM_SPEED);
         }
     }
 

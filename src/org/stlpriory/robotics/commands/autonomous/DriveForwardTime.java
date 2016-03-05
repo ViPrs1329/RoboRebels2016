@@ -1,15 +1,14 @@
-package org.stlpriory.robotics.commands.drivetrain;
+package org.stlpriory.robotics.commands.autonomous;
+
+import org.stlpriory.robotics.Robot;
+import org.stlpriory.robotics.subsystems.DrivetrainSubsystem.Direction;
+import org.stlpriory.robotics.subsystems.DrivetrainSubsystem;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.stlpriory.robotics.utils.Constants;
-import org.stlpriory.robotics.utils.Utils;
-import org.stlpriory.robotics.Robot;
-import org.stlpriory.robotics.subsystems.BallHolderSubsystem.Direction;
-
-public class DriveForward extends Command {
+public class DriveForwardTime extends Command {
 
     double startTime;
     double timeCurrent;
@@ -17,7 +16,7 @@ public class DriveForward extends Command {
     Timer timer = new Timer();
     Direction direction;
 
-    public DriveForward(double time, Direction direction) {
+    public DriveForwardTime(double time, Direction direction) {
         super("DriveWithGamepad");
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -38,21 +37,20 @@ public class DriveForward extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if (direction = Direction.FORWARD) {
+        if (direction == Direction.FORWARD) {
             Robot.drivetrain.tankDrive(DrivetrainSubsystem.FORWARD_SPEED, DrivetrainSubsystem.FORWARD_SPEED);
             System.out.println("Driving forward for time");
         } else {
             Robot.drivetrain.tankDrive(-DrivetrainSubsystem.FORWARD_SPEED, -DrivetrainSubsystem.FORWARD_SPEED);
         }
         SmartDashboard.putNumber("Robot Speed",
-                Robot.drivetrain.getRobotSpeed());
+                Robot.drivetrain.getSpeed());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         timeCurrent = timer.get(); // fix this
         return timeCurrent - startTime > goalTime;
-        SmartDashboard.putNumber("Distance", totalDistance);
     }
 
     // Called once after isFinished returns true
