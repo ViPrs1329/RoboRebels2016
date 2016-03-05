@@ -2,7 +2,6 @@ package org.stlpriory.robotics.subsystems;
 
 import org.stlpriory.robotics.OI;
 import org.stlpriory.robotics.Robot;
-import org.stlpriory.robotics.Robot.RobotType;
 import org.stlpriory.robotics.commands.drivetrain.DriveWithGamepad;
 import org.stlpriory.robotics.hardware.AMOpticalEncoderSpecs;
 import org.stlpriory.robotics.hardware.CIMMotorSpecs;
