@@ -181,9 +181,7 @@ public class BallHolderSubsystem extends Subsystem {
      * @return true if the ball holder arm is within the allowable range
      */
     public boolean inRange() {
-        double angle = Math.abs( getAngle() );
-        System.out.printf("%f > %f > %f ???%n", potHighestValue, angle, potLowestValue);
-        return (angle > potLowestValue) && (angle < potHighestValue);
+        return canGoHigher() && canGoLower();
     }
 
     public void updateStatus() {
