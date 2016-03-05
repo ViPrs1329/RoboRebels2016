@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Robot drive train subsystem consisting of 4 CIM motors configured in 2 master/slave arrangements. 
@@ -125,7 +126,8 @@ public class DrivetrainSubsystem extends Subsystem {
         // SmartDashboard.putNumber("LR motor output", leftRearMotorOutput);
         // SmartDashboard.putNumber("RF motor output", rightFrontMotorOutput);
         // SmartDashboard.putNumber("RR motor output", rightRearMotorOutput);
-
+    	SmartDashboard.putNumber("Right encoder", rightFront.getEncVelocity());
+    	SmartDashboard.putNumber("Left encoder", leftFront.getEncVelocity());
         // SmartDashboard.putNumber("LF power draw", leftFront.getOutputCurrent());
         // SmartDashboard.putNumber("LR power draw", leftRear.getOutputCurrent());
         // SmartDashboard.putNumber("RF power draw", rightFront.getOutputCurrent());

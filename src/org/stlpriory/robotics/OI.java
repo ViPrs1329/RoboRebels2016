@@ -15,6 +15,7 @@ import org.stlpriory.robotics.utils.Debug;
 import org.stlpriory.robotics.utils.TriggerTrigger;
 import org.stlpriory.robotics.utils.TwoButton;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -81,6 +82,8 @@ public class OI {
     private final TriggerTrigger rightTriggerOn;
     private final TriggerTrigger leftTriggerOn;
     private final TwoButton vibrator;
+    
+    public AnalogGyro gyro;
 
 //	private JoystickButton debugWriteButton;
 
