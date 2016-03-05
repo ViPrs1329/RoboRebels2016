@@ -135,6 +135,11 @@ public class BallHolderSubsystem extends Subsystem {
         this.rightMotor.set(speed);
     }
 
+    public void set(final Direction dir, double speed) {
+        speed = Math.abs(speed) * (dir == Direction.UP ? 1 : -1);
+        this.set(speed);
+    }
+
     public void stop() {
         set(0);
     }
@@ -152,12 +157,24 @@ public class BallHolderSubsystem extends Subsystem {
     }
     
     public void setLowValue(double value) {
-		this.potLowestValue = value;
-	}
-    
-    public void set(final Direction dir, double speed) {
-        speed = Math.abs(speed) * (dir == Direction.UP ? 1 : -1);
-        this.set(speed);
+        this.potLowestValue = value;
+    }
+    public boolean canGoLower()
+    {
+        if(potLowestValue == -1)
+        {
+            return false;
+        }
+        return getAngle() > potLowestValue;
+    }
+
+    public boolean canGoHigher()
+    {
+        if(potHighestValue == -1)
+        {
+            return false;
+        }
+        return getAngle() < potHighestValue;
     }
 
     /**

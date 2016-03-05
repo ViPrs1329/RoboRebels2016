@@ -18,6 +18,7 @@ public class ZeroPotLow extends Command {
 
 	@Override
 	protected void execute() {
+            // This is only allowed to run if the high number has been set first, since the high one is more important.
 		if (Double.parseDouble(Robot.ROBOT_PROPS
 				.getProperty(Robot.POT_LOW_VALUE)) == BallHolderSubsystem.EMPTY_VALUE) {
 			Robot.ROBOT_PROPS.setProperty(Robot.POT_LOW_VALUE,
