@@ -1,5 +1,9 @@
 package org.stlpriory.robotics.commands.autonomous;
 
+import org.stlpriory.robotics.commands.drivetrain.Rotate;
+import org.stlpriory.robotics.commands.drivetrain.Rotate.RotationDirection;
+import org.stlpriory.robotics.subsystems.DrivetrainSubsystem.Direction;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -25,5 +29,8 @@ public class AutonomousCommand extends CommandGroup {
         // a CommandGroup containing them would require both
     	//the chassis and the
         // arm.
+		
+		addSequential(new DriveForwardDistance(5, Direction.FORWARD));
+		addSequential(new Rotate(45, .5, RotationDirection.CLOCKWISE));
 	}
 }

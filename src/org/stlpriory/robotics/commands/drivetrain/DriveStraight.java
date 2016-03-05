@@ -1,6 +1,7 @@
 package org.stlpriory.robotics.commands.drivetrain;
 
 import org.stlpriory.robotics.Robot;
+import org.stlpriory.robotics.subsystems.DrivetrainSubsystem.Direction;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,7 +10,6 @@ public class DriveStraight extends Command {
     // If we are using PID, we have to change this to 
     // match the max speed we can input. 
     public static final double COEFFICIENT = 1;
-    public static enum Direction {FORWARD, REVERSE};
 
     private Direction direction;
     private int axisNumber;

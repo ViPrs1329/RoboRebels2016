@@ -10,6 +10,7 @@ import org.stlpriory.robotics.commands.StopShooter;
 import org.stlpriory.robotics.commands.Suck;
 import org.stlpriory.robotics.commands.Vibrator;
 import org.stlpriory.robotics.commands.drivetrain.DriveStraight;
+import org.stlpriory.robotics.subsystems.DrivetrainSubsystem.Direction;
 import org.stlpriory.robotics.utils.Debug;
 import org.stlpriory.robotics.utils.TriggerTrigger;
 import org.stlpriory.robotics.utils.TwoButton;
@@ -113,10 +114,10 @@ public class OI {
         this.forceButton = new JoystickButton(this.xboxController, LEFT_STICK);
 
         this.rightTriggerOn = new TriggerTrigger(this.xboxController, RIGHT_TRIGGER);
-        rightTriggerOn.whileActive(new DriveStraight(DriveStraight.Direction.FORWARD, rightTriggerOn.getPort()));
+        rightTriggerOn.whileActive(new DriveStraight(Direction.FORWARD, rightTriggerOn.getPort()));
 
         this.leftTriggerOn = new TriggerTrigger(this.xboxController, LEFT_TRIGGER);
-        leftTriggerOn.whileActive(new DriveStraight(DriveStraight.Direction.REVERSE, leftTriggerOn.getPort()));
+        leftTriggerOn.whileActive(new DriveStraight(Direction.REVERSE, leftTriggerOn.getPort()));
 
         this.vibrator = new TwoButton(new JoystickButton(this.xboxController, LEFT_STICK), new JoystickButton(this.xboxController, RIGHT_STICK));
         this.vibrator.whileActive(new Vibrator());

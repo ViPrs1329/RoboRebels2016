@@ -7,6 +7,7 @@ import java.util.Properties;
 
 import org.stlpriory.robotics.commands.ZeroPotHigh;
 import org.stlpriory.robotics.commands.ZeroPotLow;
+import org.stlpriory.robotics.commands.autonomous.AutonomousCommand;
 import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
 import org.stlpriory.robotics.subsystems.DrivetrainSubsystem;
 import org.stlpriory.robotics.subsystems.ShooterSubsystem;
@@ -43,7 +44,7 @@ public class Robot extends IterativeRobot {
     public static final Properties ROBOT_PROPS = new Properties();
 
     
-    private Command autonomousCommand;
+    private Command autonomousCommand = new AutonomousCommand();
     private Timer timer = new Timer();
     
     // ==================================================================================
@@ -83,6 +84,8 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousInit() {
         setProperties();
+        if(autonomousCommand != null)
+        	autonomousCommand.start();
     	System.out.println("set zero value");
     }
 

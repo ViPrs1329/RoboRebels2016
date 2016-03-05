@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //We may need to make a class in Utils to convert inAngle to whatever units the robot uses for rotation
 public class Rotate extends Command {
     public static final double DEFAULT_ROTATION_SPEED = -.5; // Counterclockwise is negative
-    public enum Direction {CLOCKWISE, COUNTERCLOCKWISE};
+    public enum RotationDirection {CLOCKWISE, COUNTERCLOCKWISE};
 
     double goalAngle = 0.0;
     double lastTime;
@@ -17,9 +17,9 @@ public class Rotate extends Command {
     double totalAngle = 0.0;
     double currentTime;
     Timer timer = new Timer();
-    Direction direction;
+    RotationDirection direction;
 
-    public Rotate(final double inAngle, final double speed, final Direction direction) {
+    public Rotate(final double inAngle, final double speed, final RotationDirection direction) {
         super("DriveWithGamepad");
         // if direction is true, turns left
         // else turns right
@@ -32,14 +32,14 @@ public class Rotate extends Command {
     }
 
     public Rotate(final double inAngle, final double speed) {
-        this(inAngle, speed, Direction.CLOCKWISE);
+        this(inAngle, speed, RotationDirection.CLOCKWISE);
     }
 
     public Rotate(final double inAngle) {
-        this(inAngle, DEFAULT_ROTATION_SPEED, Direction.CLOCKWISE);
+        this(inAngle, DEFAULT_ROTATION_SPEED, RotationDirection.CLOCKWISE);
     }
 
-    public Rotate(final double inAngle, final Direction direction) {
+    public Rotate(final double inAngle, final RotationDirection direction) {
         this(inAngle, DEFAULT_ROTATION_SPEED, direction);
     }
 
@@ -54,7 +54,7 @@ public class Rotate extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        if (direction == Direction.CLOCKWISE) {
+        if (direction == RotationDirection.CLOCKWISE) {
             Robot.drivetrain.tankDrive(this.speed, 0);
         } else {
             Robot.drivetrain.tankDrive(0, this.speed);
