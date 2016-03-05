@@ -23,6 +23,9 @@ public class DrivetrainSubsystem extends Subsystem {
     public static final int RF_MOTOR_ID = 2;
     public static final int RR_MOTOR_ID = 1;
 
+
+    public static final double DEFAULT_FORWARD_SPEED = 1;
+
     public static final boolean MASTER_SLAVE_MODE = true;
 
     private final CANTalon rightFront;
@@ -101,6 +104,11 @@ public class DrivetrainSubsystem extends Subsystem {
         double rightSide = rightYstick * CIMMotorSpecs.MAX_SPEED_RPM;
         
         return (leftSide + rightSide) / 2.0;
+    }
+
+    public double getSpeed()
+    {
+        return (leftFront.getSpeed() + rightFront.getSpeed()) / 2;
     }
 
     public void updateStatus() {
