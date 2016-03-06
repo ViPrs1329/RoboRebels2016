@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 
 /**
  * Robot drive train subsystem consisting of 4 CIM motors configured in 2 master/slave arrangements. 
@@ -25,7 +26,7 @@ public class DrivetrainSubsystem extends Subsystem {
     public static final int RF_MOTOR_ID = 2;
     public static final int RR_MOTOR_ID = 1;
 
-    public static final int GYRO_PORT = 2;
+    public static final int GYRO_PORT = 1;
     
     public enum Direction {FORWARD, REVERSE};
 
@@ -34,6 +35,7 @@ public class DrivetrainSubsystem extends Subsystem {
 
     public static final boolean MASTER_SLAVE_MODE = true;
     public static final double FORWARD_SPEED = .9;
+    public static final double ACCELEROMETER_TOLERANCE = .05;
 
     private final CANTalon rightFront;
     private final CANTalon rightRear;
@@ -41,6 +43,7 @@ public class DrivetrainSubsystem extends Subsystem {
     private final CANTalon leftRear;
 
     private final AnalogGyro gyro;
+    private final BuiltInAccelerometer accelerometer;
 
 
     // ==================================================================================
@@ -66,6 +69,7 @@ public class DrivetrainSubsystem extends Subsystem {
         }
         gyro = new AnalogGyro(GYRO_PORT);
         gyro.initGyro();
+        accelerometer = new BuiltInAccelerometer();
         Debug.println("[DriveTrain Subsystem] Instantiation complete.");
     }
 
@@ -155,6 +159,23 @@ public class DrivetrainSubsystem extends Subsystem {
     public double getAngle()
     {
         return gyro.getAngle();
+    }
+
+    public double getY()
+    {
+        return accelerometer.getY();
+    }
+    public double getX()
+    {
+        return accelerometer.getX();
+    }
+    public double getZ()
+    {
+        return accelerometer.getZ();
+    }
+    public boolean isFlat()
+    {
+        return Math.abs(Robot.drivetrain.getZ() - 1) > Robot.drivetrain.ACCELEROMETER_TOLERANCE;
     }
     public void updateStatus() {
         // double leftFrontMotorOutput  = this.leftFront.getOutputVoltage() / this.leftFront.getBusVoltage();
