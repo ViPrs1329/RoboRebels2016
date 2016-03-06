@@ -6,17 +6,13 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-//We may need to make a class in Utils to convert inAngle to whatever units the robot uses for rotation
 public class Rotate extends Command {
-    public static final double DEFAULT_ROTATION_SPEED = -.5; // Counterclockwise is negative
+    public static final double DEFAULT_ROTATION_SPEED = -.5;
     public enum RotationDirection {CLOCKWISE, COUNTERCLOCKWISE};
 
-    double goalAngle = 0.0;
-    double lastTime;
+    double inAngle;
+    double startAngle;
     double speed;
-    double totalAngle = 0.0;
-    double currentTime;
-    Timer timer = new Timer();
     RotationDirection direction;
 
     public Rotate(final double inAngle, final double speed, final RotationDirection direction) {
@@ -25,18 +21,18 @@ public class Rotate extends Command {
         // else turns right
         requires(Robot.drivetrain);
         this.speed = speed;
+        if(direction == RotationDirection.COUNTERCLOCKWISE)
+            speed *= -1;
         this.direction = direction;
-        //		if (direction)
-        //			speed *= (-1.0);
-        this.goalAngle = inAngle;
+        this.inAngle = inAngle;
     }
 
     public Rotate(final double inAngle, final double speed) {
-        this(inAngle, speed, RotationDirection.CLOCKWISE);
+        this(Math.abs(inAngle), speed, inAngle >= 0 ? RotationDirection.CLOCKWISE : RotationDirection.COUNTERCLOCKWISE);
     }
 
     public Rotate(final double inAngle) {
-        this(inAngle, DEFAULT_ROTATION_SPEED, RotationDirection.CLOCKWISE);
+        this(Math.abs(inAngle), DEFAULT_ROTATION_SPEED, inAngle >= 0 ? RotationDirection.CLOCKWISE : RotationDirection.COUNTERCLOCKWISE);
     }
 
     public Rotate(final double inAngle, final RotationDirection direction) {
@@ -46,9 +42,7 @@ public class Rotate extends Command {
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        this.timer.start();
-        this.lastTime = this.timer.get();
-        this.totalAngle = 0;
+        startAngle = Robot.drivetrain.getAngle();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -65,13 +59,10 @@ public class Rotate extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        this.currentTime = this.timer.get();
-        // TODO: I don't think that getSpeedInRPM() does what we think it does.
-        double angle = (Robot.drivetrain.getSpeedInRPM() * (this.currentTime - this.lastTime)); 
-        this.totalAngle = this.totalAngle + angle;
-        this.lastTime = this.timer.get();
-        SmartDashboard.putNumber("Angle", this.totalAngle);
-        return this.totalAngle >= this.goalAngle;
+        if(inAngle == 0.0)
+            return true;
+        else
+            return Math.abs(Robot.drivetrain.getAngle - startAngle) > Math.abs(inAngle);
     }
 
     // Called once after isFinished returns true

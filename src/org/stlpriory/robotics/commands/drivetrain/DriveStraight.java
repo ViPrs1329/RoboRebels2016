@@ -13,6 +13,7 @@ public class DriveStraight extends Command {
 
     private Direction direction;
     private int axisNumber;
+    private startAngle;
 
     public DriveStraight(Direction direction, int axisNumber)
     {
@@ -26,12 +27,12 @@ public class DriveStraight extends Command {
     }
     public void initialize()
     {
-
+        startAngle = Robot.drivetrain.getAngle();
     }
     public void execute()
     {
         double i = getInput() * (direction == Direction.REVERSE ? 1 : -1);
-        Robot.drivetrain.tankDrive(i * COEFFICIENT, i * COEFFICIENT);
+        Robot.drivetrain.driveForward(i * COEFFICIENT, startAngle);
     }
     public boolean isFinished()
     {
@@ -39,7 +40,7 @@ public class DriveStraight extends Command {
     }
     public void end()
     {
-        Robot.drivetrain.tankDrive(0, 0);
+        Robot.drivetrain.stop();
     }
     public void interrupted()
     {

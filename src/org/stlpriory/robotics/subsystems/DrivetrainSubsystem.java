@@ -8,6 +8,7 @@ import org.stlpriory.robotics.utils.Debug;
 import org.stlpriory.robotics.utils.Utils;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -23,6 +24,8 @@ public class DrivetrainSubsystem extends Subsystem {
     public static final int LR_MOTOR_ID = 4;
     public static final int RF_MOTOR_ID = 2;
     public static final int RR_MOTOR_ID = 1;
+
+    public static final int GYRO_PORT = 2;
     
     public enum Direction {FORWARD, REVERSE};
 
@@ -30,12 +33,14 @@ public class DrivetrainSubsystem extends Subsystem {
     public static final double DEFAULT_FORWARD_SPEED = 1;
 
     public static final boolean MASTER_SLAVE_MODE = true;
-	public static final double FORWARD_SPEED = .9;
+    public static final double FORWARD_SPEED = .9;
 
     private final CANTalon rightFront;
     private final CANTalon rightRear;
     private final CANTalon leftFront;
     private final CANTalon leftRear;
+
+    private final AnalogGyro gyro;
 
 
     // ==================================================================================
@@ -59,13 +64,10 @@ public class DrivetrainSubsystem extends Subsystem {
             this.leftRear  = createMaster(LR_MOTOR_ID);
             this.rightRear = createMaster(RR_MOTOR_ID);
         }
-
+        gyro = new AnalogGyro(GYRO_PORT);
+        gyro.initGyro();
         Debug.println("[DriveTrain Subsystem] Instantiation complete.");
     }
-
-    // ==================================================================================
-    //                        C O N S T R U C T O R S
-    // ==================================================================================
 
     public void tankDrive(final double leftStickValue, final double rightStickValue) {
     	leftFront.set(-leftStickValue);
@@ -83,6 +85,37 @@ public class DrivetrainSubsystem extends Subsystem {
         tankDrive(leftStickValue, rightStickValue);
     }
 
+    public void arcadeDrive(double speed, double rotation)
+    {
+        // I stole this from WPILib. Shhhh...
+        if (speed > 0.0) {
+            if (rotatio > 0.0) {
+                leftMotorSpeed = speed - rotatio;
+                rightMotorSpeed = Math.max(speed, rotation);
+            } else {
+                leftMotorSpeed = Math.max(speed, -rotation);
+                rightMotorSpeed = speed + rotatio;
+            }
+        } else {
+            if (rotatio > 0.0) {
+                leftMotorSpeed = -Math.max(-speed, rotation);
+                rightMotorSpeed = speed + rotatio;
+            } else {
+                leftMotorSpeed = speed - rotatio;
+                rightMotorSpeed = -Math.max(-speed, -rotation);
+            }
+        }
+    }
+    public void driveForward(double speed, double desiredHeading)
+    {
+        // I stole this from the internet too.
+        final double kP = .03;
+        arcadeDrive(speed, -(desiredHeading - getAngle()) * kP);
+    }
+    public void driveForward(double speed)
+    {
+        driveForward(speed, gyro.getAngle());
+    }
     public void stop() {
         rightFront.set(0);
         leftFront.set(0);
@@ -114,7 +147,10 @@ public class DrivetrainSubsystem extends Subsystem {
     {
         return (leftFront.getSpeed() + rightFront.getSpeed()) / 2;
     }
-
+    public double getAngle()
+    {
+        return gyro.getAngle();
+    }
     public void updateStatus() {
         // double leftFrontMotorOutput  = this.leftFront.getOutputVoltage() / this.leftFront.getBusVoltage();
         // double leftRearMotorOutput   = this.leftRear.getOutputVoltage() / this.leftRear.getBusVoltage();
