@@ -143,6 +143,11 @@ public class DrivetrainSubsystem extends Subsystem {
         return (leftSide + rightSide) / 2.0;
     }
 
+    public double getPosition()
+    {
+        // Right front seems good
+        return rightFront.getEncPosition();
+    }
     public double getSpeed()
     {
         return (leftFront.getSpeed() + rightFront.getSpeed()) / 2;

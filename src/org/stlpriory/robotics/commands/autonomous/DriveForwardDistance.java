@@ -12,12 +12,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 class DriveForwardDistance extends Command {
 
 	double goalDistance = 0.0;
-	double lastTime;
+        double startPosition;
 	double distance;
-	double totalDistance = 0.0;
-	double timeCurrent;
-	Timer timer = new Timer();
 	Direction direction;
+        double startHeading;
 
 	public DriveForwardDistance(double din, Direction direction) {
 		super("DriveWithGamepad");
@@ -29,41 +27,35 @@ class DriveForwardDistance extends Command {
 		requires(Robot.drivetrain);
 		goalDistance = Utils.TALONdistance(din);
 		this.direction = direction;
+                this.startHeading = Robot.drivetrain.getAngle();
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		timer.start();
-		lastTime = timer.get();
-		totalDistance = 0.0;
+            startPosition = Robot.drivetrain.getPosition();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		if (direction == Direction.FORWARD) {
-			Robot.drivetrain.tankDrive(DrivetrainSubsystem.FORWARD_SPEED,
-					DrivetrainSubsystem.FORWARD_SPEED);
+			Robot.drivetrain.driveForward(DrivetrainSubsystem.FORWARD_SPEED,
+					startHeading);
 			System.out.println("Driving forward");
 		} else {
-			Robot.drivetrain.tankDrive(-DrivetrainSubsystem.FORWARD_SPEED,
-					-DrivetrainSubsystem.FORWARD_SPEED);
+			Robot.drivetrain.driveForward(-DrivetrainSubsystem.FORWARD_SPEED,
+					startHeading);
+			System.out.println("Driving backward");
 		}
 		SmartDashboard.putNumber("Robot Speed", Robot.drivetrain.getSpeed());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() {
-		timeCurrent = timer.get(); // fix this
-		distance = (Robot.drivetrain.getSpeed() * (timeCurrent - lastTime));
-		totalDistance = totalDistance + distance;
-		System.out.println("distance " + totalDistance);
-		if (totalDistance >= goalDistance) {
-			return true;
-		}
-		lastTime = timer.get();
-		SmartDashboard.putNumber("Distance", totalDistance);
-		return false;
-	}
+        protected boolean isFinished() {
+            double totalDistance = Math.abs(Robot.drivetrain.getPosition() - startPosition);
+            System.out.println("I've gone " + totalDistance + " encoder units");
+            SmartDashboard.putNumber("Distance", totalDistance);
+            return totalDistance >= goalDistance;
+        }
 
 	// Called once after isFinished returns true
 	protected void end() {

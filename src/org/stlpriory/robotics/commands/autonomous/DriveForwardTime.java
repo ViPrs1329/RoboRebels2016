@@ -13,6 +13,7 @@ public class DriveForwardTime extends Command {
     double startTime;
     double timeCurrent;
     double goalTime;
+    double startHeading;
     Timer timer = new Timer();
     Direction direction;
 
@@ -25,6 +26,7 @@ public class DriveForwardTime extends Command {
         // in reverse.
         requires(Robot.drivetrain);
         goalTime = time;
+        this.startHeading = Robot.drivetrain.getAngle();
         this.direction = direction;
 
     }
@@ -38,10 +40,11 @@ public class DriveForwardTime extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         if (direction == Direction.FORWARD) {
-            Robot.drivetrain.tankDrive(DrivetrainSubsystem.FORWARD_SPEED, DrivetrainSubsystem.FORWARD_SPEED);
+            Robot.drivetrain.driveForward(DrivetrainSubsystem.FORWARD_SPEED, startHeading);
             System.out.println("Driving forward for time");
         } else {
-            Robot.drivetrain.tankDrive(-DrivetrainSubsystem.FORWARD_SPEED, -DrivetrainSubsystem.FORWARD_SPEED);
+            Robot.drivetrain.tankDrive(-DrivetrainSubsystem.FORWARD_SPEED, startHeading);
+            System.out.println("Driving backward for time");
         }
         SmartDashboard.putNumber("Robot Speed",
                 Robot.drivetrain.getSpeed());
@@ -49,7 +52,7 @@ public class DriveForwardTime extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        timeCurrent = timer.get(); // fix this
+        timeCurrent = timer.get();
         return timeCurrent - startTime > goalTime;
     }
 
