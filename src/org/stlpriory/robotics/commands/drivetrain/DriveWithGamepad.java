@@ -22,7 +22,7 @@ public class DriveWithGamepad extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        Robot.drivetrain.tankDrive(Robot.oi.getController());
+        Robot.drivetrain.controllerDrive(Robot.oi.getController());
     }
 
     // Make this return true when this Command no longer needs to run execute()
