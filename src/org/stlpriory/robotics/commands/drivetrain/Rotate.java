@@ -22,7 +22,7 @@ public class Rotate extends Command {
         requires(Robot.drivetrain);
         this.speed = speed;
         if(direction == RotationDirection.COUNTERCLOCKWISE)
-            speed *= -1;
+            this.speed *= -1;
         this.direction = direction;
         this.inAngle = inAngle;
     }
@@ -62,7 +62,7 @@ public class Rotate extends Command {
         if(inAngle == 0.0)
             return true;
         else
-            return Math.abs(Robot.drivetrain.getAngle - startAngle) > Math.abs(inAngle);
+            return Math.abs(Robot.drivetrain.getAngle() - startAngle) > Math.abs(inAngle);
     }
 
     // Called once after isFinished returns true

@@ -92,23 +92,26 @@ public class DrivetrainSubsystem extends Subsystem {
     public void arcadeDrive(double speed, double rotation)
     {
         // I stole this from WPILib. Shhhh...
+    	double leftMotorSpeed;
+    	double rightMotorSpeed;
         if (speed > 0.0) {
-            if (rotatio > 0.0) {
-                leftMotorSpeed = speed - rotatio;
+            if (rotation > 0.0) {
+                leftMotorSpeed = speed - rotation;
                 rightMotorSpeed = Math.max(speed, rotation);
             } else {
                 leftMotorSpeed = Math.max(speed, -rotation);
-                rightMotorSpeed = speed + rotatio;
+                rightMotorSpeed = speed + rotation;
             }
         } else {
-            if (rotatio > 0.0) {
+            if (rotation > 0.0) {
                 leftMotorSpeed = -Math.max(-speed, rotation);
-                rightMotorSpeed = speed + rotatio;
+                rightMotorSpeed = speed + rotation;
             } else {
-                leftMotorSpeed = speed - rotatio;
+                leftMotorSpeed = speed - rotation;
                 rightMotorSpeed = -Math.max(-speed, -rotation);
             }
         }
+        tankDrive(leftMotorSpeed, rightMotorSpeed);
     }
     public void driveForward(double speed, double desiredHeading)
     {

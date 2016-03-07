@@ -13,7 +13,7 @@ public class DriveStraight extends Command {
 
     private Direction direction;
     private int axisNumber;
-    private startAngle;
+    private double startAngle;
 
     public DriveStraight(Direction direction, int axisNumber)
     {

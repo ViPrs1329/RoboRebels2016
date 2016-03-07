@@ -5,15 +5,19 @@ import org.stlpriory.robotics.subsystems.DrivetrainSubsystem.Direction;
 import org.stlpriory.robotics.Robot;
 
 public class DriveForwardUntilFlat extends DriveForwardTime {
-    private static final int FLAT_TICK_CEILING;
-
+	private static final int FLAT_TICK_CEILING = 5;
     private boolean hasTilted;
-    private int flatTicks;
-    public DriveUntilFlat(Direction direction)
+    private int flatTicks;	
+    
+    public DriveForwardUntilFlat(double time, Direction direction) {
+		super(time, direction);
+	}
+
+    public DriveForwardUntilFlat(Direction direction)
     {
         super(0, direction);
     }
-    public DriveUntilFlat()
+    public DriveForwardUntilFlat()
     {
         super(0, Direction.FORWARD);
     }
