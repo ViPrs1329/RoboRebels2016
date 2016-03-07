@@ -27,7 +27,7 @@ class DriveForwardDistance extends Command {
 		requires(Robot.drivetrain);
 		goalDistance = Utils.TALONdistance(din);
 		this.direction = direction;
-                this.startHeading = Robot.drivetrain.getAngle();
+		this.startHeading = Robot.drivetrain.getAngle();
 	}
 
 	// Called just before this Command runs the first time
@@ -38,15 +38,15 @@ class DriveForwardDistance extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		if (direction == Direction.FORWARD) {
-			Robot.drivetrain.driveForward(DrivetrainSubsystem.FORWARD_SPEED,
+			Robot.drivetrain.driveForward(-DrivetrainSubsystem.FORWARD_SPEED,
 					startHeading);
 			System.out.println("Driving forward");
 		} else {
-			Robot.drivetrain.driveForward(-DrivetrainSubsystem.FORWARD_SPEED,
+			Robot.drivetrain.driveForward(DrivetrainSubsystem.FORWARD_SPEED,
 					startHeading);
 			System.out.println("Driving backward");
 		}
-		SmartDashboard.putNumber("Robot Speed", Robot.drivetrain.getSpeed());
+//		SmartDashboard.putNumber("Robot Speed", Robot.drivetrain.getSpeed());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

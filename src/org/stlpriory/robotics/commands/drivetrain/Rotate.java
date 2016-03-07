@@ -49,11 +49,10 @@ public class Rotate extends Command {
     @Override
     protected void execute() {
         if (direction == RotationDirection.CLOCKWISE) {
-            Robot.drivetrain.tankDrive(this.speed, 0);
+            Robot.drivetrain.tankDrive(this.speed, -this.speed);
         } else {
-            Robot.drivetrain.tankDrive(0, this.speed);
+            Robot.drivetrain.tankDrive(-this.speed, this.speed);
         }
-        SmartDashboard.putNumber("Robot Speed", Robot.drivetrain.getSpeedInRPM());
     }
 
     // Make this return true when this Command no longer needs to run execute()

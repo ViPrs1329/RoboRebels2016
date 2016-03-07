@@ -30,7 +30,7 @@ public class AutonomousCommand extends CommandGroup {
     	//the chassis and the
         // arm.
 		
-		addSequential(new DriveForwardDistance(5, Direction.FORWARD));
-		addSequential(new Rotate(45, .5, RotationDirection.CLOCKWISE));
+//		addSequential(new DriveForwardDistance(5, Direction.FORWARD));
+		addSequential(new Rotate(45, .15, RotationDirection.CLOCKWISE));
 	}
 }

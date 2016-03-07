@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 public class Utils {
     // conversion factor from feet to 'TALON' units
     // TODO: This needs to be set properly again
-    public static final double TALON_UNIT = 63;
+    public static final double TALON_UNIT = 745.6;
     // Threshold below which joystick inputs will be ignored
     public static final double JOYSTICK_THRESHOLD = 0.2;
 

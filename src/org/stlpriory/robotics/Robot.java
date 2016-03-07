@@ -7,6 +7,7 @@ import java.util.Properties;
 
 import org.stlpriory.robotics.commands.ZeroPotHigh;
 import org.stlpriory.robotics.commands.ZeroPotLow;
+import org.stlpriory.robotics.commands.ZeroGyro;
 import org.stlpriory.robotics.commands.autonomous.AutonomousCommand;
 import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
 import org.stlpriory.robotics.subsystems.DrivetrainSubsystem;
@@ -65,6 +66,7 @@ public class Robot extends IterativeRobot {
         timer.stop();
         SmartDashboard.putData("Zero Pot High", new ZeroPotHigh());
         SmartDashboard.putData("Zero pot low", new ZeroPotLow());
+        SmartDashboard.putData("Zero gyro", new ZeroGyro());
         Debug.println("[RoboRebels.robotInit()] Done in " + timer.get() * 1e6 + " ms");
         Debug.println("------------------------------------------");
         Debug.println("           Robot ready!");
@@ -104,6 +106,8 @@ public class Robot extends IterativeRobot {
             autonomousCommand.cancel();
         }
         setProperties();
+        drivetrain.zeroGyro();
+        reset();
     	System.out.println("set zero value");
         // Record initial status values
         updateStatus();
@@ -175,7 +179,12 @@ public class Robot extends IterativeRobot {
 		ballHolder.updateStatus();
 		shooter.updateStatus();
     }
-    
+    public void reset()
+    {
+    	drivetrain.stop();
+    	ballHolder.stop();
+    	shooter.stop();
+    }
     
     @Override
     public void testInit() {

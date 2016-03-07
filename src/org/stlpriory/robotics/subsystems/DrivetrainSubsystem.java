@@ -34,7 +34,7 @@ public class DrivetrainSubsystem extends Subsystem {
     public static final double DEFAULT_FORWARD_SPEED = 1;
 
     public static final boolean MASTER_SLAVE_MODE = true;
-    public static final double FORWARD_SPEED = .9;
+    public static final double FORWARD_SPEED = .1;
     public static final double ACCELEROMETER_TOLERANCE = .05;
 
     private final CANTalon rightFront;
@@ -116,8 +116,9 @@ public class DrivetrainSubsystem extends Subsystem {
     public void driveForward(double speed, double desiredHeading)
     {
         // I stole this from the internet too.
-        final double kP = .03;
-        arcadeDrive(speed, -(desiredHeading - getAngle()) * kP);
+        final double kP = .003;
+        System.out.println("Correcting " + ((desiredHeading - getAngle() > 0) ? "right " : "left") + kP * (desiredHeading - getAngle()));
+        arcadeDrive(speed, (desiredHeading - getAngle()) * kP);
     }
     public void driveForward(double speed)
     {
@@ -180,6 +181,11 @@ public class DrivetrainSubsystem extends Subsystem {
     {
         return Math.abs(Robot.drivetrain.getZ() - 1) > Robot.drivetrain.ACCELEROMETER_TOLERANCE;
     }
+    
+    public void zeroGyro()
+    {
+    	this.gyro.calibrate();
+    }
     public void updateStatus() {
         // double leftFrontMotorOutput  = this.leftFront.getOutputVoltage() / this.leftFront.getBusVoltage();
         // double leftRearMotorOutput   = this.leftRear.getOutputVoltage() / this.leftRear.getBusVoltage();
@@ -191,12 +197,18 @@ public class DrivetrainSubsystem extends Subsystem {
         // SmartDashboard.putNumber("LR motor output", leftRearMotorOutput);
         // SmartDashboard.putNumber("RF motor output", rightFrontMotorOutput);
         // SmartDashboard.putNumber("RR motor output", rightRearMotorOutput);
-    	SmartDashboard.putNumber("Right encoder", rightFront.getEncVelocity());
-    	SmartDashboard.putNumber("Left encoder", leftFront.getEncVelocity());
-        // SmartDashboard.putNumber("LF power draw", leftFront.getOutputCurrent());
-        // SmartDashboard.putNumber("LR power draw", leftRear.getOutputCurrent());
-        // SmartDashboard.putNumber("RF power draw", rightFront.getOutputCurrent());
-        // SmartDashboard.putNumber("RR power draw", rightRear.getOutputCurrent());
+    	SmartDashboard.putNumber("Right encoder", rightFront.getEncPosition());
+    	SmartDashboard.putNumber("Left encoder", leftFront.getEncPosition());
+    	SmartDashboard.putNumber("Angle", getAngle());
+    	SmartDashboard.putNumber("Z axis", getZ());
+    	SmartDashboard.putNumber("X axis", getX());
+    	SmartDashboard.putNumber("Y axis", getY());
+//    	SmartDashboard.putNumber("Current Left", leftFront.getOutputCurrent());
+//    	SmartDashboard.putNumber("Current Right", rightFront.getOutputCurrent());
+         SmartDashboard.putNumber("LF power draw", leftFront.getOutputCurrent());
+         SmartDashboard.putNumber("LR power draw", leftRear.getOutputCurrent());
+         SmartDashboard.putNumber("RF power draw", rightFront.getOutputCurrent());
+         SmartDashboard.putNumber("RR power draw", rightRear.getOutputCurrent());
     }
 
     // ==================================================================================
@@ -218,7 +230,7 @@ public class DrivetrainSubsystem extends Subsystem {
             // (e.g. setVoltageRampRate(6.0) results in 0V to 6V in one sec)
             // TODO: Should we remove this line and replace it with a Ramper 
             // so we have more control over how it ramps the speed?
-            talon.setVoltageRampRate(6.0);
+            talon.setVoltageRampRate(16.0);
 
             return talon;
 
