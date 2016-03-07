@@ -41,6 +41,7 @@ public class DrivetrainSubsystem extends Subsystem {
     private final CANTalon rightRear;
     private final CANTalon leftFront;
     private final CANTalon leftRear;
+    private double lastAngle;
 
     private final AnalogGyro gyro;
     private final BuiltInAccelerometer accelerometer;
@@ -83,10 +84,31 @@ public class DrivetrainSubsystem extends Subsystem {
     	}
     }
 
-    public void tankDrive(final Joystick joystick) {
+    public void controllerDrive(final Joystick joystick) {
+        // This sums the triggers and the sticks appropriately so that they might
+        // maybe work in a very natural-feeling way. I tried to make it so that it 
+        // would also use the gyro if possible. We'll see how it works. 
+        double rightValue = 0;
+        double leftValue = 0;
         double leftStickValue  = Utils.scale(joystick.getRawAxis(OI.LEFT_STICK_Y_AXIS) );
         double rightStickValue = Utils.scale(joystick.getRawAxis(OI.RIGHT_STICK_Y_AXIS) );
-        tankDrive(leftStickValue, rightStickValue);
+        double rightTrigger = joystick.getRawAxis(OI.RIGHT_TRIGGER);
+        double leftTrigger = joystick.getRawAxis(OI.LEFT_TRIGGER);
+        rightValue += rightTrigger;
+        leftValue += rightTrigger;
+        rightValue -= leftTrigger;
+        leftValue -= leftTrigger;
+        rightValue += rightStickValue;
+        leftValue += leftStickValue;
+        if(leftStickValue == 0 && rightStickValue == 0)
+        {
+            driveForward(rightValue, lastAngle);
+        }
+        else 
+        {
+            lastAngle = getAngle();
+            tankDrive(leftValue, rightValue);
+        }
     }
 
     public void arcadeDrive(double speed, double rotation)

@@ -175,7 +175,7 @@ public class CANDrivetrainSubsystem extends Subsystem {
     	}
     }
 
-    public void tankDrive(final Joystick joystick) {
+    public void controllerDrive(final Joystick joystick) {
         double leftStickValue  = Utils.scale(joystick.getRawAxis(OI.LEFT_STICK_Y_AXIS) );
         double rightStickValue = Utils.scale(joystick.getRawAxis(OI.RIGHT_STICK_Y_AXIS) );
         tankDrive(leftStickValue, rightStickValue);

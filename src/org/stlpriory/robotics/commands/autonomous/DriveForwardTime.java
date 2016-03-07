@@ -40,10 +40,10 @@ public class DriveForwardTime extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         if (direction == Direction.FORWARD) {
-            Robot.drivetrain.driveForward(DrivetrainSubsystem.FORWARD_SPEED, startHeading);
+            Robot.drivetrain.driveForward(-DrivetrainSubsystem.FORWARD_SPEED, startHeading);
             System.out.println("Driving forward for time");
         } else {
-            Robot.drivetrain.tankDrive(-DrivetrainSubsystem.FORWARD_SPEED, startHeading);
+            Robot.drivetrain.driveForward(DrivetrainSubsystem.FORWARD_SPEED, startHeading);
             System.out.println("Driving backward for time");
         }
         SmartDashboard.putNumber("Robot Speed",
