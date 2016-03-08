@@ -233,7 +233,6 @@ public class DrivetrainSubsystem extends Subsystem {
 
             // Voltage ramp rate in volts/sec (works regardless of mode)
             // (e.g. setVoltageRampRate(6.0) results in 0V to 6V in one sec)
-            // TODO: Should we remove this line and replace it with a Ramper 
             // so we have more control over how it ramps the speed?
             talon.setVoltageRampRate(0.0);
 
