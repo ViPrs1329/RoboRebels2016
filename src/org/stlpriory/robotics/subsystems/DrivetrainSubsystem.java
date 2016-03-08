@@ -205,9 +205,9 @@ public class DrivetrainSubsystem extends Subsystem {
     	SmartDashboard.putNumber("Right encoder", rightFront.getEncPosition());
     	SmartDashboard.putNumber("Left encoder", leftFront.getEncPosition());
     	SmartDashboard.putNumber("Angle", getAngle());
-    	SmartDashboard.putNumber("Z axis", getZ());
     	SmartDashboard.putNumber("X axis", getX());
     	SmartDashboard.putNumber("Y axis", getY());
+        SmartDashboard.putNumber("Z axis", getZ());
 //    	SmartDashboard.putNumber("Current Left", leftFront.getOutputCurrent());
 //    	SmartDashboard.putNumber("Current Right", rightFront.getOutputCurrent());
          SmartDashboard.putNumber("LF power draw", leftFront.getOutputCurrent());
