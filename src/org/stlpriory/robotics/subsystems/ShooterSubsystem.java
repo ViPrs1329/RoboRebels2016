@@ -31,9 +31,9 @@ public class ShooterSubsystem extends Subsystem {
     // Increment to use when decreasing the throttle setting [-1.0, 1.0]
     public static final double DECREASE_VALUE = .001;
 
-	private static final double KICKER_OUT_POSITION = 0;
+	private static final double KICKER_OUT_POSITION = 1;
 
-	private static final double KICKER_IN_POSITION = 1;
+	private static final double KICKER_IN_POSITION = 0;
 	
 
     private final Talon rightShooter;

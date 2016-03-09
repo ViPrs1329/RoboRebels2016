@@ -85,10 +85,10 @@ public class OI {
 
         this.xboxController = new Joystick(CONTROLLER_PORT);
 
-        this.holderUpButton = new JoystickButton(this.xboxController, B_BUTTON);
+        this.holderUpButton = new JoystickButton(this.xboxController, A_BUTTON);
         this.holderUpButton.whileHeld(new BallHolderUp(true));
 
-        this.holderDownButton = new JoystickButton(this.xboxController, A_BUTTON);
+        this.holderDownButton = new JoystickButton(this.xboxController, B_BUTTON);
         this.holderDownButton.whileHeld(new BallHolderDown(true));
 
         this.throwButton = new JoystickButton(this.xboxController, Y_BUTTON);

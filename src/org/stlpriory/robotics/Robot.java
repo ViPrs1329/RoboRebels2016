@@ -90,6 +90,7 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         loadRobotConfigFile();
         setProperties();
+        drivetrain.zeroGyro();
         if(autonomousCommand != null)
             autonomousCommand.start();
         System.out.println("set zero value");

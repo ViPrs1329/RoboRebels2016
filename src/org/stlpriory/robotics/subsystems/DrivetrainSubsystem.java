@@ -35,7 +35,7 @@ public class DrivetrainSubsystem extends Subsystem {
     public static final double DEFAULT_FORWARD_SPEED = 1;
 
     public static final boolean MASTER_SLAVE_MODE = true;
-    public static final double FORWARD_SPEED = .1;
+    public static final double FORWARD_SPEED = 0.3;
     public static final double ACCELEROMETER_TOLERANCE = .05;
 
     private final CANTalon rightFront;
@@ -99,18 +99,19 @@ public class DrivetrainSubsystem extends Subsystem {
         double rightStickValue = Utils.scale(joystick.getRawAxis(OI.RIGHT_STICK_Y_AXIS) );
         double rightTrigger = joystick.getRawAxis(OI.RIGHT_TRIGGER);
         double leftTrigger = joystick.getRawAxis(OI.LEFT_TRIGGER);
-        rightValue += rightTrigger;
-        leftValue += rightTrigger;
-        rightValue -= leftTrigger;
-        leftValue -= leftTrigger;
+        rightValue -= rightTrigger;
+        leftValue -= rightTrigger;
+        rightValue += leftTrigger;
+        leftValue += leftTrigger;
         rightValue += rightStickValue;
         leftValue += leftStickValue;
-        if(leftStickValue == 0 && rightStickValue == 0)
+        if(leftStickValue == 0 && rightStickValue == 0 && (leftTrigger > .05 || rightTrigger > .05))
         {
             driveForward(rightValue, lastAngle);
         }
         else 
         {
+        	System.out.println("Setting angle");
             lastAngle = getAngle();
             tankDrive(leftValue, rightValue);
         }
@@ -143,7 +144,7 @@ public class DrivetrainSubsystem extends Subsystem {
     public void driveForward(double speed, double desiredHeading)
     {
         // I stole this from the internet too.
-        final double kP = .003;
+        final double kP = .01;
         System.out.println("Correcting " + ((desiredHeading - getAngle() > 0) ? "right " : "left") + kP * (desiredHeading - getAngle()));
         arcadeDrive(speed, (desiredHeading - getAngle()) * kP);
     }
