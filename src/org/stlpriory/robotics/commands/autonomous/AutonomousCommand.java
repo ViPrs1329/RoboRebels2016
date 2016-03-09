@@ -13,35 +13,50 @@ public class AutonomousCommand extends CommandGroup {
 
     public  AutonomousCommand() {
 
-        /*
-         * This is the coding system for our config file. 
-         * Even Turing couldn't vanquish *this*.
-         * 1: Opposing ramps
-         * 2: Movable ramps
-         * 3: Rough terrain
-         * 4: Low bar
-         * 5: Portcullis
-         * 6: Moat
-         * 7: Drawbridge
-         * 8: Sallyport
-         * 9: Rock wall
-         */
+        public enum Obstacle {
+            OPPOSING_RAMPS (1),
+            MOVABLE_RAMPS (2),
+            ROUGH_TERRAIN (3),
+            LOW_BAR (4),
+            PORTCULLIS (5),
+            MOAT (6),
+            DRAWBRIDGE (7),
+            SALLYPORT (8),
+            ROCK_WALL (9);
+            private int number;
+            Obstacle(int number)
+            {
+                this.number = number;
+            }
+            public int getNumber()
+            {
+                return this.number;
+            }
+            public static Obstacle getObstacle(int number)
+            {
+                for(Obstacle o : Obstacle.values())
+                {
+                    if(o.getNumber() == number)
+                        return o;
+                }
+            }
+        }
 
-        int configNumber = Integer.parseInt(Robot.AUTONOMOUS_PROPS.getProperty("autonomousProp", "-1"));
-        if(configNumber != -1 || configNumber != 5 || configNumber != 7 || configNumber != 8){
+        Obstacle obstacle = Obstacle.getObstacle(Integer.parseInt(Robot.AUTONOMOUS_PROPS.getProperty("autonomousProp", "-1")));
+        if(obstacle != null || obstacle != PORTCULLIS || obstacle != DRAWBRIDGE || obstacle != SALLYPORT){
             // Get to the obstacle
-//        	if(configNumber == 3)
-//        	{ 
-        		addSequential(new DriveDistance(5, Direction.FORWARD));
-        		addSequential(new Rotate(500));
-//        		return;
-//        	}
-//            addSequential(new DriveDistance(1, Direction.FORWARD));
-//            if(configNumber == 2)
-//            {
-                // We should move the arm down here to move the ramp
-//            }
-//            addSequential(new DriveForwardUntilFlat(6000, Direction.FORWARD));
+            // if(obstacle == ROUGH_TERRAIN)
+            // { 
+            //     addSequential(new DriveDistance(5, Direction.FORWARD));
+            //     addSequential(new Rotate(500));
+            //     return;
+            // }
+            addSequential(new DriveDistance(1, Direction.FORWARD));
+            // if(obstacle == MOVABLE_RAMPS)
+            // {
+            //     We should move the arm down here to move the ramp
+            // }
+            // addSequential(new DriveForwardUntilFlat(6000, Direction.FORWARD));
 
 
             // This was just for testing
