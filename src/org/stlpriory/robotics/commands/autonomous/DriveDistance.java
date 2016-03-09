@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-class DriveForwardDistance extends Command {
+class DriveDistance extends Command {
 
 	double goalDistance = 0.0;
         double startPosition;
@@ -17,7 +17,7 @@ class DriveForwardDistance extends Command {
 	Direction direction;
         double startHeading;
 
-	public DriveForwardDistance(double din, Direction direction) {
+	public DriveDistance(double din, Direction direction) {
 		super("DriveWithGamepad");
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
