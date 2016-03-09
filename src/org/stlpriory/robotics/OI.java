@@ -78,8 +78,6 @@ public class OI {
     private final JoystickButton holderShoot;
     private final JoystickButton holderSuck;
     public final JoystickButton forceButton;
-    private final TriggerTrigger rightTriggerOn;
-    private final TriggerTrigger leftTriggerOn;
     private final TwoButton vibrator;
     
     public OI() {
