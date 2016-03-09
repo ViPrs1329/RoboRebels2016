@@ -43,6 +43,9 @@ public class Robot extends IterativeRobot {
     // Robot configuration file and properties
     public static final File CONFIG_FILE  = new File("/home/lvuser/config.txt");
     public static final Properties ROBOT_PROPS = new Properties();
+    public static final File AUTONOMOUS_CONFIG_FILE  = new File("/usr/autonomousProperties.txt");
+    public static final Properties AUTONOMOUS_PROPS = new Properties();
+
 
     
     private Command autonomousCommand = new AutonomousCommand();
@@ -85,10 +88,11 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void autonomousInit() {
+        loadRobotConfigFile();
         setProperties();
         if(autonomousCommand != null)
-        	autonomousCommand.start();
-    	System.out.println("set zero value");
+            autonomousCommand.start();
+        System.out.println("set zero value");
     }
 
     @Override
@@ -143,6 +147,22 @@ public class Robot extends IterativeRobot {
             } else {
                 // Create a new empty properties file
                 CONFIG_FILE.createNewFile();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            AUTONOMOUS_PROPS.clear();
+            if (Files.exists(AUTONOMOUS_CONFIG_FILE.toPath())) {
+                // Read the existing properties file
+                Properties props = PropertiesUtils.load(AUTONOMOUS_CONFIG_FILE);
+                // Put all the loaded values into the robot properties
+                AUTONOMOUS_PROPS.putAll(props);
+                System.out.println("read autonomous file");
+            } else {
+                // Create a new empty properties file
+                AUTONOMOUS_CONFIG_FILE.createNewFile();
             }
         } catch (Exception e) {
             e.printStackTrace();
