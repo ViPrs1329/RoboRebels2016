@@ -1,9 +1,7 @@
-package org.stlpriory.robotics.utils;
-// WARNING: THE CONSTANTS FOR THIS (MAX_DECELLERATION AND MAX_ACCELLERATION) WERE CHOSEN AT RANDOM AND MIGHT
-// CAUSE PROBLEMS IF THEY ARE USED WITHOUT BEING CHANGED. BE VERY CAREFUL. 
+package org.stlpriory.robotics.utils; 
 public class Ramper {
-    public static final double MAX_ACCELLERATION = .05;
-    public static final double MAX_DECELLERATION = .06;
+    public static final double MAX_ACCELLERATION = .03;
+    public static final double MAX_DECELLERATION = .03;
 
     private double currentSpeed;
 
