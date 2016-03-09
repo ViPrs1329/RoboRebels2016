@@ -78,8 +78,6 @@ public class OI {
     private final JoystickButton holderShoot;
     private final JoystickButton holderSuck;
     public final JoystickButton forceButton;
-    private final TriggerTrigger rightTriggerOn;
-    private final TriggerTrigger leftTriggerOn;
     private final TwoButton vibrator;
     
     public OI() {
@@ -110,12 +108,6 @@ public class OI {
         this.holderSuck.whenPressed(new MoveToSuck());
 
         this.forceButton = new JoystickButton(this.xboxController, LEFT_STICK);
-
-        this.rightTriggerOn = new TriggerTrigger(this.xboxController, RIGHT_TRIGGER);
-        rightTriggerOn.whileActive(new DriveStraight(Direction.FORWARD, rightTriggerOn.getPort()));
-
-        this.leftTriggerOn = new TriggerTrigger(this.xboxController, LEFT_TRIGGER);
-        leftTriggerOn.whileActive(new DriveStraight(Direction.REVERSE, leftTriggerOn.getPort()));
 
         this.vibrator = new TwoButton(new JoystickButton(this.xboxController, LEFT_STICK), new JoystickButton(this.xboxController, RIGHT_STICK));
         this.vibrator.whileActive(new Vibrator());
