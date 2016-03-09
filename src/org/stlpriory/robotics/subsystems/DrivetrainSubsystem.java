@@ -5,6 +5,7 @@ import org.stlpriory.robotics.Robot;
 import org.stlpriory.robotics.commands.drivetrain.DriveWithGamepad;
 import org.stlpriory.robotics.hardware.CIMMotorSpecs;
 import org.stlpriory.robotics.utils.Debug;
+import org.stlpriory.robotics.utils.Ramper;
 import org.stlpriory.robotics.utils.Utils;
 
 import edu.wpi.first.wpilibj.CANTalon;
@@ -29,7 +30,7 @@ public class DrivetrainSubsystem extends Subsystem {
     public static final int GYRO_PORT = 1;
     
     public enum Direction {FORWARD, REVERSE};
-
+    public Ramper leftRamper, rightRamper, rightRearRamper, leftRearRamper;
 
     public static final double DEFAULT_FORWARD_SPEED = 1;
 
@@ -67,6 +68,10 @@ public class DrivetrainSubsystem extends Subsystem {
             this.leftRear  = createMaster(LR_MOTOR_ID);
             this.rightRear = createMaster(RR_MOTOR_ID);
         }
+        this.leftRamper = new Ramper();
+        this.rightRamper = new Ramper();
+        this.rightRearRamper = new Ramper();
+        this.leftRearRamper = new Ramper();
         gyro = new AnalogGyro(GYRO_PORT);
         gyro.initGyro();
         accelerometer = new BuiltInAccelerometer();
@@ -74,12 +79,12 @@ public class DrivetrainSubsystem extends Subsystem {
     }
 
     public void tankDrive(final double leftStickValue, final double rightStickValue) {
-    	leftFront.set(-leftStickValue);
-    	rightFront.set(rightStickValue);
+    	leftFront.set(-leftRamper.scale(leftStickValue));
+    	rightFront.set(rightRamper.scale(rightStickValue));
     	if(!MASTER_SLAVE_MODE)
     	{
-    		leftRear.set(-leftStickValue);
-    		rightRear.set(rightStickValue);
+    		leftRear.set(-leftRearRamper.scale(leftStickValue));
+    		rightRear.set(rightRearRamper.scale(rightStickValue));
     	}
     }
 
@@ -200,9 +205,9 @@ public class DrivetrainSubsystem extends Subsystem {
     	SmartDashboard.putNumber("Right encoder", rightFront.getEncPosition());
     	SmartDashboard.putNumber("Left encoder", leftFront.getEncPosition());
     	SmartDashboard.putNumber("Angle", getAngle());
-    	SmartDashboard.putNumber("Z axis", getZ());
     	SmartDashboard.putNumber("X axis", getX());
     	SmartDashboard.putNumber("Y axis", getY());
+        SmartDashboard.putNumber("Z axis", getZ());
 //    	SmartDashboard.putNumber("Current Left", leftFront.getOutputCurrent());
 //    	SmartDashboard.putNumber("Current Right", rightFront.getOutputCurrent());
          SmartDashboard.putNumber("LF power draw", leftFront.getOutputCurrent());
@@ -226,11 +231,7 @@ public class DrivetrainSubsystem extends Subsystem {
             // brake mode: true for brake; false for coast
             talon.enableBrakeMode(true);
 
-            // Voltage ramp rate in volts/sec (works regardless of mode)
-            // (e.g. setVoltageRampRate(6.0) results in 0V to 6V in one sec)
-            // TODO: Should we remove this line and replace it with a Ramper 
-            // so we have more control over how it ramps the speed?
-            talon.setVoltageRampRate(16.0);
+            talon.setVoltageRampRate(0.0);
 
             return talon;
 
