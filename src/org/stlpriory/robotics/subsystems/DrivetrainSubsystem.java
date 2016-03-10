@@ -8,13 +8,13 @@ import org.stlpriory.robotics.utils.Debug;
 import org.stlpriory.robotics.utils.Ramper;
 import org.stlpriory.robotics.utils.Utils;
 
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 
 /**
  * Robot drive train subsystem consisting of 4 CIM motors configured in 2 master/slave arrangements. 
@@ -207,7 +207,7 @@ public class DrivetrainSubsystem extends Subsystem {
     }
     public boolean isFlat()
     {
-        return Math.abs(Robot.drivetrain.getZ() - 1) > Robot.drivetrain.ACCELEROMETER_TOLERANCE;
+        return Math.abs(Robot.drivetrain.getZ() - 1) > DrivetrainSubsystem.ACCELEROMETER_TOLERANCE;
     }
     
     public void zeroGyro()

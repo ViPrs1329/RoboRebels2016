@@ -9,10 +9,7 @@ import org.stlpriory.robotics.commands.Shoot;
 import org.stlpriory.robotics.commands.StopShooter;
 import org.stlpriory.robotics.commands.Suck;
 import org.stlpriory.robotics.commands.Vibrator;
-import org.stlpriory.robotics.commands.drivetrain.DriveStraight;
-import org.stlpriory.robotics.subsystems.DrivetrainSubsystem.Direction;
 import org.stlpriory.robotics.utils.Debug;
-import org.stlpriory.robotics.utils.TriggerTrigger;
 import org.stlpriory.robotics.utils.TwoButton;
 
 import edu.wpi.first.wpilibj.Joystick;

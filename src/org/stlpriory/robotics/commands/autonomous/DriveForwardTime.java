@@ -1,8 +1,8 @@
 package org.stlpriory.robotics.commands.autonomous;
 
 import org.stlpriory.robotics.Robot;
-import org.stlpriory.robotics.subsystems.DrivetrainSubsystem.Direction;
 import org.stlpriory.robotics.subsystems.DrivetrainSubsystem;
+import org.stlpriory.robotics.subsystems.DrivetrainSubsystem.Direction;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;

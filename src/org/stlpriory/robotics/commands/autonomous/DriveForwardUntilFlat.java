@@ -1,8 +1,7 @@
 package org.stlpriory.robotics.commands.autonomous;
 
-import org.stlpriory.robotics.commands.autonomous.DriveForwardTime;
-import org.stlpriory.robotics.subsystems.DrivetrainSubsystem.Direction;
 import org.stlpriory.robotics.Robot;
+import org.stlpriory.robotics.subsystems.DrivetrainSubsystem.Direction;
 
 public class DriveForwardUntilFlat extends DriveForwardTime {
 	private static final int FLAT_TICK_CEILING = 5;

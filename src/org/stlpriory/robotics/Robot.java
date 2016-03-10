@@ -5,9 +5,9 @@ import java.io.File;
 import java.nio.file.Files;
 import java.util.Properties;
 
+import org.stlpriory.robotics.commands.ZeroGyro;
 import org.stlpriory.robotics.commands.ZeroPotHigh;
 import org.stlpriory.robotics.commands.ZeroPotLow;
-import org.stlpriory.robotics.commands.ZeroGyro;
 import org.stlpriory.robotics.commands.autonomous.AutonomousCommand;
 import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
 import org.stlpriory.robotics.subsystems.DrivetrainSubsystem;
@@ -193,9 +193,9 @@ public class Robot extends IterativeRobot {
     	ballHolder.setHighValue(highValue);
     	ballHolder.setLowValue(lowValue);
         if(highValue == -1)
-            System.out.println("Low value is -1!")
+            System.out.println("Low value is -1!");
         if(lowValue == -1)
-            System.out.println("High value is -1!")
+            System.out.println("High value is -1!");
     }
 
     /**

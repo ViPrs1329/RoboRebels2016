@@ -2,9 +2,7 @@ package org.stlpriory.robotics.commands.drivetrain;
 
 import org.stlpriory.robotics.Robot;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Rotate extends Command {
     public static final double DEFAULT_ROTATION_SPEED = -.5;
