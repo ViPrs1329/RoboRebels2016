@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class BallHolderSubsystem extends Subsystem {
-    public static final int RIGHT_WINDOW_MOTOR = 8;
-    public static final int LEFT_WINDOW_MOTOR = 2;
+    public static final int RIGHT_WINDOW_MOTOR = 2;
+    public static final int LEFT_WINDOW_MOTOR = 8;
 
     public static final int POT_CHANNEL = 0;
     public static final int SWITCH_CHANNEL = 1;
