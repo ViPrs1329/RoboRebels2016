@@ -188,8 +188,14 @@ public class Robot extends IterativeRobot {
 
     public static void setProperties()
     {
-    	ballHolder.setHighValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_HIGH_VALUE, "-1")));
-    	ballHolder.setLowValue(Double.parseDouble(ROBOT_PROPS.getProperty(POT_LOW_VALUE, "-1")));
+        double highValue = Double.parseDouble(ROBOT_PROPS.getProperty(POT_HIGH_VALUE, "-1"));
+        double lowValue = Double.parseDouble(ROBOT_PROPS.getProperty(POT_LOW_VALUE, "-1"));
+    	ballHolder.setHighValue(highValue);
+    	ballHolder.setLowValue(lowValue);
+        if(highValue == -1)
+            System.out.println("Low value is -1!")
+        if(lowValue == -1)
+            System.out.println("High value is -1!")
     }
 
     /**

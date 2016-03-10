@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class BallHolderUp extends Command {
-    public static final double BALL_HOLDER_UP_SPEED = .5;
     private boolean forceable;
 
     public BallHolderUp(boolean forceable) {
@@ -35,7 +34,7 @@ public class BallHolderUp extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return Robot.ballHolder.canGoHigher() && !(Robot.oi.forceButton.get() && forceable);
+        return !Robot.ballHolder.canGoHigher() && !(Robot.oi.forceButton.get() && forceable);
     }
 
     // Called once after isFinished returns true
