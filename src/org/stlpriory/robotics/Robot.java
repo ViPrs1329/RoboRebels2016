@@ -78,6 +78,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void disabledInit() {
         setProperties();
+        drivetrain.zeroGyro();
     }
 
     // ==================================================================================
@@ -88,7 +89,7 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         loadRobotConfigFile();
         setProperties();
-        drivetrain.zeroGyro();
+//        drivetrain.zeroGyro();
         if(autonomousCommand != null)
             autonomousCommand.start();
     }

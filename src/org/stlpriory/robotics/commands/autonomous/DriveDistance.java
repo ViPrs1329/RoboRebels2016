@@ -34,7 +34,8 @@ class DriveDistance extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-            startPosition = Robot.drivetrain.getPosition();
+        startPosition = Robot.drivetrain.getPosition();
+		Robot.drivetrain.stop();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
