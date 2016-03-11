@@ -38,22 +38,22 @@ public class AutonomousCommand extends CommandGroup {
             return null;
         }
     }
+    private static final double gyroTolerence = 1.0;
+    private double gyroReading;
     public  AutonomousCommand() {
-
-        
-
-        Obstacle obstacle = Obstacle.getObstacle(Integer.parseInt(Robot.AUTONOMOUS_PROPS.getProperty("autonomousProp", "-1")));
+        gyroReading = Robot.drivetrain.getAngle();
+        addSequential(new DriveDistance(11, Direction.FORWARD,0,false));
+        addSequential(new DriveDistance(11, Direction.REVERSE,gyroReading,true));
+        addSequential(new DriveDistance(11, Direction.FORWARD,gyroReading,true));
+//        Obstacle obstacle = Obstacle.getObstacle(Integer.parseInt(Robot.AUTONOMOUS_PROPS.getProperty("autonomousProp", "-1")));
 //        if(obstacle != null || obstacle != Obstacle.PORTCULLIS || obstacle != Obstacle.DRAWBRIDGE || obstacle != Obstacle.SALLYPORT){
             // Get to the obstacle
             // if(obstacle == ROUGH_TERRAIN)
-            // { 
+            // {
             //     addSequential(new DriveDistance(5, Direction.FORWARD));
             //     addSequential(new Rotate(500));
             //     return;
             // }
-            addSequential(new DriveDistance(11, Direction.FORWARD));
-            addSequential(new DriveDistance(11, Direction.REVERSE));
-            addSequential(new DriveDistance(11, Direction.FORWARD));
             // if(obstacle == MOVABLE_RAMPS)
             // {
             //     We should move the arm down here to move the ramp

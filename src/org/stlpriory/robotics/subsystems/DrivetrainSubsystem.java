@@ -36,7 +36,9 @@ public class DrivetrainSubsystem extends Subsystem {
 
     public static final boolean MASTER_SLAVE_MODE = true;
     public static final double FORWARD_SPEED = 0.7;
+    public static final double AUTO_TURN_SPEED = 0.3;
     public static final double ACCELEROMETER_TOLERANCE = .05;
+    public static final double GYRO_TOLERANCE = .1;
 
     private final CANTalon rightFront;
     private final CANTalon rightRear;

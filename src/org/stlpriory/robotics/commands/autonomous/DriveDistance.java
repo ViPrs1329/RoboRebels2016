@@ -11,12 +11,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 class DriveDistance extends Command {
 
 	double goalDistance = 0.0;
-        double startPosition;
+    double startPosition;
 	double distance;
 	Direction direction;
-        double startHeading;
+	double startHeading;
+	boolean shouldCorrect;
+	double firstGyroReading;
 
-	public DriveDistance(double din, Direction direction) {
+	public DriveDistance(double din, Direction direction, double gyroReading, boolean shouldCorrect) {
 		super("DriveWithGamepad");
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
@@ -27,6 +29,7 @@ class DriveDistance extends Command {
 		goalDistance = Utils.TALONdistance(din);
 		this.direction = direction;
 		this.startHeading = Robot.drivetrain.getAngle();
+		this.shouldCorrect = shouldCorrect;
 	}
 
 	// Called just before this Command runs the first time
@@ -36,6 +39,26 @@ class DriveDistance extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		if(shouldCorrect)
+		{
+			if(Math.abs(Robot.drivetrain.getAngle()-this.firstGyroReading)<=DrivetrainSubsystem.GYRO_TOLERANCE)
+			{
+				if(Robot.drivetrain.getAngle()>this.firstGyroReading)
+				{
+					Robot.drivetrain.tankDrive(DrivetrainSubsystem.AUTO_TURN_SPEED,-DrivetrainSubsystem.AUTO_TURN_SPEED);
+					return;
+				}
+				else if(Robot.drivetrain.getAngle()<this.firstGyroReading)
+				{
+					Robot.drivetrain.tankDrive(-DrivetrainSubsystem.AUTO_TURN_SPEED,DrivetrainSubsystem.AUTO_TURN_SPEED);
+					return;
+				}
+			}
+			else
+			{
+				shouldCorrect = false;
+			}
+		}
 		if (direction == Direction.FORWARD) {
 			Robot.drivetrain.driveForward(-DrivetrainSubsystem.FORWARD_SPEED,
 					startHeading);
