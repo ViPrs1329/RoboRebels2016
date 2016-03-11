@@ -29,12 +29,15 @@ class DriveDistance extends Command {
 		goalDistance = Utils.TALONdistance(din);
 		this.direction = direction;
 		this.startHeading = Robot.drivetrain.getAngle();
+		this.firstGyroReading = gyroReading;
 		this.shouldCorrect = shouldCorrect;
+		System.out.println("I am now driving in and should correct = "+shouldCorrect+" and first gyroReading = "+this.firstGyroReading);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
         startPosition = Robot.drivetrain.getPosition();
+        System.out.println("I am now driving in and should correct = "+shouldCorrect+" and first gyroReading = "+this.firstGyroReading);
 		Robot.drivetrain.stop();
 	}
 
@@ -42,32 +45,34 @@ class DriveDistance extends Command {
 	protected void execute() {
 		if(shouldCorrect)
 		{
-			if(Math.abs(Robot.drivetrain.getAngle()-this.firstGyroReading)<=DrivetrainSubsystem.GYRO_TOLERANCE)
+			if(Math.abs(Robot.drivetrain.getAngle()-this.firstGyroReading)>=DrivetrainSubsystem.GYRO_TOLERANCE)
 			{
 				if(Robot.drivetrain.getAngle()>this.firstGyroReading)
 				{
-					Robot.drivetrain.tankDrive(DrivetrainSubsystem.AUTO_TURN_SPEED,-DrivetrainSubsystem.AUTO_TURN_SPEED);
+					Robot.drivetrain.tankDrive(-DrivetrainSubsystem.AUTO_TURN_SPEED,DrivetrainSubsystem.AUTO_TURN_SPEED);
 					return;
 				}
 				else if(Robot.drivetrain.getAngle()<this.firstGyroReading)
 				{
-					Robot.drivetrain.tankDrive(-DrivetrainSubsystem.AUTO_TURN_SPEED,DrivetrainSubsystem.AUTO_TURN_SPEED);
+					Robot.drivetrain.tankDrive(DrivetrainSubsystem.AUTO_TURN_SPEED,-DrivetrainSubsystem.AUTO_TURN_SPEED);
 					return;
 				}
 			}
 			else
 			{
 				shouldCorrect = false;
+				startPosition = Robot.drivetrain.getPosition();
+				startHeading = Robot.drivetrain.getAngle();
 			}
 		}
 		if (direction == Direction.FORWARD) {
 			Robot.drivetrain.driveForward(-DrivetrainSubsystem.FORWARD_SPEED,
 					startHeading);
-			System.out.println("Driving forward");
+//			System.out.println("Driving forward");
 		} else {
 			Robot.drivetrain.driveForward(DrivetrainSubsystem.FORWARD_SPEED,
 					startHeading);
-			System.out.println("Driving backward");
+//			System.out.println("Driving backward");
 		}
 //		SmartDashboard.putNumber("Robot Speed", Robot.drivetrain.getSpeed());
 	}
@@ -75,7 +80,7 @@ class DriveDistance extends Command {
 	// Make this return true when this Command no longer needs to run execute()
         protected boolean isFinished() {
             double totalDistance = Math.abs(Robot.drivetrain.getPosition() - startPosition);
-            System.out.println("I've gone " + totalDistance + " encoder units");
+//            System.out.println("I've gone " + totalDistance + " encoder units");
             SmartDashboard.putNumber("Distance", totalDistance);
             return totalDistance >= goalDistance;
         }
@@ -83,7 +88,7 @@ class DriveDistance extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.drivetrain.stop();
-		System.out.println("I finished Driving");
+//		System.out.println("I finished Driving");
 
 	}
 

@@ -38,10 +38,10 @@ public class AutonomousCommand extends CommandGroup {
             return null;
         }
     }
-    private static final double gyroTolerence = 1.0;
     private double gyroReading;
     public  AutonomousCommand() {
         gyroReading = Robot.drivetrain.getAngle();
+        System.out.println(String.format("Set gyro angle for autonomous; it's %f", gyroReading));
         addSequential(new DriveDistance(11, Direction.FORWARD,0,false));
         addSequential(new DriveDistance(11, Direction.REVERSE,gyroReading,true));
         addSequential(new DriveDistance(11, Direction.FORWARD,gyroReading,true));
