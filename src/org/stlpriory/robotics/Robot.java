@@ -58,7 +58,6 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
         Debug.println("[Robot.robotInit()] Initializing...");
-        System.out.println("init started");
         timer.start();
         // Load robot configuration file
         loadRobotConfigFile();
@@ -79,7 +78,6 @@ public class Robot extends IterativeRobot {
     @Override
     public void disabledInit() {
         setProperties();
-    	System.out.println("set zero value");
     }
 
     // ==================================================================================
@@ -93,7 +91,6 @@ public class Robot extends IterativeRobot {
         drivetrain.zeroGyro();
         if(autonomousCommand != null)
             autonomousCommand.start();
-        System.out.println("set zero value");
     }
 
     @Override
@@ -113,7 +110,6 @@ public class Robot extends IterativeRobot {
         setProperties();
         drivetrain.zeroGyro();
         reset();
-    	System.out.println("set zero value");
         // Record initial status values
         updateStatus();
     }

@@ -35,7 +35,7 @@ public class DrivetrainSubsystem extends Subsystem {
     public static final double DEFAULT_FORWARD_SPEED = 1;
 
     public static final boolean MASTER_SLAVE_MODE = true;
-    public static final double FORWARD_SPEED = 0.3;
+    public static final double FORWARD_SPEED = 0.7;
     public static final double ACCELEROMETER_TOLERANCE = .05;
 
     private final CANTalon rightFront;
@@ -111,7 +111,6 @@ public class DrivetrainSubsystem extends Subsystem {
         }
         else 
         {
-        	System.out.println("Setting angle");
             lastAngle = getAngle();
             tankDrive(leftValue, rightValue);
         }
@@ -145,7 +144,6 @@ public class DrivetrainSubsystem extends Subsystem {
     {
         // I stole this from the internet too.
         final double kP = .01;
-        System.out.println("Correcting " + ((desiredHeading - getAngle() > 0) ? "right " : "left") + kP * (desiredHeading - getAngle()));
         arcadeDrive(speed, (desiredHeading - getAngle()) * kP);
     }
     public void driveForward(double speed)

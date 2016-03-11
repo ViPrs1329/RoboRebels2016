@@ -104,7 +104,7 @@ public class OI {
         this.holderSuck = new JoystickButton(this.xboxController, LEFT_BUMPER);
         this.holderSuck.whenPressed(new MoveToSuck());
 
-        this.forceButton = new JoystickButton(this.xboxController, LEFT_STICK);
+        this.forceButton = new JoystickButton(this.xboxController, BACK_BUTTON);
 
         this.vibrator = new TwoButton(new JoystickButton(this.xboxController, LEFT_STICK), new JoystickButton(this.xboxController, RIGHT_STICK));
         this.vibrator.whileActive(new Vibrator());

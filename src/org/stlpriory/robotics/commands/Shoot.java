@@ -72,6 +72,7 @@ public class Shoot extends Command {
                 System.out.println("extending");
                 Robot.oi.vibrate(false);
                 pause(1);
+//                Robot.shooter.retractLoaderArm();
                 isDone = true;
                 
             } else if (leftSpeed > rightSpeed) {

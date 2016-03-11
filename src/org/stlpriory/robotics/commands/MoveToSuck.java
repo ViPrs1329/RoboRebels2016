@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class MoveToSuck extends Command {
     private boolean isDone;
+    private double targAngle;
     public MoveToSuck() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.ballHolder);
@@ -18,6 +19,7 @@ public class MoveToSuck extends Command {
     @Override
     protected void initialize() {
         isDone = false;
+        targAngle = Robot.ballHolder.potLowestValue + BallHolderSubsystem.SUCK_OFFSET;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -26,11 +28,11 @@ public class MoveToSuck extends Command {
         if(!isFinished())
         {
             double angle = Robot.ballHolder.getAngle();
-            if(angle - Robot.ballHolder.suckAngle <= BallHolderSubsystem.TOLERANCE)
+            if(Math.abs(angle - targAngle) <= BallHolderSubsystem.TOLERANCE)
                 isDone = true;
-            else if(angle > Robot.ballHolder.suckAngle)
+            else if(angle < targAngle)
                 Robot.ballHolder.set(Direction.UP, BallHolderSubsystem.ARM_SPEED);
-            else if(angle < Robot.ballHolder.suckAngle)
+            else if(angle > targAngle)
                 Robot.ballHolder.set(Direction.DOWN, BallHolderSubsystem.ARM_SPEED);
         }
     }

@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
- */
+ */                                      
 public class AutonomousCommand extends CommandGroup {
 	public enum Obstacle {
         OPPOSING_RAMPS (1),
@@ -43,7 +43,7 @@ public class AutonomousCommand extends CommandGroup {
         
 
         Obstacle obstacle = Obstacle.getObstacle(Integer.parseInt(Robot.AUTONOMOUS_PROPS.getProperty("autonomousProp", "-1")));
-        if(obstacle != null || obstacle != Obstacle.PORTCULLIS || obstacle != Obstacle.DRAWBRIDGE || obstacle != Obstacle.SALLYPORT){
+//        if(obstacle != null || obstacle != Obstacle.PORTCULLIS || obstacle != Obstacle.DRAWBRIDGE || obstacle != Obstacle.SALLYPORT){
             // Get to the obstacle
             // if(obstacle == ROUGH_TERRAIN)
             // { 
@@ -51,7 +51,9 @@ public class AutonomousCommand extends CommandGroup {
             //     addSequential(new Rotate(500));
             //     return;
             // }
-            addSequential(new DriveDistance(1, Direction.FORWARD));
+            addSequential(new DriveDistance(11, Direction.FORWARD));
+            addSequential(new DriveDistance(11, Direction.REVERSE));
+            addSequential(new DriveDistance(11, Direction.FORWARD));
             // if(obstacle == MOVABLE_RAMPS)
             // {
             //     We should move the arm down here to move the ramp
@@ -61,6 +63,6 @@ public class AutonomousCommand extends CommandGroup {
 
             // This was just for testing
             // addSequential(new Rotate(45, .15, RotationDirection.CLOCKWISE));
-        }
+//        }
     }
 }

@@ -20,7 +20,7 @@ public class ShooterSubsystem extends Subsystem {
     public static final int RIGHT_MOTOR_ENCODER_CHANNEL_B = 7;
     
     public static final double KEEPING_SPEED = .1;
-    public static final double SUCK_SPEED = .5;
+    public static final double SUCK_SPEED = .4;
     public static final double SHOOT_SPEED = 1;
     public double difference = 0;
     // This is the minimum encoder reading that we should try to shoot at. 

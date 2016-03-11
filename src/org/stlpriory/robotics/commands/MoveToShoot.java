@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class MoveToShoot extends Command {
     private boolean isDone;
+    private double targAngle;
     public MoveToShoot() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.ballHolder);
@@ -21,6 +22,7 @@ public class MoveToShoot extends Command {
     @Override
     protected void initialize() {
         isDone = false;
+        targAngle = Robot.ballHolder.potLowestValue + BallHolderSubsystem.SHOOT_OFFSET;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -28,12 +30,12 @@ public class MoveToShoot extends Command {
     protected void execute() {
         if(!isFinished())
         {
-            double angle = Robot.ballHolder.getAngle();
-            if(angle - Robot.ballHolder.shootAngle <= BallHolderSubsystem.TOLERANCE)
+            double currAngle = Robot.ballHolder.getAngle();
+            if(Math.abs(currAngle - targAngle) <= BallHolderSubsystem.TOLERANCE)
                 isDone = true;
-            else if(angle > Robot.ballHolder.shootAngle)
+            else if(currAngle < targAngle)
                 Robot.ballHolder.set(Direction.UP, BallHolderSubsystem.ARM_SPEED);
-            else if(angle < Robot.ballHolder.shootAngle)
+            else if(currAngle > targAngle)
                 Robot.ballHolder.set(Direction.DOWN, BallHolderSubsystem.ARM_SPEED);
         }
     }

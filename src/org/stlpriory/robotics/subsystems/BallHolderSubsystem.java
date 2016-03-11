@@ -43,8 +43,8 @@ public class BallHolderSubsystem extends Subsystem {
     public static final String POT_SETTING_STATUS = "Pot reset status";
     public static final double TOLERANCE = 0.5d;
     // TODO: See #4. I just made these up
-    public static final double SHOOT_OFFSET = 50;
-    public static final double SUCK_OFFSET = 25;
+    public static final double SHOOT_OFFSET = 80;
+    public static final double SUCK_OFFSET = 3;
 
     public enum Direction {
         UP, DOWN
@@ -58,9 +58,6 @@ public class BallHolderSubsystem extends Subsystem {
     public double potHighestValue = 0;
     public double potLowestValue = 0;
 
-    // TODO: See #4 for more info on this stuff
-    public double shootAngle = potLowestValue + SHOOT_OFFSET;
-    public double suckAngle = potLowestValue + SUCK_OFFSET;
     
     private final DigitalInput stowSwitch;
 	
