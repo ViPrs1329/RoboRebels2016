@@ -29,7 +29,7 @@ class DriveDistance extends Command {
 		this.direction = direction;
 		this.startHeading = Robot.drivetrain.getAngle();
 		this.shouldCorrect = shouldCorrect;
-                this.info = info;
+        this.info = info;
 		this.desiredOffset = desiredOffset;
 	}
 
@@ -37,7 +37,7 @@ class DriveDistance extends Command {
 	protected void initialize() {
         startPosition = Robot.drivetrain.getPosition();
 		Robot.drivetrain.stop();
-                this.desiredHeading = info.getHeading() + desiredOffset;
+        this.desiredHeading = info.getHeading() + desiredOffset;
 	}
 
 	// Called repeatedly when this Command is scheduled to run

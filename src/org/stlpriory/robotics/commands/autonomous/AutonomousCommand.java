@@ -43,9 +43,9 @@ public class AutonomousCommand extends CommandGroup {
     public  AutonomousCommand() {
         System.out.println(String.format("Set gyro angle for autonomous; it's %f", gyroReading));
         addSequential(new SetAutonomousInfo());
-        addSequential(new DriveDistance(11, Direction.FORWARD, null, 0, false));
+        addSequential(new DriveDistance(7, Direction.FORWARD, Robot.autonomousInfo, 0, false));
         addSequential(new Rotate(180));
-        addSequential(new DriveDistance(8, Direction.FORWARD, Robot.autonomousInfo, 180, true));
+        addSequential(new DriveDistance(3, Direction.FORWARD, Robot.autonomousInfo, 180, true));
 //        Obstacle obstacle = Obstacle.getObstacle(Integer.parseInt(Robot.AUTONOMOUS_PROPS.getProperty("autonomousProp", "-1")));
 //        if(obstacle != null || obstacle != Obstacle.PORTCULLIS || obstacle != Obstacle.DRAWBRIDGE || obstacle != Obstacle.SALLYPORT){
             // Get to the obstacle
