@@ -14,6 +14,7 @@ import org.stlpriory.robotics.subsystems.DrivetrainSubsystem;
 import org.stlpriory.robotics.subsystems.ShooterSubsystem;
 import org.stlpriory.robotics.utils.Debug;
 import org.stlpriory.robotics.utils.PropertiesUtils;
+import org.stlpriory.robotics.utils.AutonomousInfo;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -49,6 +50,7 @@ public class Robot extends IterativeRobot {
 
     
     private Command autonomousCommand = new AutonomousCommand();
+    public static AutonomousInfo autonomousInfo = new AutonomousInfo();
     private Timer timer = new Timer();
     
     // ==================================================================================

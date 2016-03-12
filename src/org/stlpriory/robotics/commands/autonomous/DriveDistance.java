@@ -4,6 +4,7 @@ import org.stlpriory.robotics.Robot;
 import org.stlpriory.robotics.subsystems.DrivetrainSubsystem;
 import org.stlpriory.robotics.subsystems.DrivetrainSubsystem.Direction;
 import org.stlpriory.robotics.utils.Utils;
+import org.stlpriory.utils.AutonomousInfo;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,43 +17,41 @@ class DriveDistance extends Command {
 	Direction direction;
 	double startHeading;
 	boolean shouldCorrect;
-	double firstGyroReading;
+        AutonomousInfo info;
+        double desiredHeading;
+	double desiredOffset;
 
-	public DriveDistance(double din, Direction direction, double gyroReading, boolean shouldCorrect) {
+	public DriveDistance(double din, Direction direction, AutonomousInfo info, double desiredOffset, boolean shouldCorrect) {
 		super("DriveWithGamepad");
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
 		// Variable "din" needs to be in feet
-		// If isFoward is true, it will drive forwards, otherwise it will drive
-		// in reverse.
 		requires(Robot.drivetrain);
 		goalDistance = Utils.TALONdistance(din);
 		this.direction = direction;
 		this.startHeading = Robot.drivetrain.getAngle();
-		this.firstGyroReading = gyroReading;
 		this.shouldCorrect = shouldCorrect;
-		System.out.println("I am now driving in and should correct = "+shouldCorrect+" and first gyroReading = "+this.firstGyroReading);
+                this.info = info;
+		this.desiredOffset = desiredOffset;
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
         startPosition = Robot.drivetrain.getPosition();
-        System.out.println("I am now driving in and should correct = "+shouldCorrect+" and first gyroReading = "+this.firstGyroReading);
 		Robot.drivetrain.stop();
+                this.desiredHeading = info.getHeading() + desiredOffset;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		if(shouldCorrect)
 		{
-			if(Math.abs(Robot.drivetrain.getAngle()-this.firstGyroReading)>=DrivetrainSubsystem.GYRO_TOLERANCE)
+			if(Math.abs(Robot.drivetrain.getAngle() - this.desiredHeading) <= DrivetrainSubsystem.GYRO_TOLERANCE)
 			{
-				if(Robot.drivetrain.getAngle()>this.firstGyroReading)
+				if(Robot.drivetrain.getAngle() > this.desiredHeading)
 				{
 					Robot.drivetrain.tankDrive(-DrivetrainSubsystem.AUTO_TURN_SPEED,DrivetrainSubsystem.AUTO_TURN_SPEED);
 					return;
 				}
-				else if(Robot.drivetrain.getAngle()<this.firstGyroReading)
+				else if(Robot.drivetrain.getAngle() < this.desiredHeading)
 				{
 					Robot.drivetrain.tankDrive(DrivetrainSubsystem.AUTO_TURN_SPEED,-DrivetrainSubsystem.AUTO_TURN_SPEED);
 					return;
@@ -67,14 +66,11 @@ class DriveDistance extends Command {
 		}
 		if (direction == Direction.FORWARD) {
 			Robot.drivetrain.driveForward(-DrivetrainSubsystem.FORWARD_SPEED,
-					startHeading);
-//			System.out.println("Driving forward");
+					desiredHeading);
 		} else {
 			Robot.drivetrain.driveForward(DrivetrainSubsystem.FORWARD_SPEED,
-					startHeading);
-//			System.out.println("Driving backward");
+					desiredHeading);
 		}
-//		SmartDashboard.putNumber("Robot Speed", Robot.drivetrain.getSpeed());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
