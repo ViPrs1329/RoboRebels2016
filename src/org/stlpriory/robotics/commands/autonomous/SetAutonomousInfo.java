@@ -1,5 +1,7 @@
-package org.stlpriory.commands.autonomous;
-import edu.wpi.first.wpilibj.command.CommandGroup;
+package org.stlpriory.robotics.commands.autonomous;
+import org.stlpriory.robotics.Robot;
+
+import edu.wpi.first.wpilibj.command.Command;
 class SetAutonomousInfo extends Command {
     public SetAutonomousInfo()
     {

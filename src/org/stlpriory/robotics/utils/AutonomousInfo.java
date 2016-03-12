@@ -1,11 +1,11 @@
 package org.stlpriory.robotics.utils;
 public class AutonomousInfo {
-    private Double originalHeading;
-    public Double getHeading()
+    private double originalHeading;
+    public double getHeading()
     {
         return originalHeading;
     }
-    public void setHeading(Double heading)
+    public void setHeading(double heading)
     {
         originalHeading = heading;
     }

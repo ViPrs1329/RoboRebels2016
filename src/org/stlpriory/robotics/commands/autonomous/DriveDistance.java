@@ -3,8 +3,8 @@ package org.stlpriory.robotics.commands.autonomous;
 import org.stlpriory.robotics.Robot;
 import org.stlpriory.robotics.subsystems.DrivetrainSubsystem;
 import org.stlpriory.robotics.subsystems.DrivetrainSubsystem.Direction;
+import org.stlpriory.robotics.utils.AutonomousInfo;
 import org.stlpriory.robotics.utils.Utils;
-import org.stlpriory.utils.AutonomousInfo;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
