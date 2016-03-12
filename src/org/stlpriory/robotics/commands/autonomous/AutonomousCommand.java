@@ -41,10 +41,10 @@ public class AutonomousCommand extends CommandGroup {
     private static final double gyroTolerence = 1.0;
     private double gyroReading;
     public  AutonomousCommand() {
-        gyroReading = Robot.drivetrain.getAngle();
-        addSequential(new DriveDistance(11, Direction.FORWARD,0,false));
-        addSequential(new DriveDistance(11, Direction.REVERSE,gyroReading,true));
-        addSequential(new DriveDistance(11, Direction.FORWARD,gyroReading,true));
+        addSequential(new SetAutonomousInfo());
+        addSequential(new DriveDistance(11, Direction.FORWARD, null, 0, false));
+        addSequential(new Rotate(180));
+        addSequential(new DriveDistance(8, Direction.FORWARD, Robot.autonomousInfo, 180, true));
 //        Obstacle obstacle = Obstacle.getObstacle(Integer.parseInt(Robot.AUTONOMOUS_PROPS.getProperty("autonomousProp", "-1")));
 //        if(obstacle != null || obstacle != Obstacle.PORTCULLIS || obstacle != Obstacle.DRAWBRIDGE || obstacle != Obstacle.SALLYPORT){
             // Get to the obstacle
