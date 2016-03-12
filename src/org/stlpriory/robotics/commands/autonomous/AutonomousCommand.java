@@ -52,8 +52,8 @@ public class AutonomousCommand extends CommandGroup {
             //     return;
             // }
             addSequential(new DriveDistance(11, Direction.FORWARD));
-            addSequential(new DriveDistance(11, Direction.REVERSE));
-            addSequential(new DriveDistance(11, Direction.FORWARD));
+//            addSequential(new DriveDistance(11, Direction.REVERSE));
+//            addSequential(new DriveDistance(11, Direction.FORWARD));
             // if(obstacle == MOVABLE_RAMPS)
             // {
             //     We should move the arm down here to move the ramp
