@@ -10,21 +10,21 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */                                      
 public class AutonomousCommand extends CommandGroup {
-	public enum Obstacle {
+    public enum Obstacle {
         OPPOSING_RAMPS (1),
-        MOVABLE_RAMPS (2),
-        ROUGH_TERRAIN (3),
-        LOW_BAR (4),
-        PORTCULLIS (5),
-        MOAT (6),
-        DRAWBRIDGE (7),
-        SALLYPORT (8),
-        ROCK_WALL (9);
-        private int number;
-        Obstacle(int number)
-        {
-            this.number = number;
-        }
+            MOVABLE_RAMPS (2),
+            ROUGH_TERRAIN (3),
+            LOW_BAR (4),
+            PORTCULLIS (5),
+            MOAT (6),
+            DRAWBRIDGE (7),
+            SALLYPORT (8),
+            ROCK_WALL (9);
+            private int number;
+            Obstacle(int number)
+            {
+                this.number = number;
+            }
         public int getNumber()
         {
             return this.number;
@@ -40,30 +40,19 @@ public class AutonomousCommand extends CommandGroup {
         }
     }
     private double gyroReading;
-    public  AutonomousCommand() {
-        System.out.println(String.format("Set gyro angle for autonomous; it's %f", gyroReading));
-        addSequential(new SetAutonomousInfo());
-        addSequential(new DriveDistance(7, Direction.FORWARD, Robot.autonomousInfo, 0, false));
-        addSequential(new Rotate(180));
-        addSequential(new DriveDistance(3, Direction.FORWARD, Robot.autonomousInfo, 180, true));
-//        Obstacle obstacle = Obstacle.getObstacle(Integer.parseInt(Robot.AUTONOMOUS_PROPS.getProperty("autonomousProp", "-1")));
-//        if(obstacle != null || obstacle != Obstacle.PORTCULLIS || obstacle != Obstacle.DRAWBRIDGE || obstacle != Obstacle.SALLYPORT){
-            // Get to the obstacle
-            // if(obstacle == ROUGH_TERRAIN)
-            // {
-            //     addSequential(new DriveDistance(5, Direction.FORWARD));
-            //     addSequential(new Rotate(500));
-            //     return;
-            // }
-            // if(obstacle == MOVABLE_RAMPS)
-            // {
-            //     We should move the arm down here to move the ramp
-            // }
-            // addSequential(new DriveForwardUntilFlat(6000, Direction.FORWARD));
+        public  AutonomousCommand() {
+            System.out.println(String.format("Set gyro angle for autonomous; it's %f", gyroReading));
+                // This code never worked, but I wanted it to.
+                addSequential(new SetAutonomousInfo());
+                addSequential(new DriveDistance(7, Direction.FORWARD, Robot.autonomousInfo, 0, false));
+                addSequential(new Rotate(180));
+                addSequential(new DriveDistance(3, Direction.FORWARD, Robot.autonomousInfo, 180, true));
 
 
-            // This was just for testing
-            // addSequential(new Rotate(45, .15, RotationDirection.CLOCKWISE));
-//        }
-    }
+
+
+
+                // This was the working autonomous code at the end of last season.
+                // addSequential(new DriveDistance(11, Direction.FORWARD));
+        }
 }

@@ -33,7 +33,7 @@ public class DriveForwardUntilFlat extends DriveForwardTime {
         // never return true.
         if(!hasTilted)
         {
-            if(Robot.drivetrain.isFlat())
+            if(!Robot.drivetrain.isFlat())
             {
                 hasTilted = true;
             }
