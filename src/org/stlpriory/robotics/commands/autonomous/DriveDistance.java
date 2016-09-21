@@ -1,13 +1,12 @@
 package org.stlpriory.robotics.commands.autonomous;
 
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.stlpriory.robotics.Robot;
 import org.stlpriory.robotics.subsystems.DrivetrainSubsystem;
 import org.stlpriory.robotics.subsystems.DrivetrainSubsystem.Direction;
 import org.stlpriory.robotics.utils.AutonomousInfo;
 import org.stlpriory.robotics.utils.Utils;
-
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 class DriveDistance extends Command {
 
@@ -42,7 +41,7 @@ class DriveDistance extends Command {
     protected void initialize() {
         startPosition = Robot.drivetrain.getPosition();
         Robot.drivetrain.stop();
-        if(shouldCorrect)
+        if (shouldCorrect)
             this.desiredHeading = info.getHeading() + desiredOffset;
         else
             this.desiredHeading = Robot.drivetrain.getAngle();
@@ -50,29 +49,21 @@ class DriveDistance extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if(shouldCorrect)
-        {
-            if(Math.abs(Robot.drivetrain.getAngle() - this.desiredHeading) <= DrivetrainSubsystem.GYRO_TOLERANCE)
-            {
-                if(Robot.drivetrain.getAngle() > this.desiredHeading)
-                {
-                    Robot.drivetrain.tankDrive(-DrivetrainSubsystem.AUTO_TURN_SPEED,DrivetrainSubsystem.AUTO_TURN_SPEED);
+        if (shouldCorrect) {
+            if (Math.abs(Robot.drivetrain.getAngle() - this.desiredHeading) <= DrivetrainSubsystem.GYRO_TOLERANCE) {
+                if (Robot.drivetrain.getAngle() > this.desiredHeading) {
+                    Robot.drivetrain.tankDrive(-DrivetrainSubsystem.AUTO_TURN_SPEED, DrivetrainSubsystem.AUTO_TURN_SPEED);
+                    return;
+                } else if (Robot.drivetrain.getAngle() < this.desiredHeading) {
+                    Robot.drivetrain.tankDrive(DrivetrainSubsystem.AUTO_TURN_SPEED, -DrivetrainSubsystem.AUTO_TURN_SPEED);
                     return;
                 }
-                else if(Robot.drivetrain.getAngle() < this.desiredHeading)
-                {
-                    Robot.drivetrain.tankDrive(DrivetrainSubsystem.AUTO_TURN_SPEED,-DrivetrainSubsystem.AUTO_TURN_SPEED);
-                    return;
-                }
-            }
-            else
-            {
+            } else {
                 shouldCorrect = false;
                 startPosition = Robot.drivetrain.getPosition();
                 startHeading = Robot.drivetrain.getAngle();
             }
-        }
-        else{
+        } else {
             if (direction == Direction.FORWARD) {
                 Robot.drivetrain.driveForward(-DrivetrainSubsystem.FORWARD_SPEED, desiredHeading);
             } else {

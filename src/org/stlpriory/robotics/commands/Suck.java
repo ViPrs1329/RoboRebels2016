@@ -1,8 +1,7 @@
 package org.stlpriory.robotics.commands;
 
-import org.stlpriory.robotics.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.stlpriory.robotics.Robot;
 
 public class Suck extends Command {
 
@@ -12,7 +11,7 @@ public class Suck extends Command {
 
     @Override
     protected void initialize() {
-    	Robot.shooter.retractLoaderArm();
+        Robot.shooter.retractLoaderArm();
     }
 
     @Override

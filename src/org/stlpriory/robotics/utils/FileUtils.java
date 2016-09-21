@@ -4,26 +4,23 @@ import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.StandardOpenOption;
+import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 import java.util.Objects;
 
 /**
  * Utility methods to make working with files a bit easier
+ *
  * @see java.util.File
  */
 public class FileUtils {
     public static final String DIR_TEMP = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
-    
+
     /**
-     * Return the temporary directory {@link File} specified by the 
+     * Return the temporary directory {@link File} specified by the
      * java.io.tmpdir system property
+     *
      * @return the temporary directory {@link File}
      */
     public static File getSystemTempDirectory() {
@@ -37,12 +34,13 @@ public class FileUtils {
         }
         return new File(DIR_TEMP);
     }
-    
+
     /**
      * Create the named {@link File} under the directory specified in the {@link File}. If
      * the file already exists and exception will be thrown.
+     *
      * @param fileName the name of the file
-     * @param baseDir the parent directory 
+     * @param baseDir  the parent directory
      * @return the created {@link File}
      * @throws IOException if an error occurs while creating the {@link File}
      */
@@ -54,9 +52,10 @@ public class FileUtils {
     }
 
     /**
-     * Creates a directory by creating all nonexistent parent directories first. 
-     * The method will not be thrown if the directory could not be created because it 
+     * Creates a directory by creating all nonexistent parent directories first.
+     * The method will not be thrown if the directory could not be created because it
      * already exists.
+     *
      * @param dirPath the directory path to create
      * @return the created directory {@link File}
      * @throws IOException if an error occurs while creating the {@link File}
@@ -66,9 +65,10 @@ public class FileUtils {
     }
 
     /**
-     * Creates a directory by creating all nonexistent parent directories first. 
-     * The method will not be thrown if the directory could not be created because it 
+     * Creates a directory by creating all nonexistent parent directories first.
+     * The method will not be thrown if the directory could not be created because it
      * already exists.
+     *
      * @param dir the directory path to create
      * @return the created directory {@link File}
      * @throws IOException if an error occurs while creating the {@link File}
@@ -79,8 +79,9 @@ public class FileUtils {
     }
 
     /**
-     * Create a temporary file under the location specified by the 
+     * Create a temporary file under the location specified by the
      * java.io.tmpdir system property
+     *
      * @return the created temporary {@link File}
      * @throws IOException if an error occurs while creating the {@link File}
      */
@@ -90,6 +91,7 @@ public class FileUtils {
 
     /**
      * Create a temporary file under the specified base directory.
+     *
      * @param baseDir the base directory {@link File}
      * @return the created temporary {@link File}
      * @throws IOException if an error occurs while creating the {@link File}
@@ -100,8 +102,9 @@ public class FileUtils {
     }
 
     /**
-     * Create a temporary directory under the location specified by the 
+     * Create a temporary directory under the location specified by the
      * java.io.tmpdir system property
+     *
      * @return the path to the directory
      * @throws IOException if an error occurs while creating the {@link File}
      */
@@ -111,6 +114,7 @@ public class FileUtils {
 
     /**
      * Create a temporary directory under the specified base directory.
+     *
      * @param baseDir the base directory {@link File}
      * @return the created temporary {@link File}
      * @throws IOException if an error occurs while creating the {@link File}
@@ -119,14 +123,14 @@ public class FileUtils {
         Path path = Objects.requireNonNull(baseDir.toPath(), "The directory may not be null");
         return Files.createTempDirectory(path, "tmp_").toFile();
     }
-    
+
     /**
-     * Read all content from a file and return it into a single string. Bytes from the file are 
-     * decoded into characters using the UTF-8 charset. This quick method is targeted at reading 
-     * small byte/text files in a single shot. The underlying logic reads the entire file's bytes 
-     * or lines, respectively, into a single read and takes care of opening and closing the stream 
+     * Read all content from a file and return it into a single string. Bytes from the file are
+     * decoded into characters using the UTF-8 charset. This quick method is targeted at reading
+     * small byte/text files in a single shot. The underlying logic reads the entire file's bytes
+     * or lines, respectively, into a single read and takes care of opening and closing the stream
      * for you after the file has been read or an I/O error or exception has occurred.
-     * 
+     *
      * @param file the {@link File} to read from
      * @return the content from the file as a single string.
      * @throws IOException if an error occurs while reading the {@link File}
@@ -137,12 +141,12 @@ public class FileUtils {
     }
 
     /**
-     * Read all lines from a file. Bytes from the file are decoded into characters 
-     * using the the UTF-8 charset. This quick method is targeted at reading small byte/text 
-     * files in a single shot. The underlying logic reads the entire file's bytes or lines, 
-     * respectively, into a single read and takes care of opening and closing the stream for 
+     * Read all lines from a file. Bytes from the file are decoded into characters
+     * using the the UTF-8 charset. This quick method is targeted at reading small byte/text
+     * files in a single shot. The underlying logic reads the entire file's bytes or lines,
+     * respectively, into a single read and takes care of opening and closing the stream for
      * you after the file has been read or an I/O error or exception has occurred.
-     * 
+     *
      * @param file the {@link File} to read from
      * @return the lines from the file as an unmodifiable List
      * @throws IOException if an error occurs while reading the {@link File}
@@ -153,10 +157,10 @@ public class FileUtils {
     }
 
     /**
-     * Write lines of text to a file. Characters are encoded into bytes using 
+     * Write lines of text to a file. Characters are encoded into bytes using
      * the UTF-8 charset.
-     * 
-     * @param file the {@link File} to write to
+     *
+     * @param file  the {@link File} to write to
      * @param lines the file content
      * @throws IOException if an error occurs while writing the {@link File}
      */
@@ -166,10 +170,10 @@ public class FileUtils {
     }
 
     /**
-     * Write the string of text to a file. Characters are encoded into bytes using 
+     * Write the string of text to a file. Characters are encoded into bytes using
      * the UTF-8 charset.
-     * 
-     * @param file the {@link File} to write to
+     *
+     * @param file    the {@link File} to write to
      * @param content the file content
      * @throws IOException if an error occurs while writing the {@link File}
      */
@@ -179,9 +183,10 @@ public class FileUtils {
     }
 
     /**
-     * Deletes a file if it exists. If the file is a symbolic link, then the 
-     * symbolic link itself, not the final target of the link, is deleted. If the 
+     * Deletes a file if it exists. If the file is a symbolic link, then the
+     * symbolic link itself, not the final target of the link, is deleted. If the
      * file is a directory then the directory must be empty.
+     *
      * @param file the file/directory {@link File}
      * @param path the path to the file/directory
      * @throws IOException
@@ -190,16 +195,17 @@ public class FileUtils {
         Path path = Objects.requireNonNull(file.toPath(), "The file/directory may not be null");
         Files.deleteIfExists(path);
     }
-    
+
     /**
-     * Recursively delete all files and sub-directories under the specified 
+     * Recursively delete all files and sub-directories under the specified
      * directory (inclusive).
-     * @param directory the directory {@link File} 
+     *
+     * @param directory the directory {@link File}
      * @throws IOException
      */
     public static void deleteRecursive(final File directory) throws IOException {
         Path start = Objects.requireNonNull(directory.toPath(), "The directory may not be null");
-        
+
         Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult visitFile(final Path file, final BasicFileAttributes attrs) throws IOException {
@@ -217,7 +223,7 @@ public class FileUtils {
                     throw e;
                 }
             }
-            
+
             @Override
             public FileVisitResult visitFileFailed(final Path file, final IOException e) {
                 System.out.println(e);
@@ -227,11 +233,11 @@ public class FileUtils {
 
         Files.deleteIfExists(start);
     }
-    
+
     /**
      * Close the specified stream, ignoring any errors. This is useful to call
      * in finally blocks.
-     * 
+     *
      * @param stream The stream to close
      */
     public static void close(final Closeable stream) {
@@ -243,6 +249,6 @@ public class FileUtils {
             System.err.println(e.getMessage());
         }
     }
-    
-    
+
+
 }

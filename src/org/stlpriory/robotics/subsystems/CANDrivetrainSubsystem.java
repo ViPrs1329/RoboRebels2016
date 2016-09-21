@@ -1,13 +1,5 @@
 package org.stlpriory.robotics.subsystems;
 
-import org.stlpriory.robotics.OI;
-import org.stlpriory.robotics.Robot;
-import org.stlpriory.robotics.commands.drivetrain.DriveWithGamepad;
-import org.stlpriory.robotics.hardware.AMOpticalEncoderSpecs;
-import org.stlpriory.robotics.hardware.CIMMotorSpecs;
-import org.stlpriory.robotics.utils.Debug;
-import org.stlpriory.robotics.utils.Utils;
-
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
@@ -16,30 +8,37 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.stlpriory.robotics.OI;
+import org.stlpriory.robotics.Robot;
+import org.stlpriory.robotics.commands.drivetrain.DriveWithGamepad;
+import org.stlpriory.robotics.hardware.AMOpticalEncoderSpecs;
+import org.stlpriory.robotics.hardware.CIMMotorSpecs;
+import org.stlpriory.robotics.utils.Debug;
+import org.stlpriory.robotics.utils.Utils;
 
 /**
- * Robot drive train subsystem consisting of 4 CIM motors configured in 2 master/slave arrangements. 
+ * Robot drive train subsystem consisting of 4 CIM motors configured in 2 master/slave arrangements.
  * The motors are controlled by Talon SRX speed controllers through a CAN bus and encoder feedback.
  */
 public class CANDrivetrainSubsystem extends Subsystem {
 //    public static double P_VALUE = .5;
 //    public static double I_VALUE = 0.02;
 //    public static double D_VALUE = 0;
-	
-	
+
+
     public static double P_VALUE = .41;
     public static double I_VALUE = 0.01;
     public static double D_VALUE = 0;
     public static double F_VALUE = 0.5;
     public static int IZONE_VALUE = (int) (0.2 * AMOpticalEncoderSpecs.PULSES_PER_REV);
-    
+
     public static double RAMP_RATE = 2;
 
 //    // For a Talon SRX these are the closed-loop outputs which, if exceeded, 
 //    // the motor output is capped
 //    public static final double TALON_SRX_POS_PEAK_OUTPUT = +1023.0d;
 //    public static final double TALON_SRX_NEG_PEAK_OUTPUT = -1023.0d;
-    
+
     private final CANTalon rightFront;
     private final CANTalon rightRear;
     private final CANTalon leftFront;
@@ -64,13 +63,13 @@ public class CANDrivetrainSubsystem extends Subsystem {
         Debug.println("   F = " + F_VALUE);
         Debug.println("   I Zone = " + IZONE_VALUE);
 
-        this.leftFront  = createMaster(DrivetrainSubsystem.LF_MOTOR_ID);
+        this.leftFront = createMaster(DrivetrainSubsystem.LF_MOTOR_ID);
         this.rightFront = createMaster(DrivetrainSubsystem.RF_MOTOR_ID);
         if (DrivetrainSubsystem.MASTER_SLAVE_MODE) {
-            this.leftRear  = createSlave(DrivetrainSubsystem.LR_MOTOR_ID, this.leftFront);          
-            this.rightRear = createSlave(DrivetrainSubsystem.RR_MOTOR_ID, this.rightFront);            
+            this.leftRear = createSlave(DrivetrainSubsystem.LR_MOTOR_ID, this.leftFront);
+            this.rightRear = createSlave(DrivetrainSubsystem.RR_MOTOR_ID, this.rightFront);
         } else {
-            this.leftRear  = createMaster(DrivetrainSubsystem.LR_MOTOR_ID);
+            this.leftRear = createMaster(DrivetrainSubsystem.LR_MOTOR_ID);
             this.rightRear = createMaster(DrivetrainSubsystem.RR_MOTOR_ID);
         }
 
@@ -82,7 +81,7 @@ public class CANDrivetrainSubsystem extends Subsystem {
 
         // invert the left side motors
         this.drive.setInvertedMotor(MotorType.kRearLeft, true);
-        
+
         // Set the scaling factor used by RobotDrive when motor controllers are in
         // a mode other than PercentVbus. The scaling factor is multiplied with the 
         // output percentage [-1,1] computed by the drive functions. 
@@ -90,8 +89,8 @@ public class CANDrivetrainSubsystem extends Subsystem {
 
         Debug.println("[CANDrivetrain Subsystem] Instantiation complete.");
     }
-    
-    
+
+
     // ==================================================================================
     //                    P R O T E C T E D   M E T H O D S
     // ==================================================================================
@@ -162,48 +161,48 @@ public class CANDrivetrainSubsystem extends Subsystem {
     }
 
 
-
-    public void tankDrive(final double leftStickValue, final double rightStickValue)
-    {
+    public void tankDrive(final double leftStickValue, final double rightStickValue) {
 //        drive.tankDrive(leftStickValue, rightStickValue);
-    	leftFront.set(leftStickValue * CIMMotorSpecs.MAX_SPEED_RPM);
-    	rightFront.set(rightStickValue * CIMMotorSpecs.MAX_SPEED_RPM);
-    	if(!DrivetrainSubsystem.MASTER_SLAVE_MODE)
-    	{
-    		leftRear.set(leftStickValue * CIMMotorSpecs.MAX_SPEED_RPM);
-    		rightRear.set(rightStickValue * CIMMotorSpecs.MAX_SPEED_RPM);
-    	}
+        leftFront.set(leftStickValue * CIMMotorSpecs.MAX_SPEED_RPM);
+        rightFront.set(rightStickValue * CIMMotorSpecs.MAX_SPEED_RPM);
+        if (!DrivetrainSubsystem.MASTER_SLAVE_MODE) {
+            leftRear.set(leftStickValue * CIMMotorSpecs.MAX_SPEED_RPM);
+            rightRear.set(rightStickValue * CIMMotorSpecs.MAX_SPEED_RPM);
+        }
     }
 
     public void controllerDrive(final Joystick joystick) {
-        double leftStickValue  = Utils.scale(joystick.getRawAxis(OI.LEFT_STICK_Y_AXIS) );
-        double rightStickValue = Utils.scale(joystick.getRawAxis(OI.RIGHT_STICK_Y_AXIS) );
+        double leftStickValue = Utils.scale(joystick.getRawAxis(OI.LEFT_STICK_Y_AXIS));
+        double rightStickValue = Utils.scale(joystick.getRawAxis(OI.RIGHT_STICK_Y_AXIS));
         tankDrive(leftStickValue, rightStickValue);
     }
+
     public void stop() {
         this.drive.stopMotor();
     }
+
     @Override
     public void initDefaultCommand() {
         setDefaultCommand(new DriveWithGamepad());
-    }    
+    }
+
     public double getSpeedInRPM() {
         // Since the 2 left motors and 2 right motors are paired in a 
         // master/slave arrangement we only need to check the master
-        Joystick joystick  = Robot.oi.getController();
-        double leftYstick  = joystick.getRawAxis(OI.LEFT_STICK_Y_AXIS);
+        Joystick joystick = Robot.oi.getController();
+        double leftYstick = joystick.getRawAxis(OI.LEFT_STICK_Y_AXIS);
         double rightYstick = joystick.getRawAxis(OI.RIGHT_STICK_Y_AXIS);
-        double leftSide  = leftYstick * CIMMotorSpecs.MAX_SPEED_RPM;
+        double leftSide = leftYstick * CIMMotorSpecs.MAX_SPEED_RPM;
         double rightSide = rightYstick * CIMMotorSpecs.MAX_SPEED_RPM;
-        
+
         return (leftSide + rightSide) / 2.0;
     }
 
     public void updateStatus() {
-        double leftFrontMotorOutput  = this.leftFront.getOutputVoltage() / this.leftFront.getBusVoltage();
-        double leftRearMotorOutput   = this.leftRear.getOutputVoltage() / this.leftRear.getBusVoltage();
+        double leftFrontMotorOutput = this.leftFront.getOutputVoltage() / this.leftFront.getBusVoltage();
+        double leftRearMotorOutput = this.leftRear.getOutputVoltage() / this.leftRear.getBusVoltage();
         double rightFrontMotorOutput = this.rightFront.getOutputVoltage() / this.rightFront.getBusVoltage();
-        double rightRearMotorOutput  = this.rightRear.getOutputVoltage() / this.rightRear.getBusVoltage();
+        double rightRearMotorOutput = this.rightRear.getOutputVoltage() / this.rightRear.getBusVoltage();
 
         SmartDashboard.putString("Control Mode", rightFront.getControlMode().toString());
         SmartDashboard.putNumber("LF motor output", leftFrontMotorOutput);

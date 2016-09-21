@@ -12,7 +12,7 @@ public class BallHolderSubsystem extends Subsystem {
 
     public static final int POT_CHANNEL = 0;
     public static final int SWITCH_CHANNEL = 1;
-    
+
     /*
      * The scaling factor multiplied by the analog voltage value to obtain the angle in degrees
      * For example, let's say you have an ideal 10-turn linear potentiometer attached to a motor
@@ -33,11 +33,11 @@ public class BallHolderSubsystem extends Subsystem {
      * the potentiometer's range (for example 30 degrees). In this case, the offset value of 30 is
      * determined from the mechanical design.
      */
-    
-    public static final double BALL_PICKUP_ANGLE    = 180.0d;
+
+    public static final double BALL_PICKUP_ANGLE = 180.0d;
     public static final double LOW_GOAL_SHOOT_ANGLE = 120.0d;
-    public static final double HI_GOAL_SHOOT_ANGLE  = 60.0d;
-    public static final double ARM_SPEED  = 0.5d;
+    public static final double HI_GOAL_SHOOT_ANGLE = 60.0d;
+    public static final double ARM_SPEED = 0.5d;
 
     public static final double EMPTY_VALUE = -1;
     public static final String POT_SETTING_STATUS = "Pot reset status";
@@ -48,19 +48,20 @@ public class BallHolderSubsystem extends Subsystem {
 
     public enum Direction {
         UP, DOWN
-    };
+    }
+
+    ;
 
     private final Talon rightMotor;
-    private final Talon leftMotor; 
+    private final Talon leftMotor;
 //    private Ramper leftRamper, rightRamper;
-    
+
     private AnalogPotentiometer pot;
     public double potHighestValue = 0;
     public double potLowestValue = 0;
 
-    
+
     private final DigitalInput stowSwitch;
-	
 
 
     // ==================================================================================
@@ -71,69 +72,65 @@ public class BallHolderSubsystem extends Subsystem {
         this.rightMotor = new Talon(RIGHT_WINDOW_MOTOR);
 //        rightRamper = new Ramper();
 //        leftRamper = new Ramper();
-        this.leftMotor  = new Talon(LEFT_WINDOW_MOTOR);
-        
+        this.leftMotor = new Talon(LEFT_WINDOW_MOTOR);
+
         this.stowSwitch = new DigitalInput(SWITCH_CHANNEL);
-        
+
         this.pot = new AnalogPotentiometer(POT_CHANNEL, POT_FULL_RANGE, 0);
-        
+
     }
 
     // ==================================================================================
     //                      P U B L I C   M E T H O D S
     // ==================================================================================
-    
+
     public void moveToStowPosition() {
-        while ( !isStowed() ) {
+        while (!isStowed()) {
             set(ARM_SPEED);
         }
         stop();
     }
-    
+
     public void moveToBallPickupPosition() {
-        while ( getAngle() < BALL_PICKUP_ANGLE ) {
+        while (getAngle() < BALL_PICKUP_ANGLE) {
             set(ARM_SPEED);
         }
         stop();
     }
-    public boolean moveToAngle(double angle)
-    {
-        if (Math.abs(this.getAngle() - angle) <= potHighestValue)
-        {
+
+    public boolean moveToAngle(double angle) {
+        if (Math.abs(this.getAngle() - angle) <= potHighestValue) {
             stop();
             return true;
         }
-        if(angle < this.getAngle())
-        {
+        if (angle < this.getAngle()) {
             this.set(-ARM_SPEED);
-        }
-        else
-        {
+        } else {
             this.set(ARM_SPEED);
         }
         return false;
 
     }
 
-    
-    public void moveToLowGoalShootPosition() {
-        while ( getAngle() < LOW_GOAL_SHOOT_ANGLE ) {
-            set(ARM_SPEED);
-        }
-        stop();
-   }
 
-    public void moveToHighGoalShootPosition() {
-        while ( getAngle() < HI_GOAL_SHOOT_ANGLE ) {
+    public void moveToLowGoalShootPosition() {
+        while (getAngle() < LOW_GOAL_SHOOT_ANGLE) {
             set(ARM_SPEED);
         }
         stop();
     }
-    
+
+    public void moveToHighGoalShootPosition() {
+        while (getAngle() < HI_GOAL_SHOOT_ANGLE) {
+            set(ARM_SPEED);
+        }
+        stop();
+    }
+
     public boolean isStowed() {
         return this.stowSwitch.get();
     }
-    
+
     public void set(final double speed) {
         this.leftMotor.set(speed);
         this.rightMotor.set(speed);
@@ -147,9 +144,10 @@ public class BallHolderSubsystem extends Subsystem {
     public void stop() {
         set(0);
     }
-    
+
     /**
-     * Get the current ball holder arm angle  
+     * Get the current ball holder arm angle
+     *
      * @return the potentiometer reading in degrees
      */
     public double getAngle() {
@@ -157,25 +155,22 @@ public class BallHolderSubsystem extends Subsystem {
     }
 
     public void setHighValue(double value) {
-        this.potHighestValue = value; 
+        this.potHighestValue = value;
     }
-    
+
     public void setLowValue(double value) {
         this.potLowestValue = value;
     }
-    public boolean canGoLower()
-    {
-        if(potLowestValue == -1)
-        {
+
+    public boolean canGoLower() {
+        if (potLowestValue == -1) {
             return false;
         }
         return getAngle() > potLowestValue;
     }
 
-    public boolean canGoHigher()
-    {
-        if(potHighestValue == -1)
-        {
+    public boolean canGoHigher() {
+        if (potHighestValue == -1) {
             return false;
         }
         return getAngle() < potHighestValue;

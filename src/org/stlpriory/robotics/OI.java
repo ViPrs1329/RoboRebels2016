@@ -1,23 +1,14 @@
 package org.stlpriory.robotics;
 
-import org.stlpriory.robotics.commands.BallHolderDown;
-import org.stlpriory.robotics.commands.BallHolderUp;
-import org.stlpriory.robotics.commands.Hold;
-import org.stlpriory.robotics.commands.MoveToShoot;
-import org.stlpriory.robotics.commands.MoveToSuck;
-import org.stlpriory.robotics.commands.Shoot;
-import org.stlpriory.robotics.commands.StopShooter;
-import org.stlpriory.robotics.commands.Suck;
-import org.stlpriory.robotics.commands.Vibrator;
-import org.stlpriory.robotics.utils.Debug;
-import org.stlpriory.robotics.utils.TwoButton;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.stlpriory.robotics.commands.*;
+import org.stlpriory.robotics.utils.Debug;
+import org.stlpriory.robotics.utils.TwoButton;
 
 /**
- * This class is the glue that binds the controls on the physical operator interface 
+ * This class is the glue that binds the controls on the physical operator interface
  * to the commands and command groups that allow control of the robot.
  */
 
@@ -52,16 +43,16 @@ public class OI {
     public static final int X_BUTTON = 3;
     public static final int Y_BUTTON = 4;
     public static final int RIGHT_BUMPER = 5;
-    public static final int LEFT_BUMPER  = 6;
-    public static final int BACK_BUTTON  = 7;
+    public static final int LEFT_BUMPER = 6;
+    public static final int BACK_BUTTON = 7;
     public static final int START_BUTTON = 8;
-    public static final int LEFT_STICK   = 9;
-    public static final int RIGHT_STICK  = 10;
+    public static final int LEFT_STICK = 9;
+    public static final int RIGHT_STICK = 10;
     public static final int LEFT_TRIGGER = 2;
     public static final int RIGHT_TRIGGER = 3;
 
-    public static final int LEFT_STICK_X_AXIS  = 0;
-    public static final int LEFT_STICK_Y_AXIS  = 1;
+    public static final int LEFT_STICK_X_AXIS = 0;
+    public static final int LEFT_STICK_Y_AXIS = 1;
     public static final int RIGHT_STICK_X_AXIS = 4;
     public static final int RIGHT_STICK_Y_AXIS = 5;
     public static final int DIRECTION_PAD = 6;
@@ -76,7 +67,7 @@ public class OI {
     private final JoystickButton holderSuck;
     public final JoystickButton forceButton;
     private final TwoButton vibrator;
-    
+
     public OI() {
         Debug.println("[OI] Instantiating ...");
 
@@ -108,25 +99,22 @@ public class OI {
 
         this.vibrator = new TwoButton(new JoystickButton(this.xboxController, LEFT_STICK), new JoystickButton(this.xboxController, RIGHT_STICK));
         this.vibrator.whileActive(new Vibrator());
-       
-        
+
+
         Debug.println("[OI] Instantiation complete.");
     }
 
     public Joystick getController() {
         return this.xboxController;
     }
-    public void vibrate(boolean on)
-    {
-    	if(on)
-    	{
-    		this.xboxController.setRumble(RumbleType.kLeftRumble, 1);
-    		this.xboxController.setRumble(RumbleType.kRightRumble, 1);
-    	}
-    	else
-    	{
-    		this.xboxController.setRumble(RumbleType.kLeftRumble, 0);
-    		this.xboxController.setRumble(RumbleType.kRightRumble, 0);
-    	}
+
+    public void vibrate(boolean on) {
+        if (on) {
+            this.xboxController.setRumble(RumbleType.kLeftRumble, 1);
+            this.xboxController.setRumble(RumbleType.kRightRumble, 1);
+        } else {
+            this.xboxController.setRumble(RumbleType.kLeftRumble, 0);
+            this.xboxController.setRumble(RumbleType.kRightRumble, 0);
+        }
     }
 }

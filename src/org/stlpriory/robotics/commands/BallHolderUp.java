@@ -1,10 +1,9 @@
 package org.stlpriory.robotics.commands;
 
+import edu.wpi.first.wpilibj.command.Command;
 import org.stlpriory.robotics.Robot;
 import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
 import org.stlpriory.robotics.subsystems.BallHolderSubsystem.Direction;
-
-import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
@@ -21,14 +20,14 @@ public class BallHolderUp extends Command {
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-    	
+
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-    	if(!isFinished())
-        Robot.ballHolder.set(Direction.UP, BallHolderSubsystem.ARM_SPEED);
+        if (!isFinished())
+            Robot.ballHolder.set(Direction.UP, BallHolderSubsystem.ARM_SPEED);
     }
 
     // Make this return true when this Command no longer needs to run execute()

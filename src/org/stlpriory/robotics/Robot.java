@@ -1,20 +1,4 @@
-
 package org.stlpriory.robotics;
-
-import java.io.File;
-import java.nio.file.Files;
-import java.util.Properties;
-
-import org.stlpriory.robotics.commands.ZeroGyro;
-import org.stlpriory.robotics.commands.ZeroPotHigh;
-import org.stlpriory.robotics.commands.ZeroPotLow;
-import org.stlpriory.robotics.commands.autonomous.AutonomousCommand;
-import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
-import org.stlpriory.robotics.subsystems.DrivetrainSubsystem;
-import org.stlpriory.robotics.subsystems.ShooterSubsystem;
-import org.stlpriory.robotics.utils.Debug;
-import org.stlpriory.robotics.utils.PropertiesUtils;
-import org.stlpriory.robotics.utils.AutonomousInfo;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -22,11 +6,25 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.stlpriory.robotics.commands.ZeroGyro;
+import org.stlpriory.robotics.commands.ZeroPotHigh;
+import org.stlpriory.robotics.commands.ZeroPotLow;
+import org.stlpriory.robotics.commands.autonomous.AutonomousCommand;
+import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
+import org.stlpriory.robotics.subsystems.DrivetrainSubsystem;
+import org.stlpriory.robotics.subsystems.ShooterSubsystem;
+import org.stlpriory.robotics.utils.AutonomousInfo;
+import org.stlpriory.robotics.utils.Debug;
+import org.stlpriory.robotics.utils.PropertiesUtils;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.util.Properties;
 
 /**
- * The VM is configured to automatically run this class, and to call the functions corresponding 
- * to each mode, as described in the IterativeRobot documentation. If you change the name of this 
- * class or the package after creating this project, you must also update the manifest file in the 
+ * The VM is configured to automatically run this class, and to call the functions corresponding
+ * to each mode, as described in the IterativeRobot documentation. If you change the name of this
+ * class or the package after creating this project, you must also update the manifest file in the
  * resource directory.
  */
 public class Robot extends IterativeRobot {
@@ -40,19 +38,18 @@ public class Robot extends IterativeRobot {
 
     // Human operator interface
     public static final OI oi = new OI();
-    
+
     // Robot configuration file and properties
-    public static final File CONFIG_FILE  = new File("/home/lvuser/config.txt");
+    public static final File CONFIG_FILE = new File("/home/lvuser/config.txt");
     public static final Properties ROBOT_PROPS = new Properties();
-    public static final File AUTONOMOUS_CONFIG_FILE  = new File("/usr/autonomousProperties.txt");
+    public static final File AUTONOMOUS_CONFIG_FILE = new File("/usr/autonomousProperties.txt");
     public static final Properties AUTONOMOUS_PROPS = new Properties();
 
 
-    
     private Command autonomousCommand = new AutonomousCommand();
     public static AutonomousInfo autonomousInfo = new AutonomousInfo();
     private Timer timer = new Timer();
-    
+
     // ==================================================================================
     //                            ROBOT INIT SECTION
     // ==================================================================================
@@ -63,10 +60,10 @@ public class Robot extends IterativeRobot {
         timer.start();
         // Load robot configuration file
         loadRobotConfigFile();
-        
-        
+
+
         oi.vibrate(false);
-        
+
         timer.stop();
         SmartDashboard.putData("Zero Pot High", new ZeroPotHigh());
         SmartDashboard.putData("Zero pot low", new ZeroPotLow());
@@ -76,7 +73,7 @@ public class Robot extends IterativeRobot {
         Debug.println("           Robot ready!");
         Debug.println("------------------------------------------");
     }
-    
+
     @Override
     public void disabledInit() {
         setProperties();
@@ -92,7 +89,7 @@ public class Robot extends IterativeRobot {
         loadRobotConfigFile();
         setProperties();
 //        drivetrain.zeroGyro();
-        if(autonomousCommand != null)
+        if (autonomousCommand != null)
             autonomousCommand.start();
     }
 
@@ -123,12 +120,12 @@ public class Robot extends IterativeRobot {
         // Record updated status values
         updateStatus();
     }
-    
+
     @Override
     public void disabledPeriodic() {
-    	oi.vibrate(false);
+        oi.vibrate(false);
     }
-    
+
     // ==================================================================================
     //                      P U B L I C   M E T H O D S
     // ==================================================================================
@@ -137,7 +134,7 @@ public class Robot extends IterativeRobot {
         try {
             // Clear any robot properties before reloading
             ROBOT_PROPS.clear();
-            
+
             if (Files.exists(CONFIG_FILE.toPath())) {
                 // Read the existing properties file
                 Properties props = PropertiesUtils.load(CONFIG_FILE);
@@ -168,7 +165,7 @@ public class Robot extends IterativeRobot {
             e.printStackTrace();
         }
     }
-    
+
     public static void saveRobotConfigFile() {
         try {
             if (CONFIG_FILE.exists()) {
@@ -182,18 +179,17 @@ public class Robot extends IterativeRobot {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }        
+        }
     }
 
-    public static void setProperties()
-    {
+    public static void setProperties() {
         double highValue = Double.parseDouble(ROBOT_PROPS.getProperty(POT_HIGH_VALUE, "-1"));
         double lowValue = Double.parseDouble(ROBOT_PROPS.getProperty(POT_LOW_VALUE, "-1"));
-    	ballHolder.setHighValue(highValue);
-    	ballHolder.setLowValue(lowValue);
-        if(highValue == -1)
+        ballHolder.setHighValue(highValue);
+        ballHolder.setLowValue(lowValue);
+        if (highValue == -1)
             System.out.println("Low value is -1!");
-        if(lowValue == -1)
+        if (lowValue == -1)
             System.out.println("High value is -1!");
     }
 
@@ -201,17 +197,17 @@ public class Robot extends IterativeRobot {
      * Call the updateStatus methods on all subsystems
      */
     public void updateStatus() {
-		drivetrain.updateStatus();
-		ballHolder.updateStatus();
-		shooter.updateStatus();
+        drivetrain.updateStatus();
+        ballHolder.updateStatus();
+        shooter.updateStatus();
     }
-    public void reset()
-    {
-    	drivetrain.stop();
-    	ballHolder.stop();
-    	shooter.stop();
+
+    public void reset() {
+        drivetrain.stop();
+        ballHolder.stop();
+        shooter.stop();
     }
-    
+
     @Override
     public void testInit() {
         LiveWindow.run();

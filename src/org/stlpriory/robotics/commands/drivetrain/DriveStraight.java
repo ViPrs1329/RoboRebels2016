@@ -1,9 +1,8 @@
 package org.stlpriory.robotics.commands.drivetrain;
 
+import edu.wpi.first.wpilibj.command.Command;
 import org.stlpriory.robotics.Robot;
 import org.stlpriory.robotics.subsystems.DrivetrainSubsystem.Direction;
-
-import edu.wpi.first.wpilibj.command.Command;
 
 
 public class DriveStraight extends Command {
@@ -15,35 +14,34 @@ public class DriveStraight extends Command {
     private int axisNumber;
     private double startAngle;
 
-    public DriveStraight(Direction direction, int axisNumber)
-    {
+    public DriveStraight(Direction direction, int axisNumber) {
         requires(Robot.drivetrain);
         this.axisNumber = axisNumber;
         this.direction = direction;
     }
-    private double getInput()
-    {
+
+    private double getInput() {
         return Robot.oi.getController().getRawAxis(axisNumber);
     }
-    public void initialize()
-    {
+
+    public void initialize() {
         startAngle = Robot.drivetrain.getAngle();
     }
-    public void execute()
-    {
+
+    public void execute() {
         double i = getInput() * (direction == Direction.REVERSE ? 1 : -1);
         Robot.drivetrain.driveForward(i * COEFFICIENT, startAngle);
     }
-    public boolean isFinished()
-    {
+
+    public boolean isFinished() {
         return false;
     }
-    public void end()
-    {
+
+    public void end() {
         Robot.drivetrain.stop();
     }
-    public void interrupted()
-    {
+
+    public void interrupted() {
         end();
     }
 }

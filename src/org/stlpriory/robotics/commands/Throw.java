@@ -1,8 +1,7 @@
 package org.stlpriory.robotics.commands;
 
-import org.stlpriory.robotics.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.stlpriory.robotics.Robot;
 
 public class Throw extends Command {
 
@@ -28,7 +27,7 @@ public class Throw extends Command {
 
     @Override
     protected void end() {
-    	Robot.shooter.retractLoaderArm();
+        Robot.shooter.retractLoaderArm();
         Robot.shooter.stop();
     }
 

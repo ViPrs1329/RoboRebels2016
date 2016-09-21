@@ -19,19 +19,20 @@ public class Utils {
     /**
      * Rounds a double to specified number of decimal places.
      *
-     * @param x The input number that needs to be rounded.
+     * @param x        The input number that needs to be rounded.
      * @param decimals The number of decimal places.
      * @return The input number rounded to the number of decimal places
      * specified.
      */
-    public static double TALONdistance(double feet){
-    	double TALON = feet * (TALON_UNIT);
-    	return TALON;
+    public static double TALONdistance(double feet) {
+        double TALON = feet * (TALON_UNIT);
+        return TALON;
     }
-    public static double getCANTalonTemp(CANTalon talon)
-    {
-    	return talon.getTemperature();
+
+    public static double getCANTalonTemp(CANTalon talon) {
+        return talon.getTemperature();
     }
+
     public static double roundDecimals(double x, int decimals) {
         if (decimals > 9) {
             return (Math.ceil(x * decimals) / decimals);
@@ -58,7 +59,7 @@ public class Utils {
      * Scale a number between two specified numbers. eg. Scale 0.6 between 0.3
      * and 0.7
      *
-     * @param x The number to be scaled
+     * @param x   The number to be scaled
      * @param min Minimum value
      * @param max Maximum value
      * @return Scaled value between min and max
@@ -95,5 +96,5 @@ public class Utils {
         }
         return 0;
     }
-    
+
 }

@@ -1,16 +1,15 @@
 package org.stlpriory.robotics.commands;
 
-import org.stlpriory.robotics.Robot;
-import org.stlpriory.robotics.hardware.AMOpticalEncoderSpecs;
-import org.stlpriory.robotics.hardware.CIMMotorSpecs;
-import org.stlpriory.robotics.utils.Debug;
-
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDeviceStatus;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.stlpriory.robotics.Robot;
+import org.stlpriory.robotics.hardware.AMOpticalEncoderSpecs;
+import org.stlpriory.robotics.hardware.CIMMotorSpecs;
+import org.stlpriory.robotics.utils.Debug;
 
 /**
  * Command used to test PID values
@@ -30,7 +29,7 @@ public class PIDAutoTuneCommand extends Command {
     // If the closed-loop output exceeds these settings the motor output is capped
     private final double posPeakOutput = +1023.0d;
     @SuppressWarnings("unused")
-	private final double negPeakOutput = -1023.0d;
+    private final double negPeakOutput = -1023.0d;
 
     private String sensorStatus = "";
     private boolean reverseSensor = false;

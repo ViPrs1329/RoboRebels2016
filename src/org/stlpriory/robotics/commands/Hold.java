@@ -1,8 +1,7 @@
 package org.stlpriory.robotics.commands;
 
-import org.stlpriory.robotics.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.stlpriory.robotics.Robot;
 
 public class Hold extends Command {
     public Hold() {

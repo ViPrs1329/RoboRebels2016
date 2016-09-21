@@ -1,14 +1,14 @@
 package org.stlpriory.robotics.commands;
 
+import edu.wpi.first.wpilibj.command.Command;
 import org.stlpriory.robotics.Robot;
 import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
 import org.stlpriory.robotics.subsystems.BallHolderSubsystem.Direction;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 public class MoveToSuck extends Command {
     private boolean isDone;
     private double targAngle;
+
     public MoveToSuck() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.ballHolder);
@@ -25,14 +25,13 @@ public class MoveToSuck extends Command {
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        if(!isFinished())
-        {
+        if (!isFinished()) {
             double angle = Robot.ballHolder.getAngle();
-            if(Math.abs(angle - targAngle) <= BallHolderSubsystem.TOLERANCE)
+            if (Math.abs(angle - targAngle) <= BallHolderSubsystem.TOLERANCE)
                 isDone = true;
-            else if(angle < targAngle)
+            else if (angle < targAngle)
                 Robot.ballHolder.set(Direction.UP, BallHolderSubsystem.ARM_SPEED);
-            else if(angle > targAngle)
+            else if (angle > targAngle)
                 Robot.ballHolder.set(Direction.DOWN, BallHolderSubsystem.ARM_SPEED);
         }
     }

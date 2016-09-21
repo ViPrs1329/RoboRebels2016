@@ -1,8 +1,7 @@
 package org.stlpriory.robotics.commands;
 
-import org.stlpriory.robotics.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.stlpriory.robotics.Robot;
 
 public class HolderToTop extends Command {
 
@@ -22,7 +21,7 @@ public class HolderToTop extends Command {
 
     @Override
     protected boolean isFinished() {
-    	return true;
+        return true;
     }
 
     @Override

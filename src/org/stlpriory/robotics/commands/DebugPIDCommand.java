@@ -1,11 +1,10 @@
 package org.stlpriory.robotics.commands;
 
-import org.stlpriory.robotics.Robot;
-import org.stlpriory.robotics.utils.Debug;
-
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.stlpriory.robotics.Robot;
+import org.stlpriory.robotics.utils.Debug;
 
 public class DebugPIDCommand extends Command {
 

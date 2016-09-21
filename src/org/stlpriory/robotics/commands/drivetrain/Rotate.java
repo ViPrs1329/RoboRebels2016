@@ -1,12 +1,14 @@
 package org.stlpriory.robotics.commands.drivetrain;
 
-import org.stlpriory.robotics.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
+import org.stlpriory.robotics.Robot;
 
 public class Rotate extends Command {
     public static final double DEFAULT_ROTATION_SPEED = -.5;
-    public enum RotationDirection {CLOCKWISE, COUNTERCLOCKWISE};
+
+    public enum RotationDirection {CLOCKWISE, COUNTERCLOCKWISE}
+
+    ;
 
     double inAngle;
     double startAngle;
@@ -19,7 +21,7 @@ public class Rotate extends Command {
         // else turns right
         requires(Robot.drivetrain);
         this.speed = speed;
-        if(direction == RotationDirection.COUNTERCLOCKWISE)
+        if (direction == RotationDirection.COUNTERCLOCKWISE)
             this.speed *= -1;
         this.direction = direction;
         this.inAngle = inAngle;
@@ -56,7 +58,7 @@ public class Rotate extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        if(inAngle == 0.0)
+        if (inAngle == 0.0)
             return true;
         else
             return Math.abs(Robot.drivetrain.getAngle() - startAngle) > Math.abs(inAngle);

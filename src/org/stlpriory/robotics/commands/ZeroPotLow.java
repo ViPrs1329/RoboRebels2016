@@ -1,10 +1,9 @@
 package org.stlpriory.robotics.commands;
 
-import org.stlpriory.robotics.Robot;
-import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
-
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.stlpriory.robotics.Robot;
+import org.stlpriory.robotics.subsystems.BallHolderSubsystem;
 
 /**
  * Created by Adam on 2/26/2016.
@@ -25,9 +24,7 @@ public class ZeroPotLow extends Command {
             Robot.saveRobotConfigFile();
             System.out.println(String.format("saved file; value in file is %s", Robot.ROBOT_PROPS.getProperty(Robot.POT_LOW_VALUE, "nonexistent")));
             Robot.setProperties();
-        }
-        else
-        {
+        } else {
             SmartDashboard.putString(BallHolderSubsystem.POT_SETTING_STATUS, "Nope!");
         }
     }
@@ -39,7 +36,7 @@ public class ZeroPotLow extends Command {
 
     @Override
     protected void end() {
-            SmartDashboard.putString(BallHolderSubsystem.POT_SETTING_STATUS, "Both are set");
+        SmartDashboard.putString(BallHolderSubsystem.POT_SETTING_STATUS, "Both are set");
     }
 
     @Override

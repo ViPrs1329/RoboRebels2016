@@ -1,28 +1,28 @@
 package org.stlpriory.robotics.commands.autonomous;
-import org.stlpriory.robotics.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import org.stlpriory.robotics.Robot;
+
 class SetAutonomousInfo extends Command {
-    public SetAutonomousInfo()
-    {
+    public SetAutonomousInfo() {
         super("SetAutonomousInfo");
     }
-    public void initialize()
-    {
+
+    public void initialize() {
     }
-    public void execute()
-    {
+
+    public void execute() {
         Robot.autonomousInfo.setHeading(Robot.drivetrain.getAngle());
     }
-    public void end()
-    {
+
+    public void end() {
     }
-    public boolean isFinished()
-    {
+
+    public boolean isFinished() {
         return true;
     }
-    public void interrupted()
-    {
+
+    public void interrupted() {
         end();
     }
 }

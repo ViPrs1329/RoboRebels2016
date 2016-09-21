@@ -1,11 +1,10 @@
 package org.stlpriory.robotics.commands;
 
+import edu.wpi.first.wpilibj.command.Command;
 import org.stlpriory.robotics.Robot;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 public class HolderToBottom extends Command {
-	
+
 
     public HolderToBottom() {
         requires(Robot.ballHolder);
@@ -23,7 +22,7 @@ public class HolderToBottom extends Command {
 
     @Override
     protected boolean isFinished() {
-    	return true;
+        return true;
     }
 
     @Override
