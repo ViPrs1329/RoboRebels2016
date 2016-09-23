@@ -58,7 +58,7 @@ public class DrivetrainSubsystem extends Subsystem {
     public DrivetrainSubsystem() {
         this("DrivetrainSubsystem");
     }
-
+//Henry var her
     public DrivetrainSubsystem(final String name) {
         super(name);
         Debug.println("[Drivetrain Subsystem] Instantiating...");
@@ -72,6 +72,11 @@ public class DrivetrainSubsystem extends Subsystem {
             this.leftRear = createMaster(LR_MOTOR_ID);
             this.rightRear = createMaster(RR_MOTOR_ID);
         }
+        this.leftFront.set(0);
+        this.leftRear.set(0);
+        this.rightFront.set(0);
+        this.rightRear.set(0);
+        this.stop();
         this.leftRamper = new Ramper();
         this.rightRamper = new Ramper();
         this.rightRearRamper = new Ramper();
