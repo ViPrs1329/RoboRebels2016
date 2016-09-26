@@ -45,9 +45,9 @@ public class AutonomousCommand extends CommandGroup {
         System.out.println(String.format("Set gyro angle for autonomous; it's %f", gyroReading));
         // This code never worked, but I wanted it to.
         addSequential(new SetAutonomousInfo());
-        addSequential(new DriveDistance(7, Direction.FORWARD, Robot.autonomousInfo, 0, false));
-        addSequential(new Rotate(180));
-        addSequential(new DriveDistance(3, Direction.FORWARD, Robot.autonomousInfo, 180, true));
+        addSequential(new DriveDistance(5, Direction.FORWARD, Robot.autonomousInfo, 0, true));
+//        addSequential(new Rotate(180));
+//        addSequential(new DriveDistance(3, Direction.FORWARD, Robot.autonomousInfo, 180, true));
 
 
         // This was the working autonomous code at the end of last season.
