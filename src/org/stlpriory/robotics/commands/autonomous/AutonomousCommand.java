@@ -1,9 +1,10 @@
 package org.stlpriory.robotics.commands.autonomous;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.stlpriory.robotics.Robot;
 import org.stlpriory.robotics.commands.drivetrain.Rotate;
 import org.stlpriory.robotics.subsystems.DrivetrainSubsystem.Direction;
+
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
