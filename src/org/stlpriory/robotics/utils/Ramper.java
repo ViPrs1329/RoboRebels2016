@@ -1,6 +1,6 @@
 package org.stlpriory.robotics.utils; 
 public class Ramper {
-    public static final double MAX_ACCELLERATION = .02;
+    public static final double MAX_ACCELLERATION = .01;
     public static final double MAX_DECELLERATION = .03;
 
     private double currentSpeed;
