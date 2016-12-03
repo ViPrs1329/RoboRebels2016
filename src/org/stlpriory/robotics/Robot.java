@@ -104,11 +104,12 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void teleopInit() {
+    	//afeawksdjfasdlkfjkasdjfl sdafksadlfjsdlfjksadfldsfdkslfkasdlfjsdkaljfdsaklfjdsl;ajf;kldsjfkl;dsfj hi 
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
         setProperties();
-        drivetrain.zeroGyro();
+//        drivetrain.zeroGyro();
         reset();
         // Record initial status values
         updateStatus();
@@ -123,7 +124,8 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void disabledPeriodic() {
-        oi.vibrate(false);
+    	oi.vibrate(false);
+    	Robot.drivetrain.zeroGyro();
     }
 
     // ==================================================================================
